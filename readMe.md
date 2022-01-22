@@ -101,7 +101,76 @@ API Base Url: `http://yourdomain.com/droidapps/index.php/api/v1/database/`
   <img src="https://raw.githubusercontent.com/appsfeature/droidapps/master/screenshots/tableContent.png" alt="Preview 1" width="600" />
 </p>
 
+## Views configuration
 
+### Step 1:Set base url in views file for css, script and image path.
+application\views\admin\login.php
+```php
+
+<?php echo base_url()?>public/admin/
+-Or-
+<?php echo base_url().'admin/login/authenticate' ?>
+For Example:
+<script src="<?php echo base_url()?>public/admin/plugins/jquery/jquery.min.js"></script>
+
+```
+
+### Step 2:Call Php method from view
+application\views\admin\login.php
+```html
+<div class="card">
+      <form action="<?php echo base_url().'admin/login/authenticate' ?>" name="loginForm" id="loginForm" method="post">
+        <div class="input-group mb-3">
+          <input type="text" name="username" id="username" class="form-control" placeholder="Username">
+          ...
+        </div>
+        <?php echo form_error('username'); ?>
+        <div class="input-group mb-3">
+          <input type="password" name="password" id="password" class="form-control" placeholder="Password">
+          ...
+        </div>
+        <?php echo form_error('password'); ?>
+        <div class="row">
+            <div class="col-4">
+              <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            </div>
+        </div>
+      </form>
+  </div>
+
+```
+
+### Step 3:PHP receiving data using post method
+application\controllers\admin\Login.php
+```php
+public function authenticate(){
+  $this->form_validation->set_rules("username", "Username", "trim|required");
+  $this->form_validation->set_rules("password", "Password", "trim|required");
+
+  if($this->form_validation->run() === TRUE){
+     $username = $this->input->post('username');
+     $password = $this->input->post('password');
+     $account = $this->Admin_model->getByUsername($username);
+     if(!empty($account)){
+         // if(password_verify($password, $account['password']) == true){
+         if($password == $account['password']){
+           $adminArray['admin_id'] = $account['id'];
+           $adminArray['username'] = $account['user_id'];
+           $this->session->set_userdata('admin', $adminArray);
+           redirect(base_url().'admin/home/index');
+         }else{
+           $this->session->set_flashdata('msg','Either username or password is incorrect');
+           redirect(base_url().'admin/login/index');
+         }
+     }else {
+       $this->session->set_flashdata('msg','Either username or password is incorrect');
+       redirect(base_url().'admin/login/index');
+     }
+  }else{
+    $this->load->view('admin/login');
+  }
+}
+```
 
 ## CodeIgniter Documentation
 
