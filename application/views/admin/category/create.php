@@ -32,7 +32,10 @@
               </div>
 
               <div class="card-body">
-                  <form name="categoryForm" id="categoryForm" action="<?php echo base_url().'admin/category/create' ?>" method="post">
+                  <form name="categoryForm" id="categoryForm" action=""  method="post" enctype="multipart/form-data">
+
+                    <input type="hidden" name="pkg_id" access="false" id="pkg_id" value="<?php echo isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:''; ?>">
+                    <input type="hidden" name="" value="">
 
                     <div class="formbuilder-number form-group field-sub_cat_id">
                          <label for="sub_cat_id" class="formbuilder-number-label">SubCatId</label>
@@ -41,7 +44,7 @@
                      <div class="formbuilder-text form-group field-cat_name">
                          <label for="cat_name" class="formbuilder-text-label">Category Name</label>
                          <input type="text" placeholder="Enter Category Name" class="form-control <?php echo (form_error('cat_name') != "") ? 'is-invalid' : ''; ?>" name="cat_name" access="false" id="cat_name">
-                         <?php echo form_error('cat_name');?>
+
                      </div>
                      <div class="formbuilder-number form-group field-cat_type">
                          <label for="cat_type" class="formbuilder-number-label">Category Type</label>
@@ -78,7 +81,7 @@
                      </div>
 
                      <div class="formbuilder-button form-group field-submit">
-                        <button type="submit" class="btn-success btn" name="submit" access="false" style="success" id="submit">Submit</button>
+                        <button type="submit" class="btn-success btn" name="submit" access="false" style="success" id="submitBtn">Submit</button>
                     </div>
                   </form>
               </div>
@@ -96,3 +99,35 @@
   <!-- /.content-wrapper -->
 
 <?php $this->load->view('admin/footer'); ?>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#categoryForm").submit(function(e) {
+        e.preventDefault();
+        $("#submitBtn").prop("disabled", true);
+
+        var formData= new FormData($("#categoryForm")[0]);
+        console.log('my message' + formData);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url().'api/v1/database/insert_category' ?>",
+            data: formData,
+            processData: false,
+            contentType: false,
+            encode: true,
+        }).done(function(data) {
+
+            var successURL = "<?php echo base_url().'admin/category' ?>";
+            if(data.status==0){
+              showToast(false, data.message);
+              $("button[type='submit']").prop("disabled", false);
+            } else {
+              if(successURL!==null) {
+                window.location.href=successURL;
+              }
+            }
+        });
+    });
+});
+</script>

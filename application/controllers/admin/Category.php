@@ -12,50 +12,70 @@ class Category extends CI_Controller{
     }
     $this->load->model(array("api/v1/database_model"));
     $this->load->library(array("form_validation"));
+    $this->load->helper("common_helper");
   }
 
     //http://localhost/droidappsmaster/admin/category
     //This will show category list page
     public function index(){
-      $this->load->view('admin/category/list');
+      $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
+      $queryString = $this->input->get();
+      $querySearch = '';
+      if($queryString != null){
+        $querySearch = $queryString['cat_name'];
+      }
+      $whereClause = getCategoryWhereClause($pkg_id, null, null);
+
+      $category = $this->database_model->get_category($whereClause, $queryString);
+      $data['categories'] = $category;
+      $data['querySearch'] = $querySearch;
+      $this->load->view('admin/category/list', $data);
     }
 
     //This will show create page
     public function create(){
-
-      $this->form_validation->set_error_delimiters('<p class="invalid-feedback">','</p>');
-      $this->form_validation->set_rules("cat_name", "Category Name", "trim|required");
-
-      if($this->form_validation->run() === FALSE){
-        $this->load->view('admin/category/create');
-      }else{
-        $category = array(
-          "pkg_id" => $pkg_id,
-          "sub_cat_id" => $sub_cat_id == null ? 0 : $sub_cat_id,
-          "cat_name" => $cat_name,
-          "cat_type" => $cat_type == null ? 0 : $cat_type,
-          "image" => $image,
-          "order_id" => $order_id == null ? 0 : $order_id,
-          "visibility" => $visibility == null ? 1 : $visibility,
-          "json_data" => $json_data,
-          "other_property" => $other_property
-        );
-        if($this->database_model->insert_category(false, $whereClause, $category)){
-          $this->responseStatus(STATUS_SUCCESS, "Category has been " . ($isInsertUpdate ? "updated" : "created"));
-        }else{
-          $this->responseStatus(STATUS_FAILURE,"Failed to " . ($isInsertUpdate ? "update" : "create") . " Category");
-        }
-      }
+      $this->load->view('admin/category/create');
     }
 
     //This will show edit page
-    public function edit(){
-
+    public function edit($catId){
+      $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
+      $whereClause = getCategoryWhereClause($pkg_id, $catId, null);
+      $category = $this->database_model->get_category($whereClause);
+      if($category != null && count($category) == 1){
+          $data['category'] = $category[0];
+          $this->load->view('admin/category/edit', $data);
+      }else {
+        $this->session->set_flashdata('error', 'Category not found');
+        redirect(base_url().'admin/category');
+      }
     }
 
     //This will show delete page
-    public function delete(){
+    public function delete($catId){
+      $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
+      $whereClause = getCategoryWhereClause($pkg_id, $catId, null);
 
+      $categoryArray = $this->database_model->get_category($whereClause);
+      if($categoryArray != null && count($categoryArray) == 1){
+          $category = $categoryArray[0];
+          if(!empty($category['image'])){
+              if(file_exists('./public/uploads/images/'.$category['image'])){
+                unlink('./public/uploads/images/'.$category['image']);
+              }
+              if(file_exists('./public/uploads/images/thumb/'.$category['image'])){
+                unlink('./public/uploads/images/thumb/'.$category['image']);
+              }
+          }
+          if($this->database_model->delete_category($whereClause)){
+              $this->session->set_flashdata('success', 'Category has been deleted');
+          }else{
+              $this->session->set_flashdata('error', 'Failed to delete category');
+          }
+      }else {
+        $this->session->set_flashdata('error', 'Category not found');
+      }
+      redirect(base_url().'admin/category');
     }
 }
 

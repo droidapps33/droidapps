@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo base_url()?>public/admin/dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="<?php echo base_url()?>public/admin/plugins/toast/build/toastr.css">
+  <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
@@ -86,13 +88,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?php echo base_url().'admin/category/create' ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Category</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="<?php echo base_url().'admin/category' ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>View Category</p>
                 </a>

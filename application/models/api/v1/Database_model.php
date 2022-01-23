@@ -12,7 +12,7 @@ class Database_model extends CI_Model{
   public function get_apps(){
     $this->db->order_by('app_id', 'DESC');
     $query = $this->db->get('table_app');
-    return $query->result();
+    return $query->result_array();
   }
 
    public function insert_category($isUpdate = false, $whereClause = array(), $data = array()){
@@ -41,9 +41,12 @@ class Database_model extends CI_Model{
      return $this->db->delete("table_category", $whereClause);
    }
 
-   public function get_category($whereClause = array()){
+   public function get_category($whereClause = array(), $params=[]){
+     if($params != null && count($params) > 0){
+       $this->db->like($params);
+     }
      $query = $this->db->get_where("table_category", $whereClause);
-     return $query->result();
+     return $query->result_array();
    }
 
    public function insert_content($isUpdate = false, $whereClause = array(), $data = array()){
@@ -74,13 +77,13 @@ class Database_model extends CI_Model{
 
    public function get_content($whereClause = array()){
      $query = $this->db->get_where("table_content", $whereClause);
-     return $query->result();
+     return $query->result_array();
    }
 
    public function get_content_data($whereClause = array()){
      $this->db->select('pkg_id, id, cat_id, json_data, updated_at');
      $query = $this->db->get_where("table_content", $whereClause);
-     return $query->result();
+     return $query->result_array();
    }
 }
 ?>

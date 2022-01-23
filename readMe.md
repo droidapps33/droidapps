@@ -172,6 +172,56 @@ public function authenticate(){
 }
 ```
 
+### Step 3:PHP receiving data using post method
+application\controllers\admin\Login.php
+
+```html
+
+<input type="hidden" name="pkg_id" access="false" id="pkg_id" value="<?php echo isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:''; ?>">
+
+```
+```ajax
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $("#categoryForm").submit(function(e) {
+        e.preventDefault();
+        $("#submitBtn").prop("disabled", true);
+        var formData = $('#categoryForm').serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url().'api/v1/database/insert_category' ?>",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        }).done(function(data) {
+            var successURL = "<?php echo base_url().'admin/category' ?>";
+            notify(data, successURL);
+        });
+    });
+});
+</script>
+
+```
+
+```html
+// call javascript method
+<a href="javascript:void(0);" onclick="deleteCategory()" class="btn btn-danger btn-sm">
+  <i class="far fa-trash-alt"></i> Delete
+</a>
+
+//define javascript method
+<script type="text/javascript">
+    function deleteCategory(id) {
+        if(confirm("Are you sure you want to delete category?")){
+            window.locotion.href='<?php echo base_url().'admin/category/delete/'; ?>' + id;
+        }
+    }
+</script>
+```
+
+
 ## CodeIgniter Documentation
 
 - [https://www.codeigniter.com/userguide3/database/query_builder.html](https://www.codeigniter.com/userguide3/database/query_builder.html)

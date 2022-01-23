@@ -751,6 +751,7 @@ abstract class REST_Controller extends \CI_Controller {
     }
 
     public function responseStatus($status=null,$message=null){
+      $this->session->set_flashdata('success', $message);
       $this->response(array(
         "status" => $status,
         "message" => $message
@@ -758,6 +759,7 @@ abstract class REST_Controller extends \CI_Controller {
     }
 
     public function responseResult($status=null,$message=null,$data=null){
+      $this->session->set_flashdata('success', $message);
       $this->response(array(
         "status" => $status,
         "message" => $message,
@@ -766,6 +768,7 @@ abstract class REST_Controller extends \CI_Controller {
     }
 
     public function responseResultArrayObject($status=null,$message=null,$data=null){
+      $this->session->set_flashdata('success', $message);
       if(!empty($data)){
         if(is_array($data) && count($data) == 1){
             $finalData = $data[0];

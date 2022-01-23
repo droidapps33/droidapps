@@ -12,14 +12,13 @@ class Database extends REST_Controller{
     $this->load->model(array("api/v1/database_model"));
     $this->load->library(array("form_validation"));
     $this->load->helper("security");
+    $this->load->helper("common_helper");
   }
 
 
-  //http://localhost/droidapps/index.php/api/v1/Database/get_apps
+  //http://localhost/droidappsmaster/api/v1/Database/get_apps
   public function get_apps_get(){
     $apps = $this->database_model->get_apps();
-    // print_r($students);
-    // die();
     if(count($apps) > 0){
       $this->responseResult(STATUS_SUCCESS,"Apps found", $apps);
     }else{
@@ -27,50 +26,38 @@ class Database extends REST_Controller{
     }
   }
 
-  private function getCategoryWhereClause($pkg_id, $cat_id_or_name, $sub_cat_id){
-    $key_cat_id_or_name = is_numeric($cat_id_or_name) ? 'cat_id' : 'cat_name';
-
-    if($cat_id_or_name != null && $sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, $key_cat_id_or_name => $cat_id_or_name, 'sub_cat_id' => $sub_cat_id);
-    }else if($cat_id_or_name != null){
-      return array('pkg_id' => $pkg_id, $key_cat_id_or_name => $cat_id_or_name);
-    }else if($sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, 'sub_cat_id' => $sub_cat_id);
-    }else{
-      return array('pkg_id' => $pkg_id);
-    }
-  }
-
-  //http://localhost/droidapps/index.php/api/v1/database/insert-category
+  //http://localhost/droidappsmaster/index.php/api/v1/database/insert-category
   //where: pkg_id, cat_name, sub_cat_id
   public function insert_category_post(){
         // print_r($whereClause);die;
      $this->insertUpdateCategory(false);
   }
-  //http://localhost/droidapps/index.php/api/v1/database/insert-update-category
+  //http://localhost/droidappsmaster/index.php/api/v1/database/insert-update-category
   //where: pkg_id, cat_name, sub_cat_id
   public function insert_update_category_post(){
      $this->insertUpdateCategory(true);
   }
-  //http://localhost/droidapps/index.php/api/v1/database/update-category
+  //http://localhost/droidappsmaster/index.php/api/v1/database/update-category
   //where: pkg_id, cat_id, sub_cat_id
   public function update_category_post(){
      $this->insertUpdateCategory(true, true);
   }
 
   private function insertUpdateCategory($isInsertUpdate = false, $isUpdateOnly = false){
+
     $pkg_id = $this->input->post("pkg_id");
     $cat_id = $this->input->post("cat_id");
     $sub_cat_id = $this->input->post("sub_cat_id");
     $cat_name = $this->input->post("cat_name");
     if($isUpdateOnly){
-      $whereClause = $this->getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
+      $whereClause = getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
     }else {
-      $whereClause = $this->getCategoryWhereClause($pkg_id, $cat_name, $sub_cat_id);
+      $whereClause = getCategoryWhereClause($pkg_id, $cat_name, $sub_cat_id);
     }
 
     $cat_type = $this->input->post("cat_type");
-    $image = $this->input->post("image");
+    $imageOld = $this->input->post("image_old");
+
     $order_id = $this->input->post("order_id");
     $visibility = $this->input->post("visibility");
     $json_data = $this->input->post("json_data");
@@ -86,6 +73,39 @@ class Database extends REST_Controller{
       $this->responseResult(0, strip_tags(validation_errors()));
     }else{
 
+      $config['upload_path']          = './public/uploads/images/';
+      $config['allowed_types']        = 'gif|jpg|png';
+      $config['encrypt_name']         =  true;
+      // $config['max_size']             = 100;
+      // $config['max_width']            = 1024;
+      // $config['max_height']           = 768;
+
+      $this->load->library('upload', $config);
+      // print_r($_FILES['image']);
+      // exit;
+      $image=null;
+      if(!empty($_FILES['image']['name'])){
+          if ($this->upload->do_upload('image')){
+            $imageData = $this->upload->data();
+            resizeImage($config['upload_path'].$imageData['file_name'], $config['upload_path'].'thumb/'.$imageData['file_name']
+                      , 100, 100);
+            $image = $imageData['file_name'];
+
+            if(!empty($imageOld)){
+                if(file_exists('./public/uploads/images/'.$imageOld)){
+                  unlink('./public/uploads/images/'.$imageOld);
+                }
+                if(file_exists('./public/uploads/images/thumb/'.$imageOld)){
+                  unlink('./public/uploads/images/thumb/'.$imageOld);
+                }
+            }
+
+          } else {
+            $this->responseStatus(STATUS_FAILURE, $this->upload->display_errors());
+            return;
+          }
+      }
+
       $category = array(
         "pkg_id" => $pkg_id,
         "sub_cat_id" => $sub_cat_id == null ? 0 : $sub_cat_id,
@@ -97,6 +117,7 @@ class Database extends REST_Controller{
         "json_data" => $json_data,
         "other_property" => $other_property
       );
+      // "created_at" => date('Y-m-d H:i:s');
 
       if($isUpdateOnly){
         if($this->database_model->update_category($whereClause, $category)){
@@ -120,7 +141,7 @@ class Database extends REST_Controller{
     $pkg_id = $this->input->post("pkg_id");
     $cat_id = $this->input->post("cat_id");
     $sub_cat_id = $this->input->post("sub_cat_id");
-    $whereClause = $this->getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
+    $whereClause = getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
 
     if($this->database_model->delete_category($whereClause)){
       $this->responseStatus(STATUS_SUCCESS, "Category has been deleted");
@@ -129,12 +150,12 @@ class Database extends REST_Controller{
     }
   }
 
-  //http://localhost/droidapps/index.php/api/v1/Database/get-category
+  //http://localhost/droidappsmaster/index.php/api/v1/Database/get-category
   public function get_category_get(){
     $pkg_id = $this->input->get("pkg_id");
     $cat_id = $this->input->get("cat_id");
     $sub_cat_id = $this->input->get("sub_cat_id");
-    $whereClause = $this->getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
+    $whereClause = getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
 
     $category = $this->database_model->get_category($whereClause);
     // print_r($students);
@@ -143,26 +164,6 @@ class Database extends REST_Controller{
       $this->responseResult(STATUS_SUCCESS,"Category found", $category);
     }else{
       $this->responseResult(STATUS_FAILURE," No Category found");
-    }
-  }
-
-  private function getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id){
-    if($cat_id != null && $sub_cat_id != null && $id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id, 'cat_id' => $cat_id, 'sub_cat_id' => $sub_cat_id);
-    }else if($cat_id != null && $sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id, 'sub_cat_id' => $sub_cat_id);
-    }else if($cat_id != null && $id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id, 'cat_id' => $cat_id);
-    }else if($sub_cat_id != null && $id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id, 'sub_cat_id' => $sub_cat_id);
-    }else if($id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id);
-    }else if($cat_id != null){
-      return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id);
-    }else if($sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, 'sub_cat_id' => $sub_cat_id);
-    }else{
-      return array('pkg_id' => $pkg_id);
     }
   }
 
@@ -189,7 +190,7 @@ class Database extends REST_Controller{
     $cat_id = $this->input->post("cat_id");
     $sub_cat_id = $this->input->post("sub_cat_id");
 
-    $whereClause = $this->getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
 
     $title = $this->input->post("title");
     $description = $this->input->post("description");
@@ -245,7 +246,7 @@ class Database extends REST_Controller{
     $id = $this->input->post("id");
     $cat_id = $this->input->post("cat_id");
     $sub_cat_id = $this->input->post("sub_cat_id");
-    $whereClause = $this->getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
 
     if($this->database_model->delete_content($whereClause)){
       $this->responseStatus(STATUS_SUCCESS, "Content has been deleted");
@@ -260,7 +261,7 @@ class Database extends REST_Controller{
     $id = $this->input->get("id");
     $cat_id = $this->input->get("cat_id");
     $sub_cat_id = $this->input->get("sub_cat_id");
-    $whereClause = $this->getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
 
     $content = $this->database_model->get_content($whereClause);
     if(count($content) > 0){
@@ -276,7 +277,7 @@ class Database extends REST_Controller{
     $id = $this->input->get("id");
     $cat_id = $this->input->get("cat_id");
     $sub_cat_id = $this->input->get("sub_cat_id");
-    $whereClause = $this->getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
 
     $category = $this->database_model->get_category($whereClause);
     if(count($category) > 0){
@@ -286,14 +287,6 @@ class Database extends REST_Controller{
       $this->responseResult(STATUS_SUCCESS,"Category found", $category);
     }else{
       $this->responseResult(STATUS_FAILURE," No Category found");
-    }
-  }
-
-  private function getDataWhereClause($pkg_id, $cat_id, $json_data){
-    if($cat_id != null){
-      return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id, 'json_data' => $json_data);
-    }else{
-      return array('pkg_id' => $pkg_id, 'json_data' => $json_data);
     }
   }
 
@@ -319,7 +312,7 @@ class Database extends REST_Controller{
     $cat_id = $this->input->post("cat_id");
     $json_data = $this->input->post("json_data");
     $title = "";
-    $whereClause = $this->getDataWhereClause($pkg_id, $cat_id, $json_data);
+    $whereClause = getDataWhereClause($pkg_id, $cat_id, $json_data);
 
     $this->form_validation->set_rules("pkg_id", "Package Id", "required");
 
@@ -363,7 +356,7 @@ class Database extends REST_Controller{
     // delete data method
     $pkg_id = $this->input->post("pkg_id");
     $cat_id = $this->input->post("cat_id");
-    $whereClause = $this->getDataWhereClause($pkg_id, $cat_id, null);
+    $whereClause = getDataWhereClause($pkg_id, $cat_id, null);
 
     if($this->database_model->delete_content($whereClause)){
       $this->responseStatus(STATUS_SUCCESS, "Data has been deleted");
@@ -376,7 +369,7 @@ class Database extends REST_Controller{
   public function get_data_get(){
     $pkg_id = $this->input->get("pkg_id");
     $cat_id = $this->input->get("cat_id");
-    $whereClause = $this->getDataWhereClause($pkg_id, $cat_id, null);
+    $whereClause = getDataWhereClause($pkg_id, $cat_id, null);
 
     $content = $this->database_model->get_content_data($whereClause);
     if(count($content) > 0){
