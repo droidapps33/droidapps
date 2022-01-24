@@ -10,7 +10,7 @@ class Category extends CI_Controller{
       $this->session->set_flashdata('msg','Your session has been expired!');
         redirect(base_url().'admin/login/index');
     }
-    $this->load->model(array("api/v1/database_model"));
+    $this->load->model(array(version_prefix."database_model"));
     $this->load->library(array("form_validation"));
     $this->load->helper("common_helper");
   }

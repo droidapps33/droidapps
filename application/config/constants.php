@@ -1,6 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
+
+defined('version_prefix') OR define('version_prefix', 'api/v1/');
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

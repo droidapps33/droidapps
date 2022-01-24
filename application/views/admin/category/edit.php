@@ -115,7 +115,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url().'api/v1/database/update_category' ?>",
+            url: "<?php echo base_url().version_prefix.'database/update_category' ?>",
             data: formData,
             processData: false,
             contentType: false,
