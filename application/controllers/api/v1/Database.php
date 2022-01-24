@@ -73,7 +73,7 @@ class Database extends REST_Controller{
       $this->responseResult(0, strip_tags(validation_errors()));
     }else{
 
-      $config['upload_path']          = './public/uploads/images/';
+      $config['upload_path']          = './'.path_image;
       $config['allowed_types']        = 'gif|jpg|png';
       $config['encrypt_name']         =  true;
       // $config['max_size']             = 100;
@@ -92,11 +92,11 @@ class Database extends REST_Controller{
             $image = $imageData['file_name'];
 
             if(!empty($imageOld)){
-                if(file_exists('./public/uploads/images/'.$imageOld)){
-                  unlink('./public/uploads/images/'.$imageOld);
+                if(file_exists('./'.path_image.$imageOld)){
+                  unlink('./'.path_image.$imageOld);
                 }
-                if(file_exists('./public/uploads/images/thumb/'.$imageOld)){
-                  unlink('./public/uploads/images/thumb/'.$imageOld);
+                if(file_exists('./'.path_image_thumb.$imageOld)){
+                  unlink('./'.path_image_thumb.$imageOld);
                 }
             }
 

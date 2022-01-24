@@ -2,8 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 
-
+/*
+|--------------------------------------------------------------------------
+| Constants for Application
+|--------------------------------------------------------------------------|
+*/
 defined('version_prefix') OR define('version_prefix', 'api/v1/');
+defined('path_image') OR define('path_image', 'public/uploads/images/');
+defined('path_image_thumb') OR define('path_image_thumb', 'public/uploads/images/thumb/');
 
 /*
 |--------------------------------------------------------------------------

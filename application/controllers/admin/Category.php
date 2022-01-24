@@ -60,11 +60,11 @@ class Category extends CI_Controller{
       if($categoryArray != null && count($categoryArray) == 1){
           $category = $categoryArray[0];
           if(!empty($category['image'])){
-              if(file_exists('./public/uploads/images/'.$category['image'])){
-                unlink('./public/uploads/images/'.$category['image']);
+              if(file_exists('./'.path_image.$category['image'])){
+                unlink('./'.path_image.$category['image']);
               }
-              if(file_exists('./public/uploads/images/thumb/'.$category['image'])){
-                unlink('./public/uploads/images/thumb/'.$category['image']);
+              if(file_exists('./'.path_image_thumb.$category['image'])){
+                unlink('./'.path_image_thumb.$category['image']);
               }
           }
           if($this->database_model->delete_category($whereClause)){

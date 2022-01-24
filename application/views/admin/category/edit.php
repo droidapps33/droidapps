@@ -54,8 +54,8 @@
                      <div class="formbuilder-file form-group field-image">
                          <label for="image" class="formbuilder-file-label">Image</label>
                          <input type="file" class="form-control" name="image" access="false" multiple="false" id="image">
-                         <?php if(!empty($category['image']) && file_exists('./public/uploads/images/thumb/'.$category['image'])) {?>
-                            <img class="mt-3" src="<?php echo base_url().'public/uploads/images/thumb/'.$category['image']; ?>" >
+                         <?php if(!empty($category['image']) && file_exists('./'.path_image_thumb.$category['image'])) {?>
+                            <img class="mt-3" src="<?php echo base_url().path_image_thumb.$category['image']; ?>" >
                          <?php } ?>
                      </div>
                      <div class="formbuilder-number form-group field-order_id">
