@@ -14,6 +14,12 @@ class Admin_model extends CI_Model{
     $query = $this->db->get('table_account');
     return $query->row_array();
   }
+
+  public function getAppDetail($whereClause = array()){
+      $query = $this->db->get_where("table_app", $whereClause);
+      // return $query->result_array();
+      return $query->row_array();
+  }
 }
 
 ?>

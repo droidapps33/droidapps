@@ -57,10 +57,14 @@ function getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id){
 }
 
 function getDataWhereClause($pkg_id, $cat_id, $json_data){
-    if($cat_id != null){
+    if($cat_id != null && $json_data != null){
       return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id, 'json_data' => $json_data);
-    }else{
+    }else if($json_data != null){
       return array('pkg_id' => $pkg_id, 'json_data' => $json_data);
+    }else if($pkg_id != null){
+      return array('pkg_id' => $pkg_id);
+    }else{
+      return null;
     }
 }
 
@@ -72,5 +76,13 @@ function isVisibleCategories($menuName){
       }
   }
   return true;
+}
+
+//Dashboard customization methods
+function getAppName(){
+  return isset($_SESSION['admin']['app_name'])?$_SESSION['admin']['app_name']:'Appsfeature';
+}
+function getPersonName(){
+  return isset($_SESSION['admin']['name'])?$_SESSION['admin']['name']:'User';
 }
 ?>

@@ -41,13 +41,13 @@ class Database_model extends CI_Model{
      return $this->db->delete("table_category", $whereClause);
    }
 
-   public function get_category($whereClause = array(), $params=[]){
-     if($params != null && count($params) > 0){
-       $this->db->like($params);
-     }
-     $query = $this->db->get_where("table_category", $whereClause);
-     return $query->result_array();
-   }
+    public function get_category($whereClause = array(), $searchQuery=[]){
+        if($searchQuery != null && count($searchQuery) > 0){
+            $this->db->like($searchQuery);
+        }
+        $query = $this->db->get_where("table_category", $whereClause);
+        return $query->result_array();
+    }
 
    public function insert_content($isUpdate = false, $whereClause = array(), $data = array()){
      $query = $this->db->get_where('table_content', $whereClause);
@@ -75,15 +75,21 @@ class Database_model extends CI_Model{
      return $this->db->delete("table_content", $whereClause);
    }
 
-   public function get_content($whereClause = array()){
-     $query = $this->db->get_where("table_content", $whereClause);
-     return $query->result_array();
-   }
+    public function get_content($whereClause = array(), $searchQuery=[]){
+        if($searchQuery != null && count($searchQuery) > 0){
+           $this->db->like($searchQuery);
+        }
+        $query = $this->db->get_where("table_content", $whereClause);
+         return $query->result_array();
+    }
 
-   public function get_content_data($whereClause = array()){
-     $this->db->select('pkg_id, id, cat_id, json_data, updated_at');
-     $query = $this->db->get_where("table_content", $whereClause);
-     return $query->result_array();
-   }
+    public function get_content_data($whereClause = array(), $searchQuery=[]){
+        if($searchQuery != null && count($searchQuery) > 0){
+            $this->db->like($searchQuery);
+        }
+        $this->db->select('pkg_id, id, cat_id, json_data, updated_at');
+        $query = $this->db->get_where("table_content", $whereClause);
+        return $query->result_array();
+    }
 }
 ?>

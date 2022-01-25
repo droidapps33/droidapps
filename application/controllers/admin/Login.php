@@ -30,11 +30,15 @@ class Login extends CI_Controller{
         $password = $this->input->post('password');
         $account = $this->Admin_model->getByUsername($username);
         if(!empty($account)){
+            $whereClause = array('pkg_id' => $account['pkg_id']);
+            $appDetail = $this->Admin_model->getAppDetail($whereClause);
             // if(password_verify($password, $account['password']) == true){
             if($password == $account['password']){
               $adminArray['admin_id'] = $account['id'];
               $adminArray['username'] = $account['user_id'];
               $adminArray['pkg_id']   = $account['pkg_id'];
+              $adminArray['name']     = $account['name'];
+              $adminArray['app_name'] = $appDetail['app_name'];
               $this->session->set_userdata('admin', $adminArray);
               redirect(base_url().'admin/home/index');
             }else{
