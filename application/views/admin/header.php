@@ -78,6 +78,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
              </p>
            </a>
          </li>
+         <?php if(isVisibleCategories('Categories') == true) {?>
+         <!-- Category section start -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -88,20 +90,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="<?php echo base_url().'admin/category' ?>" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Categories</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="<?php echo base_url().'admin/category/create' ?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add Category</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="<?php echo base_url().'admin/category' ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>View Category</p>
-                </a>
-              </li>
             </ul>
           </li>
+          <!-- Category section end -->
+          <?php } ?>
 
+          <?php if(isVisibleCategories('Contents') == true) {?>
+          <!-- Content section start -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -114,17 +120,45 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Content</p>
+                  <p>Contents</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View Content</p>
+                  <p>Add Content</p>
                 </a>
               </li>
             </ul>
           </li>
+          <?php } ?>
+          <!-- Content section end -->
+
+          <!-- Data section start -->
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Simple Item
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Items</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Add Item</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- Data section end -->
 
         </ul>
       </nav>

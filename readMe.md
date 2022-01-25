@@ -220,6 +220,39 @@ $(document).ready(function() {
     }
 </script>
 ```
+### Call controller method from View
+```html
+<!DOCTYPE html>
+//define at the top of screen
+<?php $CI =& get_instance(); ?>
+
+//call controller method in anywhere in html page
+<?php if($CI->callHelperFunctionByName('Categories') == true) {?>
+     <div class="treeview">
+
+     </div>
+ <?php } ?>
+```
+
+### Call helper method from View
+```php
+//load helper in constructor.
+class Home extends CI_Controller{
+  public function __construct(){
+    parent::__construct();
+    $this->load->helper("your_helper_class");
+  }
+}
+```
+```html
+<!DOCTYPE html>
+//call controller method in anywhere in html page
+<?php if(callHelperFunctionByName('Categories') == true) {?>
+     <div class="treeview">
+
+     </div>
+ <?php } ?>
+```
 
 
 ## CodeIgniter Documentation

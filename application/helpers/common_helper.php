@@ -63,4 +63,14 @@ function getDataWhereClause($pkg_id, $cat_id, $json_data){
       return array('pkg_id' => $pkg_id, 'json_data' => $json_data);
     }
 }
+
+function isVisibleCategories($menuName){
+  $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+  if($pkg_id == 'com.appsfeature.bizwiz'){
+      if($menuName == 'Categories' || $menuName == 'Contents'){
+          return false;
+      }
+  }
+  return true;
+}
 ?>

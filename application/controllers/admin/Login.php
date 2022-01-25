@@ -34,7 +34,7 @@ class Login extends CI_Controller{
             if($password == $account['password']){
               $adminArray['admin_id'] = $account['id'];
               $adminArray['username'] = $account['user_id'];
-              $adminArray['pkg_id'] = 'com.app';
+              $adminArray['pkg_id']   = $account['pkg_id'];
               $this->session->set_userdata('admin', $adminArray);
               redirect(base_url().'admin/home/index');
             }else{
