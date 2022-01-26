@@ -3,6 +3,13 @@ defined('BASEPATH') OR exit ('No direct script access allowed');
 
 class Category extends CI_Controller{
 
+    public $module_title = 'Categories';
+    public $module_url = 'admin/category';
+    public $module_url_list = 'admin/category';
+    public $module_url_create = 'admin/category/create';
+    public $module_url_edit = 'admin/category/edit';
+    public $module_url_delete = 'admin/category/delete';
+
     public function __construct(){
         parent::__construct();
         $admin = $this->session->userdata('admin');
@@ -29,25 +36,25 @@ class Category extends CI_Controller{
         $category = $this->database_model->get_category($whereClause, $queryString);
         $data['categories'] = $category;
         $data['querySearch'] = $querySearch;
-        $this->load->view('admin/category/list', $data);
+        $this->load->view($this->module_url.'/list', $data);
     }
 
     //This will show create page
     public function create(){
-        $this->load->view('admin/category/create');
+        $this->load->view($this->module_url.'/create');
     }
 
     //This will show edit page
-    public function edit($catId){
+    public function edit($catId = null){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
         $whereClause = getCategoryWhereClause($pkg_id, $catId, null);
         $category = $this->database_model->get_category($whereClause);
         if($category != null && count($category) == 1){
             $data['category'] = $category[0];
-            $this->load->view('admin/category/edit', $data);
+            $this->load->view($this->module_url.'/edit', $data);
         }else {
             $this->session->set_flashdata('error', 'Category not found');
-            redirect(base_url().'admin/category');
+            redirect(base_url().$this->module_url);
         }
     }
 
@@ -75,7 +82,7 @@ class Category extends CI_Controller{
         }else {
             $this->session->set_flashdata('error', 'Category not found');
         }
-        redirect(base_url().'admin/category');
+        redirect(base_url().$this->module_url);
     }
 }
 

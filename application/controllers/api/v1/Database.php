@@ -62,6 +62,7 @@ class Database extends REST_Controller{
     $visibility = $this->input->post("visibility");
     $json_data = $this->input->post("json_data");
     $other_property = $this->input->post("other_property");
+    $updated_at = $this->input->post("updated_at");
 
 
     $this->form_validation->set_rules("pkg_id", "Package Id", "required");
@@ -115,7 +116,8 @@ class Database extends REST_Controller{
         "order_id" => $order_id == null ? 0 : $order_id,
         "visibility" => $visibility == null ? 1 : $visibility,
         "json_data" => $json_data,
-        "other_property" => $other_property
+        "other_property" => $other_property,
+        "updated_at" => $updated_at
       );
       // "created_at" => date('Y-m-d H:i:s');
 
@@ -184,60 +186,101 @@ class Database extends REST_Controller{
      $this->insertUpdateContent(true, true);
   }
 
-  private function insertUpdateContent($isInsertUpdate = false, $isUpdateOnly = false){
-    $pkg_id = $this->input->post("pkg_id");
-    $id = $this->input->post("id");
-    $cat_id = $this->input->post("cat_id");
-    $sub_cat_id = $this->input->post("sub_cat_id");
+    private function insertUpdateContent($isInsertUpdate = false, $isUpdateOnly = false){
+        $pkg_id = $this->input->post("pkg_id");
+        $id = $this->input->post("id");
+        $cat_id = $this->input->post("cat_id");
+        $sub_cat_id = $this->input->post("sub_cat_id");
+        $title = $this->input->post("title");
+        $imageOld = $this->input->post("image_old");
 
-    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
-
-    $title = $this->input->post("title");
-    $description = $this->input->post("description");
-    $image = $this->input->post("image");
-    $link = $this->input->post("link");
-    $visibility = $this->input->post("visibility");
-    $json_data = $this->input->post("json_data");
-    $other_property = $this->input->post("other_property");
-
-
-    $this->form_validation->set_rules("pkg_id", "Package Id", "required");
-    $this->form_validation->set_rules("title", "Title", "required");
-
-    // checking form submittion have any error or not
-    if($this->form_validation->run() === FALSE){
-      // we have some errors
-      $this->responseResult(0, strip_tags(validation_errors()));
-    }else{
-
-      $content = array(
-        "pkg_id" => $pkg_id,
-        "cat_id" => $cat_id == null ? 0 : $cat_id,
-        "sub_cat_id" => $sub_cat_id == null ? 0 : $sub_cat_id,
-        "title" => $title,
-        "description" => $description,
-        "image" => $image,
-        "link" => $link,
-        "visibility" => $visibility == null ? 1 : $visibility,
-        "json_data" => $json_data,
-        "other_property" => $other_property
-      );
-
-      if($isUpdateOnly){
-        if($this->database_model->update_content($whereClause, $content)){
-          $this->responseStatus(STATUS_SUCCESS, "Content has been updated");
-        }else{
-          $this->responseStatus(STATUS_FAILURE,"Failed to update Content");
+        if($isInsertUpdate == false){
+            //case for insert record
+            $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, $title);
+        }else {
+            //case for update record
+            $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, null);
         }
-      }else {
-        if($this->database_model->insert_content($isInsertUpdate, $whereClause, $content)){
-          $this->responseStatus(STATUS_SUCCESS, "Content has been " . ($isInsertUpdate ? "updated" : "created"));
+
+        $description = $this->input->post("description");
+        $link = $this->input->post("link");
+        $visibility = $this->input->post("visibility");
+        $json_data = $this->input->post("json_data");
+        $other_property = $this->input->post("other_property");
+        $updated_at = $this->input->post("updated_at");
+
+
+        $this->form_validation->set_rules("pkg_id", "Package Id", "required");
+        $this->form_validation->set_rules("title", "Title", "required");
+
+        // checking form submittion have any error or not
+        if($this->form_validation->run() === FALSE){
+            // we have some errors
+                $this->responseResult(0, strip_tags(validation_errors()));
         }else{
-          $this->responseStatus(STATUS_FAILURE,"Failed to " . ($isInsertUpdate ? "update" : "create") . " Content");
+
+          $config['upload_path']          = './'.path_image;
+          $config['allowed_types']        = 'gif|jpg|png';
+          $config['encrypt_name']         =  true;
+          // $config['max_size']             = 100;
+          // $config['max_width']            = 1024;
+          // $config['max_height']           = 768;
+
+          $this->load->library('upload', $config);
+          // print_r($_FILES['image']);
+          // exit;
+          $image=null;
+          if(!empty($_FILES['image']['name'])){
+              if ($this->upload->do_upload('image')){
+                $imageData = $this->upload->data();
+                resizeImage($config['upload_path'].$imageData['file_name'], $config['upload_path'].'thumb/'.$imageData['file_name']
+                          , 100, 100);
+                $image = $imageData['file_name'];
+
+                if(!empty($imageOld)){
+                    if(file_exists('./'.path_image.$imageOld)){
+                      unlink('./'.path_image.$imageOld);
+                    }
+                    if(file_exists('./'.path_image_thumb.$imageOld)){
+                      unlink('./'.path_image_thumb.$imageOld);
+                    }
+                }
+
+              } else {
+                $this->responseStatus(STATUS_FAILURE, $this->upload->display_errors());
+                return;
+              }
+          }
+
+            $content = array(
+                "pkg_id" => $pkg_id,
+                "cat_id" => $cat_id == null ? 0 : $cat_id,
+                "sub_cat_id" => $sub_cat_id == null ? 0 : $sub_cat_id,
+                "title" => $title,
+                "description" => $description,
+                "image" => $image,
+                "link" => $link,
+                "visibility" => $visibility == null ? 1 : $visibility,
+                "json_data" => $json_data,
+                "other_property" => $other_property,
+                "updated_at" => $updated_at
+            );
+
+            if($isUpdateOnly){
+                if($this->database_model->update_content($whereClause, $content)){
+                    $this->responseStatus(STATUS_SUCCESS, "Content has been updated");
+                }else{
+                    $this->responseStatus(STATUS_FAILURE,"Failed to update Content");
+                }
+            }else {
+                if($this->database_model->insert_content($isInsertUpdate, $whereClause, $content)){
+                    $this->responseStatus(STATUS_SUCCESS, "Content has been " . ($isInsertUpdate ? "updated" : "created"));
+                }else{
+                    $this->responseStatus(STATUS_FAILURE,"Failed to " . ($isInsertUpdate ? "update" : "create") . " Content");
+                }
+            }
         }
-      }
     }
-  }
 
   //http://localhost/droidappsmaster/api/v1/database/delete-content
   public function delete_content_post(){
@@ -246,7 +289,7 @@ class Database extends REST_Controller{
     $id = $this->input->post("id");
     $cat_id = $this->input->post("cat_id");
     $sub_cat_id = $this->input->post("sub_cat_id");
-    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, null);
 
     if($this->database_model->delete_content($whereClause)){
       $this->responseStatus(STATUS_SUCCESS, "Content has been deleted");
@@ -261,7 +304,7 @@ class Database extends REST_Controller{
     $id = $this->input->get("id");
     $cat_id = $this->input->get("cat_id");
     $sub_cat_id = $this->input->get("sub_cat_id");
-    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, null);
 
     $content = $this->database_model->get_content($whereClause);
     if(count($content) > 0){
@@ -277,7 +320,7 @@ class Database extends REST_Controller{
     $id = $this->input->get("id");
     $cat_id = $this->input->get("cat_id");
     $sub_cat_id = $this->input->get("sub_cat_id");
-    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id);
+    $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, null);
 
     $category = $this->database_model->get_category($whereClause);
     if(count($category) > 0){
@@ -315,7 +358,7 @@ class Database extends REST_Controller{
     $whereClause = getDataWhereClause($pkg_id, $cat_id, $json_data);
 
     $this->form_validation->set_rules("pkg_id", "Package Id", "required");
-
+    $this->form_validation->set_rules("json_data", "Json Data", "required");
     // checking form submittion have any error or not
     if($this->form_validation->run() === FALSE){
       // we have some errors
@@ -334,18 +377,17 @@ class Database extends REST_Controller{
         "json_data" => $json_data,
         "other_property" => null
       );
-
       if($isUpdateOnly){
-        if($this->database_model->update_content($whereClause, $category)){
+        if($this->database_model->update_content($whereClause, $content)){
           $this->responseStatus(STATUS_SUCCESS, "Data has been updated");
         }else{
           $this->responseStatus(STATUS_FAILURE,"Failed to update Data");
         }
       }else {
-        if($this->database_model->insert_content($isInsertUpdate, $whereClause, $category)){
-          $this->responseStatus(STATUS_SUCCESS, "Data has been " . ($isInsertUpdate ? "updated" : "created"));
+        if($this->database_model->insert_content(false, $whereClause, $content)){
+          $this->responseStatus(STATUS_SUCCESS, "Data has been created");
         }else{
-          $this->responseStatus(STATUS_FAILURE,"Failed to " . ($isInsertUpdate ? "update" : "create") . " Data");
+          $this->responseStatus(STATUS_FAILURE,"Failed to create Data");
         }
       }
     }

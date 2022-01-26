@@ -1,15 +1,16 @@
 <?php $this->load->view('admin/header'); ?>
+<?php $CI =& get_instance(); ?>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Items</h1>
+            <h1 class="m-0 text-dark"><?php echo $CI->module_title;?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?php echo base_url().'admin/home' ?>">Home</a></li>
-              <li class="breadcrumb-item"><a href="<?php echo base_url().'admin/item' ?>">Items</a></li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url().$CI->module_url_list ?>"><?php echo $CI->module_title;?></a></li>
               <li class="breadcrumb-item active">Create New Item</li>
             </ol>
           </div><!-- /.col -->
@@ -41,47 +42,12 @@
                          <label for="cat_id" class="formbuilder-number-label">CatId</label>
                          <input type="number" placeholder="Enter CatId" class="form-control" name="cat_id" access="false" value="0" id="cat_id">
                      </div>
-                     <div class="formbuilder-number form-group field-sub_cat_id">
-                         <label for="sub_cat_id" class="formbuilder-number-label">SubCatId</label>
-                         <input type="number" placeholder="Enter SubCatId" class="form-control" name="sub_cat_id" access="false" value="0" id="sub_cat_id">
-                     </div>
-                     <div class="formbuilder-text form-group field-title">
-                         <label for="title" class="formbuilder-text-label">Title</label>
-                         <input type="text" placeholder="Enter Title" class="form-control <?php echo (form_error('title') != "") ? 'is-invalid' : ''; ?>" name="title" access="false" id="title">
 
-                     </div>
-                     <div class="formbuilder-text form-group field-description">
-                         <label for="description" class="formbuilder-number-label">Description</label>
-                         <input type="text" placeholder="Enter Category Type" placeholder="Enter Description" class="form-control" name="description" access="false" id="description">
-                     </div>
-                     <div class="formbuilder-file form-group field-image">
-                         <label for="image" class="formbuilder-file-label">Image</label>
-                         <input type="file" class="form-control" name="image" access="false" multiple="false" id="image">
-                     </div>
-                     <div class="formbuilder-text form-group field-link">
-                         <label for="link" class="formbuilder-number-label">Link</label>
-                         <input type="text" placeholder="Enter Link" class="form-control" name="link" access="false" id="link">
-                     </div>
-                     <div class="formbuilder-radio-group form-group field-radio-group-1642854908703">
-                         <label for="radio-group-1642854908703" class="formbuilder-radio-group-label">Visibility</label>
-                         <div class="radio-group">
-                             <div class="formbuilder-radio">
-                                 <input name="visibility"  id="radio_active" value="1" type="radio" checked="checked">
-                                 <label for="radio_active">Active</label>
-                             </div>
-                             <div class="formbuilder-radio">
-                                 <input name="visibility"  id="radio-deactive" value="2" type="radio" >
-                                 <label for="radio-deactive">Deactive</label>
-                             </div>
-                         </div>
-                     </div>
-                     <div class="formbuilder-text form-group field-json_data">
-                         <label for="json_data" class="formbuilder-text-label">Json Data</label>
-                         <input type="text" placeholder="Enter Json Data" class="form-control" name="json_data" access="false" id="json_data">
-                     </div>
-                     <div class="formbuilder-text form-group field-other_property">
-                         <label for="other_property" class="formbuilder-text-label">Other Property</label>
-                         <input type="text" placeholder="Enter Other Property" class="form-control" name="other_property" access="false" id="other_property">
+                     <div class="rendered-form">
+                        <div class="formbuilder-textarea form-group field-json_data">
+                            <label for="json_data" class="formbuilder-textarea-label">Json Data <span style="color:red">*</span></label>
+                            <textarea type="textarea" placeholder="Enter json here" class="form-control" name="json_data" access="false" rows="10" id="json_data"></textarea>
+                        </div>
                      </div>
 
                      <div class="formbuilder-button form-group field-submit">
@@ -121,7 +87,7 @@ $(document).ready(function() {
             contentType: false,
             encode: true,
         }).done(function(data) {
-            var successURL = "<?php echo base_url().'admin/item' ?>";
+            var successURL = "<?php echo base_url().$CI->module_url_list; ?>";
             if(data.status==0){
               showToast(false, data.message);
               $("button[type='submit']").prop("disabled", false);

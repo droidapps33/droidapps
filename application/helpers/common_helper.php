@@ -21,54 +21,54 @@ function resizeImage($sourcePath, $newPath, $width, $height){
 function getCategoryWhereClause($pkg_id, $cat_id_or_name, $sub_cat_id){
     $key_cat_id_or_name = is_numeric($cat_id_or_name) ? 'cat_id' : 'cat_name';
 
-    if($cat_id_or_name != null && $sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, $key_cat_id_or_name => $cat_id_or_name, 'sub_cat_id' => $sub_cat_id);
-    }else if($cat_id_or_name != null){
-      return array('pkg_id' => $pkg_id, $key_cat_id_or_name => $cat_id_or_name);
-    }else if($sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, 'sub_cat_id' => $sub_cat_id);
-    }else if($pkg_id != null){
-      return array('pkg_id' => $pkg_id);
-    }else{
-      return null;
+    $whereClause = null;
+    if($pkg_id != null){
+        $whereClause['pkg_id'] = $pkg_id;
     }
+    if($cat_id_or_name != null){
+        $whereClause[$key_cat_id_or_name] = $cat_id_or_name;
+    }
+    if($sub_cat_id != null){
+        $whereClause['sub_cat_id'] = $sub_cat_id;
+    }
+    return $whereClause;
 }
 
-function getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id){
-    if($cat_id != null && $sub_cat_id != null && $id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id, 'cat_id' => $cat_id, 'sub_cat_id' => $sub_cat_id);
-    }else if($cat_id != null && $sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id, 'sub_cat_id' => $sub_cat_id);
-    }else if($cat_id != null && $id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id, 'cat_id' => $cat_id);
-    }else if($sub_cat_id != null && $id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id, 'sub_cat_id' => $sub_cat_id);
-    }else if($id != null){
-      return array('pkg_id' => $pkg_id, 'id' => $id);
-    }else if($cat_id != null){
-      return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id);
-    }else if($sub_cat_id != null){
-      return array('pkg_id' => $pkg_id, 'sub_cat_id' => $sub_cat_id);
-    }else if($pkg_id != null){
-      return array('pkg_id' => $pkg_id);
-    }else{
-      return null;
+function getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, $title){
+    $whereClause = null;
+    if($pkg_id != null){
+        $whereClause['pkg_id'] = $pkg_id;
     }
+    if($cat_id != null){
+        $whereClause['cat_id'] = $cat_id;
+    }
+    if($sub_cat_id != null){
+        $whereClause['sub_cat_id'] = $sub_cat_id;
+    }
+    if($id != null){
+        $whereClause['id'] = $id;
+    }
+    if($title != null){
+        $whereClause['title'] = $title;
+    }
+    return $whereClause;
 }
 
 function getDataWhereClause($pkg_id, $cat_id, $json_data){
-    if($cat_id != null && $json_data != null){
-      return array('pkg_id' => $pkg_id, 'cat_id' => $cat_id, 'json_data' => $json_data);
-    }else if($json_data != null){
-      return array('pkg_id' => $pkg_id, 'json_data' => $json_data);
-    }else if($pkg_id != null){
-      return array('pkg_id' => $pkg_id);
-    }else{
-      return null;
+    $whereClause = null;
+    if($pkg_id != null){
+        $whereClause['pkg_id'] = $pkg_id;
     }
+    if($cat_id != null){
+        $whereClause['cat_id'] = $cat_id;
+    }
+    if($json_data != null){
+        $whereClause['json_data'] = $json_data;
+    }
+    return $whereClause;
 }
 
-function isVisibleCategories($menuName){
+function isVisibleSideMenu($menuName){
   $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
   if($pkg_id == 'com.appsfeature.bizwiz'){
       if($menuName == 'Categories' || $menuName == 'Contents'){
@@ -76,6 +76,47 @@ function isVisibleCategories($menuName){
       }
   }
   return true;
+}
+
+function isVisibleDashboardMenu($menuName){
+  $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+  if($pkg_id == 'com.appsfeature.bizwiz'){
+      if($menuName == 'Categories'){
+          return false;
+      }
+  }
+  return true;
+}
+
+function getMenuTitle($menuName){
+  $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+  if($pkg_id == 'com.appsfeature.bizwiz'){
+      switch ($menuName) {
+          case 'Contents':
+              return 'Home Items';
+          case 'Simple Item':
+              return 'Home Items';
+          default:
+              return $menuName;
+      }
+  }
+  return $menuName;
+}
+
+function getMenuLink($menuLink){
+  $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+  if($pkg_id == 'com.appsfeature.bizwiz'){
+      switch ($menuLink) {
+          case 'admin/content':
+          case 'admin/item':
+              return 'admin/bizwiz';
+          case 'admin/item/create':
+              return 'admin/bizwiz/create';
+          default:
+              return $menuLink;
+      }
+  }
+  return $menuLink;
 }
 
 //Dashboard customization methods

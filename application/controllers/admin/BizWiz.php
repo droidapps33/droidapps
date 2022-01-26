@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
-class Content extends CI_Controller{
+class BizWiz extends CI_Controller{
 
-    public $module_title = 'Contents';
-    public $module_url = 'admin/content';
-    public $module_url_list = 'admin/content';
-    public $module_url_create = 'admin/content/create';
-    public $module_url_edit = 'admin/content/edit';
-    public $module_url_delete = 'admin/content/delete';
+    public $module_title = 'Item';
+    public $module_url = 'admin/bizwiz';
+    public $module_url_list = 'admin/bizwiz';
+    public $module_url_create = 'admin/bizwiz/create';
+    public $module_url_edit = 'admin/bizwiz/edit';
+    public $module_url_delete = 'admin/bizwiz/delete';
 
     public function __construct(){
         parent::__construct();
@@ -22,7 +22,7 @@ class Content extends CI_Controller{
         $this->load->helper("common_helper");
     }
 
-    //http://localhost/droidappsmaster/admin/content
+    //http://localhost/droidappsmaster/admin/bizwiz
     //This will show content list page
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
@@ -50,12 +50,12 @@ class Content extends CI_Controller{
 
         $whereClause = getContentWhereClause($pkg_id, null, null, $contentId, null);
         $content = $this->database_model->get_content($whereClause);
-        // print_r($content);die;
+
         if($content != null && count($content) == 1){
             $data['content'] = $content[0];
             $this->load->view($this->module_url.'/edit', $data);
         }else {
-            $this->session->set_flashdata('error', 'Content not found');
+            $this->session->set_flashdata('error', 'Item not found');
             redirect(base_url().$this->module_url);
         }
     }
@@ -77,12 +77,12 @@ class Content extends CI_Controller{
                 }
             }
             if($this->database_model->delete_content($whereClause)){
-                $this->session->set_flashdata('success', 'Content has been deleted');
+                $this->session->set_flashdata('success', 'Item has been deleted');
             }else{
-                $this->session->set_flashdata('error', 'Failed to delete Content');
+                $this->session->set_flashdata('error', 'Failed to delete Item');
             }
         }else {
-            $this->session->set_flashdata('error', 'Content not found');
+            $this->session->set_flashdata('error', 'Item not found');
         }
         redirect(base_url().$this->module_url);
     }

@@ -5,12 +5,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark"><?php echo $CI->module_title;?></h1>
+            <h1 class="m-0 text-dark">Home Items</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?php echo base_url().'admin/home';?>">Home</a></li>
-              <li class="breadcrumb-item active"><?php echo $CI->module_title;?></li>
+              <li class="breadcrumb-item active">Items</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -28,7 +28,7 @@
                 <div class="card-title">
                   <form id="searchForm" name="searchForm" method="get" action="">
                     <div class="input-group input-group-sm">
-                      <input type="text" value="<?php  echo $querySearch;?>" class="form-control" placeholder="Search" name="cat_name">
+                      <input type="text" value="<?php  echo $querySearch;?>" class="form-control" placeholder="Search" name="title">
                       <div class="input-group-append">
                         <button class="input-group-text" id="basic-addon1">
                           <i class="fas fa-search"></i>
@@ -45,29 +45,31 @@
               <div class="card-body">
                   <table class="table">
                     <tr>
-                      <th width="50" class="text-center">CatId</th>
-                      <th>Name</th>
+                      <th width="50" class="text-center">Id</th>
+                      <th>Title</th>
+                      <th>Link</th>
                       <th width="100" class="text-center">Status</th>
                       <th width="160" class="text-center">Action</th>
                     </tr>
 
-                    <?php if(!empty($categories)) {?>
-                        <?php foreach ($categories as $categoryRow) {?>
+                    <?php if(!empty($contents)) {?>
+                        <?php foreach ($contents as $itemRow) {?>
                             <tr>
-                              <td class="text-center"><?php echo $categoryRow['cat_id'];?></td>
-                              <td><?php echo $categoryRow['cat_name'];?></td>
+                              <td class="text-center"><?php echo $itemRow['id'];?></td>
+                              <td><?php echo $itemRow['title'];?></td>
+                              <td><?php echo $itemRow['link'];?></td>
                               <td class="text-center">
-                                  <?php if($categoryRow['visibility'] == 1) {?>
+                                  <?php if($itemRow['visibility'] == 1) {?>
                                     <span class="badge badge-success">Active</span>
                                   <?php } else { ?>
                                     <span class="badge badge-danger">Block</span>
                                   <?php } ?>
                               </td>
                               <td class="text-center">
-                                  <a href="<?php echo base_url().$CI->module_url_edit.'/'.$categoryRow['cat_id']; ?>" class="btn btn-primary btn-sm">
+                                  <a href="<?php echo base_url().$CI->module_url_edit.'/'.$itemRow['id']; ?>" class="btn btn-primary btn-sm">
                                     <i class="far fa-edit"></i> Edit
                                   </a>
-                                  <a href="javascript:void(0);" onclick="deleteRow(<?php echo $categoryRow['cat_id']; ?>)" class="btn btn-danger btn-sm">
+                                  <a href="javascript:void(0);" onclick="deleteRow('<?php echo $itemRow['id'] ?>')" class="btn btn-danger btn-sm">
                                     <i class="far fa-trash-alt"></i> Delete
                                   </a>
                               </td>
@@ -75,7 +77,7 @@
                         <?php } ?>
                     <?php } else { ?>
                       <tr>
-                        <td colspan="4">Record not found</td>
+                        <td colspan="5">Record not found</td>
                       </tr>
                     <?php } ?>
                   </table>
@@ -105,9 +107,9 @@
 </script>
 
 <script type="text/javascript">
-    function deleteRow(id) {
-        if(confirm("Are you sure you want to delete category?")){
-            window.location.href='<?php echo base_url().$CI->module_url_delete.'/'; ?>' + id;
+    function deleteRow(JsonData) {
+        if(confirm("Are you sure you want to delete item?")){
+            window.location.href='<?php echo base_url().$CI->module_url_delete.'/'; ?>' + JsonData;
         }
     }
 </script>

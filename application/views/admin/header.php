@@ -26,7 +26,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
-
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Notifications Dropdown Menu -->
@@ -71,34 +75,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          <li class="nav-item">
-           <a href="#" class="nav-link">
+           <a href="<?php echo base_url().'admin/home';?>" class="nav-link">
              <i class="far fa-circle nav-icon"></i>
              <p>
                Dashboard
              </p>
            </a>
          </li>
-         <?php if(isVisibleCategories('Categories') == true) {?>
+         <?php if(isVisibleSideMenu('Categories') == true) {?>
          <!-- Category section start -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Categories
+                <?php echo getMenuTitle('Categories');?>
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().'admin/category' ?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/category');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Categories</p>
+                  <p><?php echo getMenuTitle('Categories');?></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url().'admin/category/create' ?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/category/create');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Category</p>
+                  <p><?php echo getMenuTitle('Add Category');?></p>
                 </a>
               </li>
             </ul>
@@ -106,27 +110,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Category section end -->
           <?php } ?>
 
-          <?php if(isVisibleCategories('Contents') == true) {?>
+          <?php if(isVisibleSideMenu('Contents') == true) {?>
           <!-- Content section start -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Contents
+                <?php echo getMenuTitle('Contents');?>
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().'admin/content' ?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/content');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Contents</p>
+                  <p><?php echo getMenuTitle('Contents');?></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url().'admin/content/create' ?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/content/create');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Content</p>
+                  <p><?php echo getMenuTitle('Add Content');?></p>
                 </a>
               </li>
             </ul>
@@ -139,21 +143,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Simple Item
+                <?php echo getMenuTitle('Simple Item');?>
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().'admin/item' ?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/item');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Items</p>
+                  <p><?php echo getMenuTitle('Items');?></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url().'admin/item/create' ?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/item/create');?>" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Item</p>
+                  <p><?php echo getMenuTitle('Add Item');?></p>
                 </a>
               </li>
             </ul>

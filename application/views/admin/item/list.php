@@ -1,15 +1,16 @@
 <?php $this->load->view('admin/header'); ?>
+<?php $CI =& get_instance(); ?>
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Items</h1>
+            <h1 class="m-0 text-dark"><?php echo $CI->module_title;?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Items</li>
+              <li class="breadcrumb-item"><a href="<?php echo base_url().'admin/home';?>">Home</a></li>
+              <li class="breadcrumb-item active"><?php echo $CI->module_title;?></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -37,14 +38,15 @@
                   </form>
                 </div>
                 <div class="card-tools">
-                  <a href="<?php echo base_url().'admin/item/create' ?>" class="btn btn-primary"><i class="fas fa-plus"></i>  Create</a>
+                  <a href="<?php echo base_url().$CI->module_url_create; ?>" class="btn btn-primary"><i class="fas fa-plus"></i>  Create</a>
                 </div>
               </div>
 
               <div class="card-body">
                   <table class="table">
                     <tr>
-                      <th width="50">Id</th>
+                      <th width="50" class="text-center">Id</th>
+                      <th width="100" class="text-center">CatId</th>
                       <th>JsonData</th>
                       <th width="160" class="text-center">Action</th>
                     </tr>
@@ -52,20 +54,15 @@
                     <?php if(!empty($items)) {?>
                         <?php foreach ($items as $itemRow) {?>
                             <tr>
-                              <td><?php echo $itemRow['id'];?></td>
+                              <td class="text-center"><?php echo $itemRow['id'];?></td>
+                              <td class="text-center"><?php echo $itemRow['cat_id'];?></td>
                               <td><?php echo $itemRow['json_data'];?></td>
-                              <td>
-                                  <?php if($itemRow['visibility'] == 1) {?>
-                                    <span class="badge badge-success">Active</span>
-                                  <?php } else { ?>
-                                    <span class="badge badge-danger">Block</span>
-                                  <?php } ?>
-                              </td>
+
                               <td class="text-center">
-                                  <a href="<?php echo base_url().'admin/item/edit/'.$itemRow['json_data']; ?>" class="btn btn-primary btn-sm">
+                                  <a href="<?php echo base_url().$CI->module_url_edit.'/'.$itemRow['json_data']; ?>" class="btn btn-primary btn-sm">
                                     <i class="far fa-edit"></i> Edit
                                   </a>
-                                  <a href="javascript:void(0);" onclick="deleteCategory(<?php echo $itemRow['json_data'] ?>)" class="btn btn-danger btn-sm">
+                                  <a href="javascript:void(0);" onclick="deleteRow('<?php echo $itemRow['json_data'] ?>')" class="btn btn-danger btn-sm">
                                     <i class="far fa-trash-alt"></i> Delete
                                   </a>
                               </td>
@@ -103,9 +100,9 @@
 </script>
 
 <script type="text/javascript">
-    function deleteCategory(id) {
+    function deleteRow(JsonData) {
         if(confirm("Are you sure you want to delete item?")){
-            window.location.href='<?php echo base_url().'admin/item/delete/'; ?>' + id;
+            window.location.href='<?php echo base_url().$CI->module_url_delete.'/'; ?>' + JsonData;
         }
     }
 </script>

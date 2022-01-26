@@ -45,6 +45,7 @@ class Database_model extends CI_Model{
         if($searchQuery != null && count($searchQuery) > 0){
             $this->db->like($searchQuery);
         }
+        $this->db->order_by('cat_id', 'DESC');
         $query = $this->db->get_where("table_category", $whereClause);
         return $query->result_array();
     }
@@ -79,6 +80,7 @@ class Database_model extends CI_Model{
         if($searchQuery != null && count($searchQuery) > 0){
            $this->db->like($searchQuery);
         }
+        $this->db->order_by('id', 'DESC');
         $query = $this->db->get_where("table_content", $whereClause);
          return $query->result_array();
     }
@@ -88,6 +90,8 @@ class Database_model extends CI_Model{
             $this->db->like($searchQuery);
         }
         $this->db->select('pkg_id, id, cat_id, json_data, updated_at');
+        $this->db->where('json_data !=', '');
+        $this->db->order_by('id', 'DESC');
         $query = $this->db->get_where("table_content", $whereClause);
         return $query->result_array();
     }
