@@ -116,7 +116,15 @@ $(document).ready(function() {
         $("#submitBtn").prop("disabled", true);
 
         var formData= new FormData($("#contentForm")[0]);
-        console.log('my message' + formData);
+
+        // if(formData.get('updated_at') != ''){
+        //     formData.set('updated_at', String(formData.get('updated_at')).replace('T',' ') + ":00");
+        // }
+        // if(formData.get('other_property') != ''){
+        //     formData.set('other_property', String(formData.get('other_property')).replace('T',' ') + ":00");
+        // }
+        // console.log('my message: ' + newDate);
+        // return;
 
         $.ajax({
             type: "POST",
