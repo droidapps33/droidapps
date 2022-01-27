@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2022 at 09:36 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Jan 27, 2022 at 11:05 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -96,11 +96,7 @@ CREATE TABLE `table_category` (
 INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `cat_name`, `cat_type`, `image`, `order_id`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
 ('com.sample.live', 13, 5, 'Category Live Exam', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.sample.live', 14, 5, 'Category Live Exam 2', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.app', 97, 0, 'eqweqwe', 0, NULL, 0, 0, '', '', '2022-01-23 20:00:03', '2022-01-26 16:19:23'),
-('com.sampe.admin', 99, 0, 'fdsf22222', 0, NULL, 0, 1, '', '', '2022-01-26 14:17:55', '2022-01-26 16:19:23'),
-('com.sampe.admin', 100, 0, 'dfsdfsdf', 0, NULL, 0, 1, '', '', '2022-01-26 14:18:01', '2022-01-26 16:19:23'),
-('com.sampe.admin', 101, 0, 'dfgdfgdfg', 0, NULL, 0, 1, '', '', '2022-01-26 14:18:05', '2022-01-26 16:19:23');
+('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23');
 
 -- --------------------------------------------------------
 
@@ -130,12 +126,7 @@ CREATE TABLE `table_content` (
 
 INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `image`, `link`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
 ('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.sampe.admin', 5, 0, 0, 'Content', '', NULL, NULL, 1, '', '', '', '2022-01-26 16:18:09'),
-('com.sampe.admin', 9, 0, 0, '', NULL, NULL, NULL, 1, 'dfsf', NULL, '', '2022-01-26 16:18:09'),
-('com.appsfeature.bizwiz', 23, 0, 0, 'qwe', 'ss', NULL, 'http://localhost/droidapps/admin/bizwiz1', 0, NULL, '', '', '2022-01-26 19:16:44'),
-('com.appsfeature.bizwiz', 24, 0, 0, 'AAA', '', NULL, '', 1, NULL, '', '', '2022-01-26 19:24:03'),
-('com.sampe.admin', 25, 0, 0, 'ewrwer', '', NULL, '', 1, '', '', NULL, '2022-01-26 20:21:15');
+('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09');
 
 --
 -- Indexes for dumped tables
@@ -193,7 +184,7 @@ ALTER TABLE `table_category`
 -- AUTO_INCREMENT for table `table_content`
 --
 ALTER TABLE `table_content`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
