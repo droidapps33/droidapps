@@ -22,7 +22,7 @@ class Content extends CI_Controller{
         $this->load->helper("common_helper");
     }
 
-    //http://localhost/droidappsmaster/admin/content
+    //http://localhost/droidapps/admin/content
     //This will show content list page
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;

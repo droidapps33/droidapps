@@ -133,7 +133,7 @@ INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `d
 ('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
 ('com.sampe.admin', 5, 0, 0, 'Content', '', NULL, NULL, 1, '', '', '', '2022-01-26 16:18:09'),
 ('com.sampe.admin', 9, 0, 0, '', NULL, NULL, NULL, 1, 'dfsf', NULL, '', '2022-01-26 16:18:09'),
-('com.appsfeature.bizwiz', 23, 0, 0, 'qwe', 'ss', NULL, 'http://localhost/droidappsmaster/admin/bizwiz1', 0, NULL, '', '', '2022-01-26 19:16:44'),
+('com.appsfeature.bizwiz', 23, 0, 0, 'qwe', 'ss', NULL, 'http://localhost/droidapps/admin/bizwiz1', 0, NULL, '', '', '2022-01-26 19:16:44'),
 ('com.appsfeature.bizwiz', 24, 0, 0, 'AAA', '', NULL, '', 1, NULL, '', '', '2022-01-26 19:24:03'),
 ('com.sampe.admin', 25, 0, 0, 'ewrwer', '', NULL, '', 1, '', '', NULL, '2022-01-26 20:21:15');
 

@@ -12,7 +12,7 @@ class Login extends CI_Controller{
     $this->load->library(array("form_validation"));
   }
 
-  //http://localhost/droidappsmaster/admin/login
+  //http://localhost/droidapps/admin/login
     public function index()
     {
       $this->load->view('admin/login');

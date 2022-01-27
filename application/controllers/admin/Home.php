@@ -13,7 +13,7 @@ class Home extends CI_Controller{
         }
     }
 
-    //http://localhost/droidappsmaster/admin/home
+    //http://localhost/droidapps/admin/home
     public function index() {
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
 

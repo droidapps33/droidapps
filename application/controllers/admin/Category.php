@@ -22,7 +22,7 @@ class Category extends CI_Controller{
         $this->load->helper("common_helper");
     }
 
-    //http://localhost/droidappsmaster/admin/category
+    //http://localhost/droidapps/admin/category
     //This will show category list page
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
