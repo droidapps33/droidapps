@@ -102,8 +102,8 @@ $config['charset'] = 'UTF-8';
 */
 $config['enable_hooks'] = FALSE;
 
-define('STATUS_SUCCESS', 1);
-define('STATUS_FAILURE', 0);
+define('STATUS_SUCCESS', 'success');
+define('STATUS_FAILURE', 'failure');
 /*
 |--------------------------------------------------------------------------
 | Class Extension Prefix
