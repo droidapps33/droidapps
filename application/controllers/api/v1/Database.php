@@ -16,7 +16,7 @@ class Database extends REST_Controller{
   }
 
 
-  //http://localhost/droidapps/api/v1/Database/get_apps
+  //http://localhost/droidapps/api/v1/database/get_apps
   public function get_apps_get(){
     $apps = $this->database_model->get_apps();
     if(count($apps) > 0){
@@ -152,7 +152,7 @@ class Database extends REST_Controller{
     }
   }
 
-  //http://localhost/droidapps/index.php/api/v1/Database/get-category
+  //http://localhost/droidapps/index.php/api/v1/database/get-category
   public function get_category_get(){
     $pkg_id = $this->input->get("pkg_id");
     $cat_id = $this->input->get("cat_id");
@@ -298,7 +298,7 @@ class Database extends REST_Controller{
     }
   }
 
-  //http://localhost/droidapps/api/v1/Database/get-content
+  //http://localhost/droidapps/api/v1/database/get-content
   public function get_content_get(){
     $pkg_id = $this->input->get("pkg_id");
     $id = $this->input->get("id");
@@ -314,7 +314,7 @@ class Database extends REST_Controller{
     }
   }
 
-  //http://localhost/droidapps/api/v1/Database/get-content-by-category
+  //http://localhost/droidapps/api/v1/database/get-content-by-category
   public function get_content_by_category_get(){
     $pkg_id = $this->input->get("pkg_id");
     $id = $this->input->get("id");
@@ -407,7 +407,7 @@ class Database extends REST_Controller{
     }
   }
 
-  //http://localhost/droidapps/api/v1/Database/get-data
+  //http://localhost/droidapps/api/v1/database/get-data
   public function get_data_get(){
     $pkg_id = $this->input->get("pkg_id");
     $cat_id = $this->input->get("cat_id");
