@@ -27,13 +27,13 @@ class Database extends REST_Controller{
   }
 
   //http://localhost/droidapps/index.php/api/v1/database/insert-category
-  //where: pkg_id, cat_name, sub_cat_id
+  //where: pkg_id, title, sub_cat_id
   public function insert_category_post(){
         // print_r($whereClause);die;
      $this->insertUpdateCategory(false);
   }
   //http://localhost/droidapps/index.php/api/v1/database/insert-update-category
-  //where: pkg_id, cat_name, sub_cat_id
+  //where: pkg_id, title, sub_cat_id
   public function insert_update_category_post(){
      $this->insertUpdateCategory(true);
   }
@@ -48,17 +48,17 @@ class Database extends REST_Controller{
     $pkg_id = $this->input->post("pkg_id");
     $cat_id = $this->input->post("cat_id");
     $sub_cat_id = $this->input->post("sub_cat_id");
-    $cat_name = $this->input->post("cat_name");
+    $title = $this->input->post("title");
     if($isUpdateOnly){
       $whereClause = getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
     }else {
-      $whereClause = getCategoryWhereClause($pkg_id, $cat_name, $sub_cat_id);
+      $whereClause = getCategoryWhereClause($pkg_id, $title, $sub_cat_id);
     }
 
-    $cat_type = $this->input->post("cat_type");
+    $item_type = $this->input->post("item_type");
     $imageOld = $this->input->post("image_old");
 
-    $order_id = $this->input->post("order_id");
+    $ranking = $this->input->post("ranking");
     $visibility = $this->input->post("visibility");
     $json_data = $this->input->post("json_data");
     $other_property = $this->input->post("other_property");
@@ -66,7 +66,7 @@ class Database extends REST_Controller{
 
 
     $this->form_validation->set_rules("pkg_id", "Package Id", "required");
-    $this->form_validation->set_rules("cat_name", "Category Name", "required");
+    $this->form_validation->set_rules("title", "Category Name", "required");
 
     // checking form submittion have any error or not
     if($this->form_validation->run() === FALSE){
@@ -110,10 +110,10 @@ class Database extends REST_Controller{
       $category = array(
         "pkg_id" => $pkg_id,
         "sub_cat_id" => $sub_cat_id == null ? 0 : $sub_cat_id,
-        "cat_name" => $cat_name,
-        "cat_type" => $cat_type == null ? 0 : $cat_type,
+        "title" => $title,
+        "item_type" => $item_type == null ? 0 : $item_type,
         "image" => $image,
-        "order_id" => $order_id == null ? 0 : $order_id,
+        "ranking" => $ranking == null ? 0 : $ranking,
         "visibility" => $visibility == null ? 1 : $visibility,
         "json_data" => $json_data,
         "other_property" => $other_property,
@@ -170,13 +170,13 @@ class Database extends REST_Controller{
   }
 
   //http://localhost/droidapps/api/v1/database/insert-content
-  //where: pkg_id, cat_name, sub_cat_id
+  //where: pkg_id, title, sub_cat_id
   public function insert_content_post(){
         // print_r($whereClause);die;
      $this->insertUpdateContent(false);
   }
   //http://localhost/droidapps/api/v1/database/insert-update-content
-  //where: pkg_id, cat_name, sub_cat_id
+  //where: pkg_id, title, sub_cat_id
   public function insert_update_content_post(){
      $this->insertUpdateContent(true);
   }
@@ -334,13 +334,13 @@ class Database extends REST_Controller{
   }
 
   //http://localhost/droidapps/api/v1/database/insert-data
-  //where: pkg_id, cat_name, sub_cat_id
+  //where: pkg_id, title, sub_cat_id
   public function insert_data_post(){
         // print_r($whereClause);die;
      $this->insertUpdateData(false);
   }
   //http://localhost/droidapps/api/v1/database/insert-update-data
-  //where: pkg_id, cat_name, sub_cat_id
+  //where: pkg_id, title, sub_cat_id
   public function insert_update_data_post(){
      $this->insertUpdateData(false);
   }

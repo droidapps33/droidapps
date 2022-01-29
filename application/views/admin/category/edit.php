@@ -27,7 +27,7 @@
             <div class="card card-primary">
               <div class="card-header">
                 <div class="card-title">
-                    Edit Category "<?php echo $category['cat_name']; ?>"
+                    Edit Category "<?php echo $category['title']; ?>"
                 </div>
 
               </div>
@@ -45,17 +45,17 @@
                             <input type="number" placeholder="Enter SubCatId" value="<?php echo $category['sub_cat_id'];?>" class="form-control" name="sub_cat_id" access="false" value="0" id="sub_cat_id">
                         </div>
                         <div class="col-sm-4 mb-3">
-                            <label for="cat_type" class="formbuilder-number-label">Category Type</label>
-                            <input type="number" placeholder="Enter Category Type" value="<?php echo $category['cat_type'];?>" class="form-control" name="cat_type" access="false" value="0" id="cat_type">
+                            <label for="item_type" class="formbuilder-number-label">Item Type</label>
+                            <input type="number" placeholder="Enter Item Type" value="<?php echo $category['item_type'];?>" class="form-control" name="item_type" access="false" value="0" id="item_type">
                         </div>
                         <div class="col-sm-4 mb-3">
-                            <label for="order_id" class="formbuilder-number-label">Order Id</label>
-                            <input type="number" placeholder="Enter Order Id" value="<?php echo $category['order_id']; ?>" class="form-control" name="order_id" access="false" value="0" id="order_id">
+                            <label for="ranking" class="formbuilder-number-label">Ranking</label>
+                            <input type="number" placeholder="Enter Ranking" value="<?php echo $category['ranking']; ?>" class="form-control" name="ranking" access="false" value="0" id="ranking">
                         </div>
                     </div>
-                     <div class="formbuilder-text form-group field-cat_name">
-                         <label for="cat_name" class="formbuilder-text-label">Category Name <span style="color:red">*</span></label>
-                         <input type="text" placeholder="Enter Category Name" value="<?php echo $category['cat_name'];?>" class="form-control" name="cat_name" access="false" id="cat_name">
+                     <div class="formbuilder-text form-group field-title">
+                         <label for="title" class="formbuilder-text-label">Category Name <span style="color:red">*</span></label>
+                         <input type="text" placeholder="Enter Category Name" value="<?php echo $category['title'];?>" class="form-control" name="title" access="false" id="title">
                      </div>
 
                      <div class="row">

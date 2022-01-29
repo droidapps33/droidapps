@@ -29,7 +29,7 @@ class Category extends CI_Controller{
         $queryString = $this->input->get();
         $querySearch = '';
         if($queryString != null){
-        $querySearch = $queryString['cat_name'];
+        $querySearch = $queryString['title'];
         }
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
 

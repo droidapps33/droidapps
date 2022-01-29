@@ -19,7 +19,7 @@ function resizeImage($sourcePath, $newPath, $width, $height){
 }
 
 function getCategoryWhereClause($pkg_id, $cat_id_or_name, $sub_cat_id){
-    $key_cat_id_or_name = is_numeric($cat_id_or_name) ? 'cat_id' : 'cat_name';
+    $key_cat_id_or_name = is_numeric($cat_id_or_name) ? 'cat_id' : 'title';
 
     $whereClause = null;
     if($pkg_id != null){

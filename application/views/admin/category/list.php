@@ -28,7 +28,7 @@
                 <div class="card-title">
                   <form id="searchForm" name="searchForm" method="get" action="">
                     <div class="input-group input-group-sm">
-                      <input type="text" value="<?php  echo $querySearch;?>" class="form-control" placeholder="Search" name="cat_name">
+                      <input type="text" value="<?php  echo $querySearch;?>" class="form-control" placeholder="Search" name="title">
                       <div class="input-group-append">
                         <button class="input-group-text" id="basic-addon1">
                           <i class="fas fa-search"></i>
@@ -55,7 +55,7 @@
                         <?php foreach ($categories as $categoryRow) {?>
                             <tr>
                               <td class="text-center"><?php echo $categoryRow['cat_id'];?></td>
-                              <td><?php echo $categoryRow['cat_name'];?></td>
+                              <td><?php echo $categoryRow['title'];?></td>
                               <td class="text-center">
                                   <?php if($categoryRow['visibility'] == 1) {?>
                                     <span class="badge badge-success">Active</span>

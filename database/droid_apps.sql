@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 27, 2022 at 11:05 AM
+-- Generation Time: Jan 29, 2022 at 09:03 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -78,10 +78,10 @@ CREATE TABLE `table_category` (
   `pkg_id` varchar(100) NOT NULL,
   `cat_id` int(100) NOT NULL,
   `sub_cat_id` int(100) NOT NULL DEFAULT 0,
-  `cat_name` varchar(1000) NOT NULL,
-  `cat_type` int(100) NOT NULL DEFAULT 0,
+  `title` varchar(1000) NOT NULL,
+  `item_type` int(100) NOT NULL DEFAULT 0,
   `image` varchar(1000) DEFAULT NULL,
-  `order_id` int(100) NOT NULL DEFAULT 0,
+  `ranking` int(100) NOT NULL DEFAULT 0,
   `visibility` int(100) NOT NULL DEFAULT 1,
   `json_data` varchar(5000) DEFAULT NULL,
   `other_property` varchar(1000) DEFAULT NULL,
@@ -93,10 +93,11 @@ CREATE TABLE `table_category` (
 -- Dumping data for table `table_category`
 --
 
-INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `cat_name`, `cat_type`, `image`, `order_id`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
+INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `title`, `item_type`, `image`, `ranking`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
 ('com.sample.live', 13, 5, 'Category Live Exam', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.sample.live', 14, 5, 'Category Live Exam 2', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23');
+('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
+('com.sampe.admin', 103, 0, 'fsdfsd', 2, NULL, 1, 1, '', '', NULL, '2022-01-29 06:01:51');
 
 -- --------------------------------------------------------
 
@@ -126,7 +127,9 @@ CREATE TABLE `table_content` (
 
 INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `image`, `link`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
 ('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09');
+('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
+('com.appsfeature.bizwiz', 34, 0, 0, 'Happy Hours', '', NULL, 'https://github.com/appsfeature/droidapps', 1, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
+('com.sampe.admin', 35, 0, 0, 'dasdasd', '', NULL, '', 1, '', '', NULL, '2022-01-29 06:00:10');
 
 --
 -- Indexes for dumped tables
@@ -178,13 +181,13 @@ ALTER TABLE `table_app`
 -- AUTO_INCREMENT for table `table_category`
 --
 ALTER TABLE `table_category`
-  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
 -- AUTO_INCREMENT for table `table_content`
 --
 ALTER TABLE `table_content`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
