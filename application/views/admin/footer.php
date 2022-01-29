@@ -4,7 +4,7 @@
 <footer class="main-footer">
 
   <!-- Default to the left -->
-  <strong>Copyright &copy; 2014-2022 <a href="https://appsfeature.com">Appsfeature</a>.</strong> All rights reserved.
+  <strong>Copyright &copy; 2014-2022 <a href="<?php echo appsfeature_url; ?>">Appsfeature</a>.</strong> All rights reserved.
 </footer>
 </div>
 <!-- ./wrapper -->
