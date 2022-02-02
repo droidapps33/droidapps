@@ -25,7 +25,7 @@ class Content extends CI_Controller{
     //http://localhost/droidapps/admin/content
     //This will show content list page
     public function index(){
-        $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
+        $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
         $queryString = $this->input->get();
         $querySearch = '';
         if($queryString != null){
@@ -41,7 +41,13 @@ class Content extends CI_Controller{
 
     //This will show create page
     public function create(){
-        $this->load->view($this->module_url.'/create');
+        $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $categories = $this->database_model->get_category($whereClause);
+        $itemTypes = $this->database_model->get_item_types($whereClause);
+        $data['categories'] = $categories;
+        $data['itemTypes'] = $itemTypes;
+        $this->load->view($this->module_url.'/create', $data);
     }
 
     //This will show edit page
@@ -50,9 +56,15 @@ class Content extends CI_Controller{
 
         $whereClause = getContentWhereClause($pkg_id, null, null, $contentId, null);
         $content = $this->database_model->get_content($whereClause);
-        // print_r($content);die;
+
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $allCategories = $this->database_model->get_category($whereClause);
+        $itemTypes = $this->database_model->get_item_types($whereClause);
+
         if($content != null && count($content) == 1){
             $data['content'] = $content[0];
+            $data['categories'] = $allCategories;
+            $data['itemTypes'] = $itemTypes;
             $this->load->view($this->module_url.'/edit', $data);
         }else {
             $this->session->set_flashdata('error', 'Content not found');

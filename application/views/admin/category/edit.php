@@ -41,12 +41,37 @@
 
                     <div class="row">
                         <div class="col-sm-4 mb-3">
+
                             <label for="sub_cat_id" class="formbuilder-number-label">SubCatId</label>
-                            <input type="number" placeholder="Enter SubCatId" value="<?php echo $category['sub_cat_id'];?>" class="form-control" name="sub_cat_id" access="false" value="0" id="sub_cat_id">
+                            <select class="form-control" name="sub_cat_id" id="sub_cat_id">
+                                <option value="0">Select Sub Category</option>
+                                <?php
+                                    if(!empty($categories)){
+                                        foreach ($categories as $item) {
+                                            $selected = ($category['sub_cat_id'] == $item['cat_id']) ? true : false;
+                                             ?>
+                                             <option <?php echo set_select('sub_cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
                         </div>
                         <div class="col-sm-4 mb-3">
                             <label for="item_type" class="formbuilder-number-label">Item Type</label>
-                            <input type="number" placeholder="Enter Item Type" value="<?php echo $category['item_type'];?>" class="form-control" name="item_type" access="false" value="0" id="item_type">
+                            <select class="form-control" name="item_type" id="item_type">
+                                <option value="0">Select Item Type</option>
+                                <?php
+                                    if(!empty($itemTypes)){
+                                        foreach ($itemTypes as $item) {
+                                            $selected = ($category['item_type'] == $item['item_type']) ? true : false;
+                                            ?>
+                                             <option <?php echo set_select('item_type', $item['item_type'], $selected); ?> value="<?php echo $item['item_type'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
                         </div>
                         <div class="col-sm-4 mb-3">
                             <label for="ranking" class="formbuilder-number-label">Ranking</label>
@@ -121,8 +146,7 @@ $(document).ready(function() {
         $("#submitBtn").prop("disabled", true);
 
         var formData= new FormData($("#categoryForm")[0]);
-        console.log('my message' + formData);
-
+        // console.log('my message' + formData.get('sub_cat_id'));
         $.ajax({
             type: "POST",
             url: "<?php echo base_url().version_prefix.'database/update_category' ?>",

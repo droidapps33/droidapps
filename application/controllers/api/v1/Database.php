@@ -48,9 +48,9 @@ class Database extends REST_Controller{
       $sub_cat_id = $this->input->post("sub_cat_id");
       $title = $this->input->post("title");
       if($isUpdateOnly){
-          $whereClause = getCategoryWhereClause($pkg_id, $cat_id, $sub_cat_id);
+          $whereClause = getCategoryWhereClause($pkg_id, $cat_id, null);
       }else {
-          $whereClause = getCategoryWhereClause($pkg_id, $title, $sub_cat_id);
+          $whereClause = getCategoryWhereClause($pkg_id, $title, null);
       }
 
       $item_type = $this->input->post("item_type");
@@ -192,13 +192,14 @@ class Database extends REST_Controller{
 
         if($isInsertUpdate == false){
             //case for insert record
-            $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, $title);
+            $whereClause = getContentWhereClause($pkg_id, null, null, $id, $title);
         }else {
             //case for update record
-            $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, null);
+            $whereClause = getContentWhereClause($pkg_id, null, null, $id, null);
         }
 
         $description = $this->input->post("description");
+        $item_type = $this->input->post("item_type");
         $link = $this->input->post("link");
         $visibility = $this->input->post("visibility");
         $json_data = $this->input->post("json_data");
@@ -220,6 +221,7 @@ class Database extends REST_Controller{
                 "sub_cat_id" => $sub_cat_id == null ? 0 : $sub_cat_id,
                 "title" => $title,
                 "description" => $description,
+                "item_type" => $item_type,
                 "link" => $link,
                 "visibility" => $visibility == null ? 1 : $visibility,
                 "json_data" => $json_data,

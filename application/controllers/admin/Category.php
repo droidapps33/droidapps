@@ -41,7 +41,13 @@ class Category extends CI_Controller{
 
     //This will show create page
     public function create(){
-        $this->load->view($this->module_url.'/create');
+        $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $category = $this->database_model->get_category($whereClause);
+        $itemTypes = $this->database_model->get_item_types($whereClause);
+        $data['category'] = $category;
+        $data['itemTypes'] = $itemTypes;
+        $this->load->view($this->module_url.'/create', $data);
     }
 
     //This will show edit page
@@ -49,8 +55,15 @@ class Category extends CI_Controller{
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
         $whereClause = getCategoryWhereClause($pkg_id, $catId, null);
         $category = $this->database_model->get_category($whereClause);
+
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $allCategories = $this->database_model->get_category($whereClause);
+
+        $itemTypes = $this->database_model->get_item_types($whereClause);
         if($category != null && count($category) == 1){
             $data['category'] = $category[0];
+            $data['categories'] = $allCategories;
+            $data['itemTypes'] = $itemTypes;
             $this->load->view($this->module_url.'/edit', $data);
         }else {
             $this->session->set_flashdata('error', 'Category not found');

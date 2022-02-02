@@ -41,11 +41,48 @@
                     <div class="row">
                         <div class="col-sm-4 mb-3">
                             <label for="cat_id" class="formbuilder-number-label">CatId</label>
-                            <input type="number" placeholder="Enter CatId" class="form-control" name="cat_id" access="false" value="0" id="cat_id">
+                            <select class="form-control" name="cat_id" id="cat_id">
+                                <option value="0">Select Category</option>
+                                <?php
+                                    if(!empty($categories)){
+                                        foreach ($categories as $item) {
+                                             ?>
+                                             <option <?php echo set_select('cat_id', $item['cat_id'], false); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
                         </div>
                         <div class="col-sm-4 mb-3">
                             <label for="sub_cat_id" class="formbuilder-number-label">SubCatId</label>
-                            <input type="number" placeholder="Enter SubCatId" class="form-control" name="sub_cat_id" access="false" value="0" id="sub_cat_id">
+                            <select class="form-control" name="sub_cat_id" id="sub_cat_id">
+                                <option value="0">Select Sub Category</option>
+                                <?php
+                                    if(!empty($categories)){
+                                        foreach ($categories as $item) {
+                                             ?>
+                                             <option <?php echo set_select('sub_cat_id', $item['cat_id'], false); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-4 mb-3">
+                            <label for="item_type" class="formbuilder-number-label">Item Type</label>
+                            <select class="form-control" name="item_type" id="item_type">
+                                <option value="0">Select Item Type</option>
+                                <?php
+                                    if(!empty($itemTypes)){
+                                        foreach ($itemTypes as $item) {
+                                             ?>
+                                             <option <?php echo set_select('item_type', $item['item_type'], false); ?> value="<?php echo $item['item_type'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
                         </div>
                     </div>
 

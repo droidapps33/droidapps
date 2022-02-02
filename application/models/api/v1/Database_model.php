@@ -15,6 +15,12 @@ class Database_model extends CI_Model{
     return $query->result_array();
   }
 
+   public function get_item_types($whereClause = array()){
+       $this->db->order_by('id', 'DESC');
+       $query = $this->db->get_where("table_item_type", $whereClause);
+       return $query->result_array();
+   }
+
    public function insert_category($isUpdate = false, $whereClause = array(), $data = array()){
      $query = $this->db->get_where('table_category', $whereClause);
      if($query->num_rows() <= 0 ){
