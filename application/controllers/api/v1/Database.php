@@ -350,7 +350,7 @@ class Database extends REST_Controller{
       $cat_id = $this->input->post("cat_id");
       $json_data = $this->input->post("json_data");
       $title = "";
-      $whereClause = getDataWhereClause($pkg_id, $cat_id, $json_data);
+      $whereClause = getDataWhereClause($pkg_id, null, $json_data);
 
       $this->form_validation->set_rules("pkg_id", "Package Id", "required");
       $this->form_validation->set_rules("json_data", "Json Data", "required");

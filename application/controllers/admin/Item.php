@@ -41,7 +41,11 @@ class Item extends CI_Controller{
 
     //This will show create page
     public function create(){
-        $this->load->view($this->module_url.'/create');
+        $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $categories = $this->database_model->get_category($whereClause);
+        $data['categories'] = $categories;
+        $this->load->view($this->module_url.'/create', $data);
     }
 
     //This will show edit page
@@ -50,8 +54,13 @@ class Item extends CI_Controller{
 
         $whereClause = getDataWhereClause($pkg_id, null, $jsonData);
         $item = $this->database_model->get_content_data($whereClause);
+
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $categories = $this->database_model->get_category($whereClause);
+
         if($item != null && count($item) == 1){
             $data['item'] = $item[0];
+            $data['categories'] = $categories;
             // print_r($item);die;
             $this->load->view($this->module_url.'/edit', $data);
         }else {

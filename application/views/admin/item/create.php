@@ -40,7 +40,18 @@
 
                      <div class="formbuilder-number form-group field-cat_id">
                          <label for="cat_id" class="formbuilder-number-label">CatId</label>
-                         <input type="number" placeholder="Enter CatId" class="form-control" name="cat_id" access="false" value="0" id="cat_id">
+                         <select class="form-control" name="cat_id" id="cat_id">
+                             <option value="0">Select Category</option>
+                             <?php
+                                 if(!empty($categories)){
+                                     foreach ($categories as $item) {
+                                          ?>
+                                          <option <?php echo set_select('cat_id', $item['cat_id'], false); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                          <?php
+                                     }
+                                 }
+                              ?>
+                         </select>
                      </div>
 
                      <div class="rendered-form">

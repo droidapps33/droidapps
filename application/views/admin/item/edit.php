@@ -40,8 +40,21 @@
                     <input type="hidden" name="id" access="false" id="id" value="<?php echo $item['id']; ?>">
 
                     <div class="formbuilder-number form-group field-cat_id">
+                         
                         <label for="cat_id" class="formbuilder-number-label">CatId</label>
-                        <input type="number" placeholder="Enter CatId" class="form-control" name="cat_id" value="<?php echo $item['cat_id']; ?>" access="false" id="cat_id">
+                        <select class="form-control" name="cat_id" id="cat_id">
+                            <option value="0">Select Category</option>
+                            <?php
+                                if(!empty($categories)){
+                                    foreach ($categories as $value) {
+                                        $selected = ($item['cat_id'] == $value['cat_id']) ? true : false;
+                                         ?>
+                                         <option <?php echo set_select('cat_id', $value['cat_id'], $selected); ?> value="<?php echo $value['cat_id'];?>"><?php echo $value['title'];?></option>
+                                         <?php
+                                    }
+                                }
+                             ?>
+                        </select>
                     </div>
 
                      <div class="rendered-form">
