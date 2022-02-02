@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2022 at 09:03 AM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Generation Time: Feb 02, 2022 at 08:56 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -79,7 +79,7 @@ CREATE TABLE `table_category` (
   `cat_id` int(100) NOT NULL,
   `sub_cat_id` int(100) NOT NULL DEFAULT 0,
   `title` varchar(1000) NOT NULL,
-  `item_type` int(100) NOT NULL DEFAULT 0,
+  `item_type` int(100) DEFAULT 0,
   `image` varchar(1000) DEFAULT NULL,
   `ranking` int(100) NOT NULL DEFAULT 0,
   `visibility` int(100) NOT NULL DEFAULT 1,
@@ -97,7 +97,8 @@ INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `title`, `item_t
 ('com.sample.live', 13, 5, 'Category Live Exam', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.sample.live', 14, 5, 'Category Live Exam 2', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.sampe.admin', 103, 0, 'fsdfsd', 2, NULL, 1, 1, '', '', NULL, '2022-01-29 06:01:51');
+('com.sampe.admin', 106, 0, 'Alpha Category', 1, NULL, 0, 1, '', '', NULL, '2022-02-02 18:19:46'),
+('com.sampe.admin', 107, 106, 'Beta Category', 0, NULL, 0, 1, '', '', NULL, '2022-02-02 18:19:58');
 
 -- --------------------------------------------------------
 
@@ -112,6 +113,7 @@ CREATE TABLE `table_content` (
   `sub_cat_id` int(100) NOT NULL DEFAULT 0,
   `title` varchar(1000) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
+  `item_type` int(100) DEFAULT 0,
   `image` varchar(100) DEFAULT NULL,
   `link` varchar(1000) DEFAULT NULL,
   `visibility` int(100) NOT NULL DEFAULT 1,
@@ -125,11 +127,34 @@ CREATE TABLE `table_content` (
 -- Dumping data for table `table_content`
 --
 
-INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `image`, `link`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
-('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.appsfeature.bizwiz', 34, 0, 0, 'Happy Hours', '', NULL, 'https://github.com/appsfeature/droidapps', 1, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
-('com.sampe.admin', 35, 0, 0, 'dasdasd', '', NULL, '', 1, '', '', NULL, '2022-01-29 06:00:10');
+INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `item_type`, `image`, `link`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
+('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, 0, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
+('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, 0, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
+('com.appsfeature.bizwiz', 34, 0, 0, 'Happy Hours', '', 0, NULL, 'https://github.com/appsfeature/droidapps', 1, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
+('com.sampe.admin', 35, 106, 107, 'dasdasd', '', 1, NULL, '', 1, '', '', NULL, '2022-01-29 06:00:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_item_type`
+--
+
+CREATE TABLE `table_item_type` (
+  `pkg_id` varchar(100) NOT NULL,
+  `id` int(11) NOT NULL,
+  `item_type` int(100) NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `visibility` int(11) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `table_item_type`
+--
+
+INSERT INTO `table_item_type` (`pkg_id`, `id`, `item_type`, `title`, `visibility`) VALUES
+('com.appsfeature.bizwiz', 1, 0, 'Home Slider', 1),
+('com.sampe.admin', 2, 0, 'Category', 1),
+('com.sampe.admin', 3, 1, 'Content', 1);
 
 --
 -- Indexes for dumped tables
@@ -162,6 +187,12 @@ ALTER TABLE `table_content`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `table_item_type`
+--
+ALTER TABLE `table_item_type`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -181,13 +212,19 @@ ALTER TABLE `table_app`
 -- AUTO_INCREMENT for table `table_category`
 --
 ALTER TABLE `table_category`
-  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- AUTO_INCREMENT for table `table_content`
 --
 ALTER TABLE `table_content`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `table_item_type`
+--
+ALTER TABLE `table_item_type`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
