@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 02, 2022 at 08:56 PM
+-- Generation Time: Feb 03, 2022 at 09:08 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.27
 
@@ -43,8 +43,7 @@ CREATE TABLE `table_account` (
 --
 
 INSERT INTO `table_account` (`id`, `name`, `role`, `pkg_id`, `user_id`, `password`, `active`, `validity`) VALUES
-(1, 'Admin', 1, 'com.sampe.admin', 'admin', '123', 1, '2024-01-31 19:15:44'),
-(2, 'Manager', 0, 'com.sampe.test', 'manager', 'manager@123', 1, '2022-05-17 19:16:26'),
+(1, 'Admin', 1, 'com.appsfeature', 'admin', '123', 1, '2024-01-31 19:15:44'),
 (3, 'Amit Jain', 0, 'com.appsfeature.bizwiz', 'amit', '123', 1, '2022-05-17 19:16:26');
 
 -- --------------------------------------------------------
@@ -65,7 +64,7 @@ CREATE TABLE `table_app` (
 --
 
 INSERT INTO `table_app` (`app_id`, `pkg_id`, `app_name`, `visibility`) VALUES
-(1, 'com.sample.live', 'Live Exam', 1),
+(1, 'com.appsfeature', 'Appsfeature', 1),
 (2, 'com.appsfeature.bizwiz', 'BizWiz', 1);
 
 -- --------------------------------------------------------
@@ -97,8 +96,11 @@ INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `title`, `item_t
 ('com.sample.live', 13, 5, 'Category Live Exam', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.sample.live', 14, 5, 'Category Live Exam 2', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.sampe.admin', 106, 0, 'Alpha Category', 1, NULL, 0, 1, '', '', NULL, '2022-02-02 18:19:46'),
-('com.sampe.admin', 107, 106, 'Beta Category', 0, NULL, 0, 1, '', '', NULL, '2022-02-02 18:19:58');
+('com.appsfeature', 108, 0, 'Dashboard', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 17:12:07'),
+('com.appsfeature', 109, 108, 'Mobile Shop', 1, NULL, 0, 1, '', '', NULL, '2022-02-03 17:15:17'),
+('com.appsfeature', 110, 108, 'Cloth Shop', 1, NULL, 0, 1, '', '', NULL, '2022-02-03 17:15:33'),
+('com.appsfeature', 111, 108, 'Electronics', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 19:20:14'),
+('com.appsfeature', 112, 111, 'Laptops', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 19:20:57');
 
 -- --------------------------------------------------------
 
@@ -117,6 +119,7 @@ CREATE TABLE `table_content` (
   `image` varchar(100) DEFAULT NULL,
   `link` varchar(1000) DEFAULT NULL,
   `visibility` int(100) NOT NULL DEFAULT 1,
+  `ranking` int(100) DEFAULT 0,
   `json_data` varchar(5000) DEFAULT NULL,
   `other_property` varchar(1000) DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
@@ -127,11 +130,15 @@ CREATE TABLE `table_content` (
 -- Dumping data for table `table_content`
 --
 
-INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `item_type`, `image`, `link`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
-('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, 0, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, 0, NULL, NULL, 1, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.appsfeature.bizwiz', 34, 0, 0, 'Happy Hours', '', 0, NULL, 'https://github.com/appsfeature/droidapps', 1, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
-('com.sampe.admin', 35, 106, 107, 'dasdasd', '', 1, NULL, '', 1, '', '', NULL, '2022-01-29 06:00:10');
+INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `item_type`, `image`, `link`, `visibility`, `ranking`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
+('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, 0, NULL, NULL, 1, 0, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
+('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, 0, NULL, NULL, 1, 0, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
+('com.appsfeature.bizwiz', 34, 0, 0, 'Happy Hours', '', 0, NULL, 'https://github.com/appsfeature/droidapps', 1, 0, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
+('com.appsfeature', 39, 109, 0, 'Android Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:14'),
+('com.appsfeature', 40, 109, 0, 'Apple Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:35'),
+('com.appsfeature', 41, 110, 0, 'Womens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:39'),
+('com.appsfeature', 42, 110, 0, 'Mens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:51'),
+('com.appsfeature', 43, 112, 0, 'Dell Laptop', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 19:24:25');
 
 -- --------------------------------------------------------
 
@@ -152,9 +159,25 @@ CREATE TABLE `table_item_type` (
 --
 
 INSERT INTO `table_item_type` (`pkg_id`, `id`, `item_type`, `title`, `visibility`) VALUES
-('com.appsfeature.bizwiz', 1, 0, 'Home Slider', 1),
-('com.sampe.admin', 2, 0, 'Category', 1),
-('com.sampe.admin', 3, 1, 'Content', 1);
+('com.appsfeature', 1, 3, 'Home Slider', 1),
+('com.appsfeature', 2, 0, 'Category', 1),
+('com.appsfeature', 3, 1, 'Content', 1),
+('com.appsfeature', 4, 2, 'Item', 1),
+('com.appsfeature.bizwiz', 5, 0, 'Home Slider', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `table_json`
+--
+
+CREATE TABLE `table_json` (
+  `pkg_id` varchar(100) NOT NULL,
+  `id` int(11) NOT NULL,
+  `cat_id` int(100) DEFAULT 0,
+  `json_data` text NOT NULL,
+  `updated_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -193,6 +216,12 @@ ALTER TABLE `table_item_type`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `table_json`
+--
+ALTER TABLE `table_json`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -212,19 +241,25 @@ ALTER TABLE `table_app`
 -- AUTO_INCREMENT for table `table_category`
 --
 ALTER TABLE `table_category`
-  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT for table `table_content`
 --
 ALTER TABLE `table_content`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `table_item_type`
 --
 ALTER TABLE `table_item_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `table_json`
+--
+ALTER TABLE `table_json`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

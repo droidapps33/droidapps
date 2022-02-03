@@ -59,10 +59,10 @@
                               <td><?php echo $itemRow['json_data'];?></td>
 
                               <td class="text-center">
-                                  <a href="<?php echo base_url().$CI->module_url_edit.'/'.$itemRow['json_data']; ?>" class="btn btn-primary btn-sm">
+                                  <a href="<?php echo base_url().$CI->module_url_edit.'/'.$itemRow['id']; ?>" class="btn btn-primary btn-sm">
                                     <i class="far fa-edit"></i> Edit
                                   </a>
-                                  <a href="javascript:void(0);" onclick="deleteRow('<?php echo $itemRow['json_data'] ?>')" class="btn btn-danger btn-sm">
+                                  <a href="javascript:void(0);" onclick="deleteRow('<?php echo $itemRow['id'] ?>')" class="btn btn-danger btn-sm">
                                     <i class="far fa-trash-alt"></i> Delete
                                   </a>
                               </td>

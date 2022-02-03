@@ -47,7 +47,7 @@
                     <tr>
                       <th width="50" class="text-center">Id</th>
                       <th width="100" class="text-center">CatId</th>
-                      <th width="100" class="text-center">SubCatId</th>
+                      <!-- <th width="100" class="text-center">SubCatId</th> -->
                       <th>Name</th>
                       <th width="100" class="text-center">Status</th>
                       <th width="160" class="text-center">Action</th>
@@ -58,7 +58,7 @@
                             <tr>
                               <td class="text-center"><?php echo $contentRow['id'];?></td>
                               <td class="text-center"><?php echo $contentRow['cat_id'];?></td>
-                              <td class="text-center"><?php echo $contentRow['sub_cat_id'];?></td>
+                              <!-- <td class="text-center"><?php echo $contentRow['sub_cat_id'];?></td> -->
                               <td><?php echo $contentRow['title'];?></td>
                               <td class="text-center">
                                   <?php if($contentRow['visibility'] == 1) {?>

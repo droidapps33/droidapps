@@ -312,15 +312,57 @@ class Database extends REST_Controller{
   //http://localhost/droidapps/api/v1/database/get-content-by-category
   public function get_content_by_category_get(){
       $pkg_id = $this->input->get("pkg_id");
-      $id = $this->input->get("id");
       $cat_id = $this->input->get("cat_id");
-      $sub_cat_id = $this->input->get("sub_cat_id");
-      $whereClause = getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, null);
+      $level = $this->input->get("level");
+
+      $whereClause = getCategoryWhereClause($pkg_id, $cat_id, null);
+      $category = $this->database_model->get_category($whereClause);
+      if(count($category) > 0){
+          foreach ($category as $key => $item) {
+              if($level >= 2){
+                  $whereClause = getCategoryWhereClause($pkg_id, null, $item['cat_id']);
+                  $category2 = $this->database_model->get_category($whereClause);
+                  if(count($category2) > 0){
+                      foreach ($category2 as $key2 => $item2) {
+                          if($level >= 3){
+                              $whereClause = getCategoryWhereClause($pkg_id, null, $item2['cat_id']);
+                              $category3 = $this->database_model->get_category($whereClause);
+                              if(count($category3) > 0){
+                                  foreach ($category3 as $key3 => $item3) {
+                                      $whereClause = getContentWhereClause($pkg_id, $item3['cat_id'], null, null, null);
+                                      $category3[$key3]['data'] = $this->database_model->get_content($whereClause);
+                                  }
+                              }
+                              $category2[$key2]['data'] = $category3;
+                          }else {
+                              $whereClause = getContentWhereClause($pkg_id, $item2['cat_id'], null, null, null);
+                              $category2[$key2]['data'] = $this->database_model->get_content($whereClause);
+                          }
+                      }
+                  }
+                  $category[$key]['data'] = $category2;
+              }else {
+                  $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+                  $category[$key]['data'] = $this->database_model->get_content($whereClause);
+              }
+          }
+          $this->responseResult(STATUS_SUCCESS,"Category found", $category);
+      }else{
+          $this->responseResult(STATUS_FAILURE," No Category found");
+      }
+  }
+
+  //http://localhost/droidapps/api/v1/database/get-content-by-sub-category
+  public function get_content_by_sub_category_get(){
+      $pkg_id = $this->input->get("pkg_id");
+      $cat_id = $this->input->get("cat_id");
+      $whereClause = getCategoryWhereClause($pkg_id, null, $cat_id);
 
       $category = $this->database_model->get_category($whereClause);
       if(count($category) > 0){
           foreach ($category as $key => $item) {
-              $category[$key]->content = $this->database_model->get_content($whereClause);
+              $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+              $category[$key]['data'] = $this->database_model->get_content($whereClause);
           }
           $this->responseResult(STATUS_SUCCESS,"Category found", $category);
       }else{
@@ -348,9 +390,10 @@ class Database extends REST_Controller{
   private function insertUpdateData($isUpdateOnly = false){
       $pkg_id = $this->input->post("pkg_id");
       $cat_id = $this->input->post("cat_id");
+      $id = $this->input->post("id");
       $json_data = $this->input->post("json_data");
-      $title = "";
-      $whereClause = getDataWhereClause($pkg_id, null, $json_data);
+
+      $whereClause = getDataWhereClause($pkg_id, null, $id);
 
       $this->form_validation->set_rules("pkg_id", "Package Id", "required");
       $this->form_validation->set_rules("json_data", "Json Data", "required");
@@ -362,26 +405,19 @@ class Database extends REST_Controller{
           $content = array(
               "pkg_id" => $pkg_id,
               "cat_id" => $cat_id == null ? 0 : $cat_id,
-              "sub_cat_id" => 0,
-              "title" => $title,
-              "description" => null,
-              "image" => null,
-              "link" => null,
-              "visibility" => 1,
-              "json_data" => $json_data,
-              "other_property" => null
+              "json_data" => $json_data
           );
           if($isUpdateOnly){
-              if($this->database_model->update_content($whereClause, $content)){
-                  $this->responseStatus(STATUS_SUCCESS, "Data has been updated");
+              if($this->database_model->update_json($whereClause, $content)){
+                  $this->responseStatus(STATUS_SUCCESS, "Json has been updated");
               }else{
-                  $this->responseStatus(STATUS_FAILURE,"Failed to update Data");
+                  $this->responseStatus(STATUS_FAILURE,"Failed to update Json");
               }
           }else {
-              if($this->database_model->insert_content(false, $whereClause, $content)){
-                  $this->responseStatus(STATUS_SUCCESS, "Data has been created");
+              if($this->database_model->insert_json(false, $whereClause, $content)){
+                  $this->responseStatus(STATUS_SUCCESS, "Json has been created");
               }else{
-                  $this->responseStatus(STATUS_FAILURE,"Failed to create Data");
+                  $this->responseStatus(STATUS_FAILURE,"Failed to create Json");
               }
           }
       }
@@ -394,10 +430,10 @@ class Database extends REST_Controller{
       $cat_id = $this->input->post("cat_id");
       $whereClause = getDataWhereClause($pkg_id, $cat_id, null);
 
-      if($this->database_model->delete_content($whereClause)){
-          $this->responseStatus(STATUS_SUCCESS, "Data has been deleted");
+      if($this->database_model->delete_json($whereClause)){
+          $this->responseStatus(STATUS_SUCCESS, "Json has been deleted");
       }else{
-          $this->responseStatus(STATUS_FAILURE,"Failed to delete Data");
+          $this->responseStatus(STATUS_FAILURE,"Failed to delete Json");
       }
   }
 
@@ -407,11 +443,11 @@ class Database extends REST_Controller{
       $cat_id = $this->input->get("cat_id");
       $whereClause = getDataWhereClause($pkg_id, $cat_id, null);
 
-      $content = $this->database_model->get_content_data($whereClause);
+      $content = $this->database_model->get_json($whereClause);
       if(count($content) > 0){
-          $this->responseResult(STATUS_SUCCESS,"Data found", $content);
+          $this->responseResult(STATUS_SUCCESS,"Json found", $content);
       }else{
-          $this->responseResult(STATUS_FAILURE," No Data found");
+          $this->responseResult(STATUS_FAILURE," No Json found");
       }
   }
 

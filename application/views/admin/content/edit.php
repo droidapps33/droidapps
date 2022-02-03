@@ -58,7 +58,7 @@
                                  ?>
                             </select>
                         </div>
-                        <div class="col-sm-4 mb-3">
+                        <!-- <div class="col-sm-4 mb-3">
                             <label for="sub_cat_id" class="formbuilder-number-label">SubCatId</label>
                             <select class="form-control" name="sub_cat_id" id="sub_cat_id">
                                 <option value="0">Select Sub Category</option>
@@ -73,7 +73,7 @@
                                     }
                                  ?>
                             </select>
-                        </div>
+                        </div> -->
                         <div class="col-sm-4 mb-3">
                             <label for="item_type" class="formbuilder-number-label">Item Type</label>
                             <select class="form-control" name="item_type" id="item_type">

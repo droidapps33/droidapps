@@ -43,9 +43,9 @@ class Category extends CI_Controller{
     public function create(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
-        $category = $this->database_model->get_category($whereClause);
+        $categories = $this->database_model->get_category($whereClause);
         $itemTypes = $this->database_model->get_item_types($whereClause);
-        $data['category'] = $category;
+        $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
         $this->load->view($this->module_url.'/create', $data);
     }

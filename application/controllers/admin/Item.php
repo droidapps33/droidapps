@@ -33,7 +33,7 @@ class Item extends CI_Controller{
         }
         $whereClause = getDataWhereClause($pkg_id, null, null);
 
-        $items = $this->database_model->get_content_data($whereClause, $queryString);
+        $items = $this->database_model->get_json($whereClause, $queryString);
         $data['items'] = $items;
         $data['querySearch'] = $querySearch;
         $this->load->view($this->module_url.'/list', $data);
@@ -49,11 +49,11 @@ class Item extends CI_Controller{
     }
 
     //This will show edit page
-    public function edit($jsonData = null){
+    public function edit($id = null){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
 
-        $whereClause = getDataWhereClause($pkg_id, null, $jsonData);
-        $item = $this->database_model->get_content_data($whereClause);
+        $whereClause = getDataWhereClause($pkg_id, null, $id);
+        $item = $this->database_model->get_json($whereClause);
 
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
         $categories = $this->database_model->get_category($whereClause);
@@ -64,26 +64,26 @@ class Item extends CI_Controller{
             // print_r($item);die;
             $this->load->view($this->module_url.'/edit', $data);
         }else {
-            $this->session->set_flashdata('error', 'Item not found');
+            $this->session->set_flashdata('error', 'Json not found');
             redirect(base_url().$this->module_url);
         }
     }
 
     //This will show delete page
-    public function delete($jsonData = null){
+    public function delete($id = null){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
-        $whereClause = getDataWhereClause($pkg_id, null, $jsonData);
+        $whereClause = getDataWhereClause($pkg_id, null, $id);
 
-        $itemArray = $this->database_model->get_content_data($whereClause);
+        $itemArray = $this->database_model->get_json($whereClause);
         if($itemArray != null && count($itemArray) == 1){
             $item = $itemArray[0];
-            if($this->database_model->delete_content($whereClause)){
-                $this->session->set_flashdata('success', 'Item has been deleted');
+            if($this->database_model->delete_json($whereClause)){
+                $this->session->set_flashdata('success', 'Json has been deleted');
             }else{
-                $this->session->set_flashdata('error', 'Failed to delete Item');
+                $this->session->set_flashdata('error', 'Failed to delete Json');
             }
         }else {
-            $this->session->set_flashdata('error', 'Item not found');
+            $this->session->set_flashdata('error', 'Json not found');
         }
         redirect(base_url().$this->module_url);
     }

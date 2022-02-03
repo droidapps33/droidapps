@@ -54,7 +54,7 @@ function getContentWhereClause($pkg_id, $cat_id, $sub_cat_id, $id, $title){
     return $whereClause;
 }
 
-function getDataWhereClause($pkg_id, $cat_id, $json_data){
+function getDataWhereClause($pkg_id, $cat_id, $id){
     $whereClause = null;
     if($pkg_id != null){
         $whereClause['pkg_id'] = $pkg_id;
@@ -62,8 +62,8 @@ function getDataWhereClause($pkg_id, $cat_id, $json_data){
     if($cat_id != null){
         $whereClause['cat_id'] = $cat_id;
     }
-    if($json_data != null){
-        $whereClause['json_data'] = $json_data;
+    if($id != null){
+        $whereClause['id'] = $id;
     }
     return $whereClause;
 }
