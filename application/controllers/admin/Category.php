@@ -36,6 +36,8 @@ class Category extends CI_Controller{
         $category = $this->database_model->get_category($whereClause, $queryString);
         $data['categories'] = $category;
         $data['querySearch'] = $querySearch;
+        $data['mainModule'] = 'category';
+        $data['subModule'] = 'viewCategory';
         $this->load->view($this->module_url.'/list', $data);
     }
 
@@ -47,6 +49,8 @@ class Category extends CI_Controller{
         $itemTypes = $this->database_model->get_item_types($whereClause);
         $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
+        $data['mainModule'] = 'category';
+        $data['subModule'] = 'createCategory';
         $this->load->view($this->module_url.'/create', $data);
     }
 
@@ -64,6 +68,8 @@ class Category extends CI_Controller{
             $data['category'] = $category[0];
             $data['categories'] = $allCategories;
             $data['itemTypes'] = $itemTypes;
+            $data['mainModule'] = 'category';
+            $data['subModule'] = '';
             $this->load->view($this->module_url.'/edit', $data);
         }else {
             $this->session->set_flashdata('error', 'Category not found');

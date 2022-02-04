@@ -36,12 +36,16 @@ class Bizwiz extends CI_Controller{
         $contents = $this->database_model->get_content($whereClause, $queryString);
         $data['contents'] = $contents;
         $data['querySearch'] = $querySearch;
+        $data['mainModule'] = 'item';
+        $data['subModule'] = 'viewItem';
         $this->load->view($this->module_url.'/list', $data);
     }
 
     //This will show create page
     public function create(){
-        $this->load->view($this->module_url.'/create');
+        $data['mainModule'] = 'item';
+        $data['subModule'] = 'createItem';
+        $this->load->view($this->module_url.'/create', $data);
     }
 
     //This will show edit page
@@ -53,6 +57,8 @@ class Bizwiz extends CI_Controller{
 
         if($content != null && count($content) == 1){
             $data['content'] = $content[0];
+            $data['mainModule'] = 'item';
+            $data['subModule'] = '';
             $this->load->view($this->module_url.'/edit', $data);
         }else {
             $this->session->set_flashdata('error', 'Item not found');

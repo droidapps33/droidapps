@@ -23,6 +23,7 @@ class Home extends CI_Controller{
         $contents = $this->database_model->get_content($whereClause);
         $data['categories'] = $categories;
         $data['contents'] = $contents;
+        $data['mainModule'] = 'dashboard';
 
         $this->load->view('admin/dashboard', $data);
     }

@@ -36,6 +36,8 @@ class Content extends CI_Controller{
         $contents = $this->database_model->get_content($whereClause, $queryString);
         $data['contents'] = $contents;
         $data['querySearch'] = $querySearch;
+        $data['mainModule'] = 'content';
+        $data['subModule'] = 'viewContent';
         $this->load->view($this->module_url.'/list', $data);
     }
 
@@ -47,6 +49,8 @@ class Content extends CI_Controller{
         $itemTypes = $this->database_model->get_item_types($whereClause);
         $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
+        $data['mainModule'] = 'content';
+        $data['subModule'] = 'createContent';
         $this->load->view($this->module_url.'/create', $data);
     }
 
@@ -65,6 +69,8 @@ class Content extends CI_Controller{
             $data['content'] = $content[0];
             $data['categories'] = $allCategories;
             $data['itemTypes'] = $itemTypes;
+            $data['mainModule'] = 'content';
+            $data['subModule'] = '';
             $this->load->view($this->module_url.'/edit', $data);
         }else {
             $this->session->set_flashdata('error', 'Content not found');

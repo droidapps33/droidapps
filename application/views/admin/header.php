@@ -75,7 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
          <li class="nav-item">
-           <a href="<?php echo base_url().'admin/home';?>" class="nav-link">
+           <a href="<?php echo base_url().'admin/home';?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='dashboard') ? 'active' : ''; ?>">
              <i class="far fa-circle nav-icon"></i>
              <p>
                Dashboard
@@ -84,8 +84,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
          </li>
          <?php if(isVisibleSideMenu('Categories') == true) {?>
          <!-- Category section start -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php echo (!empty($mainModule) && $mainModule =='category') ? 'menu-open' : ''; ?>">
+            <a href="#" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='category') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 <?php echo getMenuTitle('Categories');?>
@@ -94,13 +94,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/category');?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/category');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='category' && !empty($subModule) && $subModule =='viewCategory') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Categories');?></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/category/create');?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/category/create');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='category' && !empty($subModule) && $subModule =='createCategory') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Add Category');?></p>
                 </a>
@@ -112,8 +112,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
           <?php if(isVisibleSideMenu('Contents') == true) {?>
           <!-- Content section start -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php echo (!empty($mainModule) && $mainModule =='content') ? 'menu-open' : ''; ?>">
+            <a href="#" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='content') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 <?php echo getMenuTitle('Contents');?>
@@ -122,13 +122,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/content');?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/content');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='content' && !empty($subModule) && $subModule =='viewContent') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Contents');?></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/content/create');?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/content/create');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='content' && !empty($subModule) && $subModule =='createContent') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Add Content');?></p>
                 </a>
@@ -139,8 +139,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Content section end -->
 
           <!-- Data section start -->
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+          <li class="nav-item has-treeview <?php echo (!empty($mainModule) && $mainModule =='item') ? 'menu-open' : ''; ?>">
+            <a href="#" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='item') ? 'active' : ''; ?>">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 <?php echo getMenuTitle('Simple Item');?>
@@ -149,13 +149,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/item');?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/item');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='item' && !empty($subModule) && $subModule =='viewItem') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Items');?></p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/item/create');?>" class="nav-link">
+                <a href="<?php echo base_url().getMenuLink('admin/item/create');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='item' && !empty($subModule) && $subModule =='createItem') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Add Item');?></p>
                 </a>

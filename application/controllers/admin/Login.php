@@ -13,9 +13,12 @@ class Login extends CI_Controller{
   }
 
   //http://localhost/droidapps/admin/login
-    public function index()
-    {
-      $this->load->view('admin/login');
+    public function index() {
+        $admin = $this->session->userdata('admin');
+        if(!empty($admin)){
+            redirect(base_url().'admin/home/index');
+        }
+        $this->load->view('admin/login');
     }
 
     public function authenticate()
