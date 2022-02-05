@@ -7,11 +7,12 @@ This is a developed community where you will find several interesting blog artic
 
 API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 
+# Common API's methods
 - GET: get-apps
 
         return all apps list.
 
-## Category API's methods
+# Category API's methods
 
 - POST: insert-category, insert-update-category
 ```
@@ -63,7 +64,7 @@ Params & Where :
 ```
 
 
-## Content API's methods
+# Content API's methods
 
 - POST: insert-content, insert-update-content
 ```
@@ -134,7 +135,7 @@ Params & Where :
 ```
 
 
-## Data API's methods
+# Json Data API's methods
 
 - POST: insert-data, insert-update-data
 ```
