@@ -65,7 +65,7 @@ Params & Where :
 
 ## Content API's methods
 
-#### - POST: insert-content, insert-update-content
+- POST: insert-content, insert-update-content
 ```
 Params :
     pkg_id:
@@ -122,9 +122,15 @@ Params & Where :
 ```
 Params & Where :
     pkg_id:
-    id:
     cat_id:
-    sub_cat_id:
+    level:
+```
+
+- GET: get-content-by-sub-category
+```
+Params & Where :
+    pkg_id:
+    cat_id:
 ```
 
 
