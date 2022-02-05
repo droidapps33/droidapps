@@ -14,7 +14,7 @@ API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 ## Category API's methods
 
 - POST: insert-category, insert-update-category
-
+```
     Params :    
         pkg_id:
         sub_cat_id:
@@ -27,7 +27,7 @@ API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
         other_property:
 
     Where  :  pkg_id, cat_name, sub_cat_id
-
+```
 - POST: update-category
 
         Params :    pkg_id:
