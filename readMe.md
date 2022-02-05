@@ -65,7 +65,7 @@ Params & Where :
 
 ## Content API's methods
 
-- POST: insert-content, insert-update-content
+##### - POST: insert-content, insert-update-content
 ```
 Params :
     pkg_id:
