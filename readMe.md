@@ -3,8 +3,6 @@
 This is a developed community where you will find several interesting blog articles with short and cool codes. It contains Laravel 8, CodeIgniter 4, MySQL, WordPress, Node Js etc. Please visit once and see the power of learning from this blog.
 
 
-
-
 API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 
 # Common API's methods
@@ -335,6 +333,27 @@ class Home extends CI_Controller{
  <?php } ?>
 ```
 
+
+## Server Side Configuration
+PATH -> application\config\database.php
+```php
+$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'katyayan_school',
+	'password' => 'katyayan@@123',
+	'database' => 'droid_apps',
+	'dbdriver' => 'mysqli',
+	...
+    ...
+);
+```
+PATH -> application\config\config.php
+```php
+$config['base_url'] = 'http://localhost/droidapps/';
+replace with your domain
+$config['base_url'] = 'http://yourdomain.com/droidapps/';
+```
 
 ## CodeIgniter Documentation
 
