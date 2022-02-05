@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2022 at 09:08 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Feb 05, 2022 at 01:29 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -44,7 +44,7 @@ CREATE TABLE `table_account` (
 
 INSERT INTO `table_account` (`id`, `name`, `role`, `pkg_id`, `user_id`, `password`, `active`, `validity`) VALUES
 (1, 'Admin', 1, 'com.appsfeature', 'admin', '123', 1, '2024-01-31 19:15:44'),
-(3, 'Amit Jain', 0, 'com.appsfeature.bizwiz', 'amit', '123', 1, '2022-05-17 19:16:26');
+(3, 'Amit Jain', 0, 'com.appsfeature.bizwiz', 'amit', 'amit@123', 1, '2022-05-17 19:16:26');
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `title`, `item_t
 ('com.appsfeature', 109, 108, 'Mobile Shop', 1, NULL, 0, 1, '', '', NULL, '2022-02-03 17:15:17'),
 ('com.appsfeature', 110, 108, 'Cloth Shop', 1, NULL, 0, 1, '', '', NULL, '2022-02-03 17:15:33'),
 ('com.appsfeature', 111, 108, 'Electronics', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 19:20:14'),
-('com.appsfeature', 112, 111, 'Laptops', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 19:20:57');
+('com.appsfeature', 112, 111, 'Laptops', 0, '5bc19555e3a6ddae1a318f0f486cf092.png', 0, 1, '', '', NULL, '2022-02-03 19:20:57');
 
 -- --------------------------------------------------------
 
@@ -149,8 +149,10 @@ INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `d
 CREATE TABLE `table_item_type` (
   `pkg_id` varchar(100) NOT NULL,
   `id` int(11) NOT NULL,
+  `flavour` varchar(100) DEFAULT NULL,
   `item_type` int(100) NOT NULL,
   `title` varchar(500) NOT NULL,
+  `ranking` int(10) DEFAULT 0,
   `visibility` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -158,12 +160,12 @@ CREATE TABLE `table_item_type` (
 -- Dumping data for table `table_item_type`
 --
 
-INSERT INTO `table_item_type` (`pkg_id`, `id`, `item_type`, `title`, `visibility`) VALUES
-('com.appsfeature', 1, 3, 'Home Slider', 1),
-('com.appsfeature', 2, 0, 'Category', 1),
-('com.appsfeature', 3, 1, 'Content', 1),
-('com.appsfeature', 4, 2, 'Item', 1),
-('com.appsfeature.bizwiz', 5, 0, 'Home Slider', 1);
+INSERT INTO `table_item_type` (`pkg_id`, `id`, `flavour`, `item_type`, `title`, `ranking`, `visibility`) VALUES
+('com.appsfeature', 1, NULL, 3, 'Home Slider', 0, 1),
+('com.appsfeature', 2, NULL, 0, 'Category', 0, 1),
+('com.appsfeature', 3, NULL, 1, 'Content', 0, 1),
+('com.appsfeature', 4, NULL, 2, 'Item', 0, 1),
+('com.appsfeature.bizwiz', 5, NULL, 0, 'Home Slider', 0, 1);
 
 -- --------------------------------------------------------
 
