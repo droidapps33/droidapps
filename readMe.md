@@ -354,6 +354,13 @@ $config['base_url'] = 'http://localhost/droidapps/';
 replace with your domain
 $config['base_url'] = 'http://yourdomain.com/droidapps/';
 ```
+Change Default Welcome.php controller
+PATH -> application\config\routes.php
+```php
+$route['default_controller'] = 'welcome';
+replace with your controller
+$route['default_controller'] = 'profile';
+```
 
 ## CodeIgniter Documentation
 

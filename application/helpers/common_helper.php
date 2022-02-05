@@ -18,6 +18,18 @@ function resizeImage($sourcePath, $newPath, $width, $height){
     $CI->image_lib->clear();
 }
 
+function savePref($key, $value){
+    $CI =& get_instance();
+    $preferencesArray[$key] = $value;
+    $preferencesKey = $key.'pref';
+    $CI->session->set_userdata($preferencesKey, $preferencesArray);
+}
+
+function getPref($key){
+    $preferencesKey = $key.'pref';
+    return isset($_SESSION[$preferencesKey][$key])?$_SESSION[$preferencesKey][$key]:'';
+}
+
 function getCategoryWhereClause($pkg_id, $cat_id_or_name, $sub_cat_id){
     $key_cat_id_or_name = is_numeric($cat_id_or_name) ? 'cat_id' : 'title';
 
@@ -68,6 +80,13 @@ function getDataWhereClause($pkg_id, $cat_id, $id){
     return $whereClause;
 }
 
+function savePreferences(){
+    $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+    if($pkg_id == 'com.appsfeature.bizwiz'){
+        savePref('catSpinnerSelected', '114');
+    }
+}
+
 function isVisibleSideMenu($menuName){
   $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
   if($pkg_id == 'com.appsfeature.bizwiz'){
@@ -81,9 +100,9 @@ function isVisibleSideMenu($menuName){
 function isVisibleDashboardMenu($menuName){
   $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
   if($pkg_id == 'com.appsfeature.bizwiz'){
-      if($menuName == 'Categories'){
-          return false;
-      }
+      // if($menuName == 'Categories'){
+      //     return false;
+      // }
   }
   return true;
 }
@@ -108,6 +127,7 @@ function getMenuLink($menuLink){
   if($pkg_id == 'com.appsfeature.bizwiz'){
       switch ($menuLink) {
           case 'admin/content':
+          case 'admin/content/list':
           case 'admin/item':
               return 'admin/bizwiz';
           case 'admin/item/create':

@@ -10,6 +10,7 @@ class Login extends CI_Controller{
     $this->load->database();
     $this->load->model(array("Admin_model"));
     $this->load->library(array("form_validation"));
+    $this->load->helper("common_helper");
   }
 
   //http://localhost/droidapps/admin/login
@@ -43,6 +44,7 @@ class Login extends CI_Controller{
               $adminArray['name']     = $account['name'];
               $adminArray['app_name'] = $appDetail['app_name'];
               $this->session->set_userdata('admin', $adminArray);
+              savePreferences();
               redirect(base_url().'admin/home/index');
             }else{
               $this->session->set_flashdata('msg','Either username or password is incorrect');

@@ -34,6 +34,25 @@
                           <i class="fas fa-search"></i>
                         </button>
                       </div>
+
+                      <select class="form-control ml-3" name="sub_cat_id" id="sub_cat_id">
+                          <option value="0">Select Sub Category</option>
+                          <?php
+                              if(!empty($subCategories)){
+                                  foreach ($subCategories as $item) {
+                                      $selected = ($subCatIdSelected == $item['cat_id']) ? true : false;
+                                       ?>
+                                       <option <?php echo set_select('sub_cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                       <?php
+                                  }
+                              }
+                           ?>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon1">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -46,6 +65,7 @@
                   <table class="table">
                     <tr>
                       <th width="50" class="text-center">CatId</th>
+                      <th width="100" class="text-center">SubCatId</th>
                       <th>Name</th>
                       <th width="100" class="text-center">Status</th>
                       <th width="160" class="text-center">Action</th>
@@ -55,6 +75,7 @@
                         <?php foreach ($categories as $categoryRow) {?>
                             <tr>
                               <td class="text-center"><?php echo $categoryRow['cat_id'];?></td>
+                              <td class="text-center"><?php echo $categoryRow['sub_cat_id'];?></td>
                               <td><?php echo $categoryRow['title'];?></td>
                               <td class="text-center">
                                   <?php if($categoryRow['visibility'] == 1) {?>

@@ -36,7 +36,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
-          Welcome, <strong>Admin</strong>
+          Welcome, <strong><?php echo getPersonName();?></strong>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <div class="dropdown-divider"></div>
@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/category');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='category' && !empty($subModule) && $subModule =='viewCategory') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url().getMenuLink('admin/category/list');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='category' && !empty($subModule) && $subModule =='viewCategory') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Categories');?></p>
                 </a>
@@ -122,7 +122,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="<?php echo base_url().getMenuLink('admin/content');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='content' && !empty($subModule) && $subModule =='viewContent') ? 'active' : ''; ?>">
+                <a href="<?php echo base_url().getMenuLink('admin/content/list');?>" class="nav-link <?php echo (!empty($mainModule) && $mainModule =='content' && !empty($subModule) && $subModule =='viewContent') ? 'active' : ''; ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p><?php echo getMenuTitle('Contents');?></p>
                 </a>

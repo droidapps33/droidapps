@@ -34,6 +34,26 @@
                           <i class="fas fa-search"></i>
                         </button>
                       </div>
+
+                      <select class="form-control ml-3" name="cat_id" id="cat_id">
+                          <option value="0">Select Category</option>
+                          <?php
+                              if(!empty($categories)){
+                                  foreach ($categories as $item) {
+                                      $selected = ($catIdSelected == $item['cat_id']) ? true : false;
+                                       ?>
+                                       <option <?php echo set_select('cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                       <?php
+                                  }
+                              }
+                           ?>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon1">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+
                     </div>
                   </form>
                 </div>

@@ -40,14 +40,15 @@
 
                     <div class="row">
                         <div class="col-sm-4 mb-3">
-                            <label for="cat_id" class="formbuilder-number-label">CatId</label>
+                            <label for="cat_id" class="formbuilder-number-label">Category</label>
                             <select class="form-control" name="cat_id" id="cat_id">
                                 <option value="0">Select Category</option>
                                 <?php
                                     if(!empty($categories)){
                                         foreach ($categories as $item) {
-                                             ?>
-                                             <option <?php echo set_select('cat_id', $item['cat_id'], false); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                            $selected = ($catIdSelected == $item['cat_id']) ? true : false;
+                                            ?>
+                                             <option <?php echo set_select('cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
                                              <?php
                                         }
                                     }

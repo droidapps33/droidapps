@@ -27,18 +27,36 @@ class Content extends CI_Controller{
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
         $queryString = $this->input->get();
+        $catIdSelected = getPref('catIdSelected');
         $querySearch = '';
-        if($queryString != null){
-            $querySearch = $queryString['title'];
+        if(!empty($queryString)){
+            if(array_key_exists("cat_id", $queryString)){
+                $catIdSelected = $queryString['cat_id'];
+                savePref('catIdSelected', $catIdSelected);
+            }
+            if(array_key_exists("title", $queryString)){
+                $querySearch = $queryString['title'];
+            }
+        }else{
+            $queryString['cat_id'] = $catIdSelected;
         }
         $whereClause = getContentWhereClause($pkg_id, null, null, null, null);
+        $categories = $this->database_model->get_category($whereClause);
 
         $contents = $this->database_model->get_content($whereClause, $queryString);
         $data['contents'] = $contents;
+        $data['categories'] = $categories;
+        $data['catIdSelected'] = $catIdSelected;
         $data['querySearch'] = $querySearch;
         $data['mainModule'] = 'content';
         $data['subModule'] = 'viewContent';
         $this->load->view($this->module_url.'/list', $data);
+    }
+
+    //Reset and open list
+    public function list(){
+        savePref('catIdSelected', '');
+        $this->index();
     }
 
     //This will show create page
@@ -47,8 +65,10 @@ class Content extends CI_Controller{
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
         $categories = $this->database_model->get_category($whereClause);
         $itemTypes = $this->database_model->get_item_types($whereClause);
+        $catIdSelected = getPref('catIdSelected');
         $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
+        $data['catIdSelected'] = $catIdSelected;
         $data['mainModule'] = 'content';
         $data['subModule'] = 'createContent';
         $this->load->view($this->module_url.'/create', $data);

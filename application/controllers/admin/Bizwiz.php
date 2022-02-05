@@ -43,6 +43,13 @@ class Bizwiz extends CI_Controller{
 
     //This will show create page
     public function create(){
+        $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $categories = $this->database_model->get_category($whereClause);
+
+        $catSpinnerSelected = getPref('catSpinnerSelected');
+        $data['categories'] = $categories;
+        $data['catSpinnerSelected'] = $catSpinnerSelected;
         $data['mainModule'] = 'item';
         $data['subModule'] = 'createItem';
         $this->load->view($this->module_url.'/create', $data);
@@ -55,8 +62,12 @@ class Bizwiz extends CI_Controller{
         $whereClause = getContentWhereClause($pkg_id, null, null, $contentId, null);
         $content = $this->database_model->get_content($whereClause);
 
+        $whereClause = getCategoryWhereClause($pkg_id, null, null);
+        $categories = $this->database_model->get_category($whereClause);
+
         if($content != null && count($content) == 1){
             $data['content'] = $content[0];
+            $data['categories'] = $categories;
             $data['mainModule'] = 'item';
             $data['subModule'] = '';
             $this->load->view($this->module_url.'/edit', $data);

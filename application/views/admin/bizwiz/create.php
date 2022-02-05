@@ -37,6 +37,25 @@
 
                     <input type="hidden" name="pkg_id" access="false" id="pkg_id" value="<?php echo isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:''; ?>">
 
+                    <div class="row">
+                        <div class="col-sm-3 mb-3">
+                            <label for="cat_id" class="formbuilder-number-label">Category</label>
+                            <select class="form-control" name="cat_id" id="cat_id">
+                                <option value="0">Select Category</option>
+                                <?php
+                                    if(!empty($categories)){
+                                        foreach ($categories as $item) {
+                                            $selected = ($catSpinnerSelected == $item['cat_id']) ? true : false;
+                                            ?>
+                                             <option <?php echo set_select('cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
+                        </div>
+                    </div>
+
                      <div class="row">
                          <div class="col-sm-6 mb-3">
                              <label for="title" class="formbuilder-text-label">Title <span style="color:red">*</span></label>

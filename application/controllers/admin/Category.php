@@ -27,18 +27,38 @@ class Category extends CI_Controller{
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
         $queryString = $this->input->get();
+        $subCatIdSelected = getPref('subCatIdSelected');
         $querySearch = '';
-        if($queryString != null){
-        $querySearch = $queryString['title'];
+        if(!empty($queryString)){
+            if(array_key_exists("sub_cat_id", $queryString)){
+                $subCatIdSelected = $queryString['sub_cat_id'];
+                savePref('subCatIdSelected', $subCatIdSelected);
+            }
+            if(array_key_exists("title", $queryString)){
+                $querySearch = $queryString['title'];
+            }
+        }else{
+            $queryString['sub_cat_id'] = $subCatIdSelected;
         }
+        // print_r($queryString);die;
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
+
+        $subCategories = $this->database_model->get_category($whereClause);
 
         $category = $this->database_model->get_category($whereClause, $queryString);
         $data['categories'] = $category;
+        $data['subCategories'] = $subCategories;
+        $data['subCatIdSelected'] = $subCatIdSelected;
         $data['querySearch'] = $querySearch;
         $data['mainModule'] = 'category';
         $data['subModule'] = 'viewCategory';
         $this->load->view($this->module_url.'/list', $data);
+    }
+
+    //Reset and open list
+    public function list(){
+        savePref('subCatIdSelected', '');
+        $this->index();
     }
 
     //This will show create page
@@ -47,8 +67,10 @@ class Category extends CI_Controller{
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
         $categories = $this->database_model->get_category($whereClause);
         $itemTypes = $this->database_model->get_item_types($whereClause);
+        $subCatIdSelected = getPref('subCatIdSelected');
         $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
+        $data['subCatIdSelected'] = $subCatIdSelected;
         $data['mainModule'] = 'category';
         $data['subModule'] = 'createCategory';
         $this->load->view($this->module_url.'/create', $data);

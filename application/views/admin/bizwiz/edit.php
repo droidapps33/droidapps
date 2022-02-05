@@ -42,6 +42,25 @@
                     <input type="hidden" name="image_old" access="false" id="image_old" value="<?php echo $content['image']; ?>">
 
                     <div class="row">
+                        <div class="col-sm-3 mb-3">
+                            <label for="cat_id" class="formbuilder-number-label">Category</label>
+                            <select class="form-control" name="cat_id" id="cat_id">
+                                <option value="0">Select Category</option>
+                                <?php
+                                    if(!empty($categories)){
+                                        foreach ($categories as $item) {
+                                            $selected = ($content['cat_id'] == $item['cat_id']) ? true : false;
+                                             ?>
+                                             <option <?php echo set_select('cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                             <?php
+                                        }
+                                    }
+                                 ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
                         <div class="col-sm-6 mb-3">
                             <label for="title" class="formbuilder-text-label">Title <span style="color:red">*</span></label>
                             <input type="text" placeholder="Enter Title" value="<?php echo $content['title'];?>" class="form-control" name="title" access="false" id="title">

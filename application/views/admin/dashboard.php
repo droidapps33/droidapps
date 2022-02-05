@@ -42,7 +42,7 @@
                           <div class="icon">
                             <i class="ion ion-stats-bars"></i>
                           </div>
-                          <a href="<?php echo base_url().getMenuLink('admin/category');?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                          <a href="<?php echo base_url().getMenuLink('admin/category/list');?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                       </div>
                       <!-- ./col -->
@@ -60,7 +60,7 @@
                             <div class="icon">
                               <i class="ion ion-stats-bars"></i>
                             </div>
-                            <a href="<?php echo base_url().getMenuLink('admin/content');?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="<?php echo base_url().getMenuLink('admin/content/list');?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                           </div>
                         </div>
                         <!-- ./col -->

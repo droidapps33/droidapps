@@ -40,8 +40,8 @@
                     <input type="hidden" name="id" access="false" id="id" value="<?php echo $item['id']; ?>">
 
                     <div class="formbuilder-number form-group field-cat_id">
-                         
-                        <label for="cat_id" class="formbuilder-number-label">CatId</label>
+
+                        <label for="cat_id" class="formbuilder-number-label">Category</label>
                         <select class="form-control" name="cat_id" id="cat_id">
                             <option value="0">Select Category</option>
                             <?php

@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-sm-4 mb-3">
 
-                            <label for="sub_cat_id" class="formbuilder-number-label">SubCatId</label>
+                            <label for="sub_cat_id" class="formbuilder-number-label">Sub Category</label>
                             <select class="form-control" name="sub_cat_id" id="sub_cat_id">
                                 <option value="0">Select Sub Category</option>
                                 <?php
