@@ -15,17 +15,18 @@ API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 
 - POST: insert-category, insert-update-category
 
-        Params :    pkg_id:
-                    sub_cat_id:
-                    cat_name:
-                    cat_type:
-                    image:
-                    order_id:
-                    visibility:
-                    json_data:
-                    other_property:
+    Params :    
+        pkg_id:
+        sub_cat_id:
+        cat_name:
+        cat_type:
+        image:
+        order_id:
+        visibility:
+        json_data:
+        other_property:
 
-        Where  :    pkg_id, cat_name, sub_cat_id
+    Where  :  pkg_id, cat_name, sub_cat_id
 
 - POST: update-category
 
