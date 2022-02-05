@@ -15,25 +15,40 @@ API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 
 - POST: insert-category, insert-update-category
 
-        Params : pkg_id, sub_cat_id, cat_name, cat_type, image, order_id, visibility
-                 , json_data, other_property
+        Params :    pkg_id:
+                    sub_cat_id:
+                    cat_name:
+                    cat_type:
+                    image:
+                    order_id:
+                    visibility:
+                    json_data:
+                    other_property:
 
-        Where  : pkg_id, cat_name, sub_cat_id
+        Where  :    pkg_id, cat_name, sub_cat_id
 
 - POST: update-category
 
-        Params : pkg_id, cat_id, sub_cat_id, cat_name, cat_type, image, order_id, visibility
-                 ,json_data, other_property
+        Params :    pkg_id:
+                    cat_id:
+                    sub_cat_id:
+                    cat_name:
+                    cat_type:
+                    image:
+                    order_id:
+                    visibility:
+                    json_data:
+                    other_property:
 
         Where  : pkg_id, cat_id, sub_cat_id
 
 - POST: delete-category
 
-        Params & Where : pkg_id, cat_id, sub_cat_id
+        Params & Where : pkg_id:cat_id:sub_cat_id
 
 - GET: get-category
 
-        Params & Where : pkg_id, cat_id, sub_cat_id
+        Params & Where : pkg_id:cat_id:sub_cat_id
 
 
 
@@ -41,29 +56,29 @@ API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 
 - POST: insert-content, insert-update-content
 
-        Params : pkg_id, cat_id, sub_cat_id, title, description, image, link, visibility
-                 , json_data, other_property
+        Params : pkg_id:cat_id:sub_cat_id:title:description:image:link:visibility
+                 :json_data:other_property
 
         Where  : pkg_id, cat_id, sub_cat_id
 
 - POST: update-content
 
-        Params : pkg_id, id, cat_id, sub_cat_id, title, description, image, link, visibility
-                 , json_data, other_property
+        Params : pkg_id:id:cat_id:sub_cat_id:title:description:image:link:visibility
+                 :json_data:other_property
 
         Where  : pkg_id, id, cat_id, sub_cat_id
 
 - POST: delete-content
 
-        Params & Where : pkg_id, id, cat_id, sub_cat_id
+        Params & Where : pkg_id:id:cat_id:sub_cat_id
 
 - GET: get-content
 
-        Params & Where : pkg_id, id, cat_id, sub_cat_id
+        Params & Where : pkg_id:id:cat_id:sub_cat_id
 
 - GET: get-content-by-category
 
-        Params & Where : pkg_id, id, cat_id, sub_cat_id
+        Params & Where : pkg_id:id:cat_id:sub_cat_id
 
 
 
@@ -71,19 +86,19 @@ API Base Url: `http://yourdomain.com/droidapps/api/v1/database/`
 
 - POST: insert-data, insert-update-data
 
-        Params & Where : pkg_id, cat_id, json_data
+        Params & Where : pkg_id:cat_id:json_data
 
 - POST: update-data
 
-        Params & Where : pkg_id, cat_id, json_data
+        Params & Where : pkg_id:cat_id:json_data
 
 - POST: delete-data
 
-        Params & Where : pkg_id, cat_id
+        Params & Where : pkg_id:cat_id
 
 - GET: get-data
 
-        Params & Where : pkg_id, cat_id
+        Params & Where : pkg_id:cat_id
 
 
 
