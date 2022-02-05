@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2022 at 01:29 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.27
+-- Generation Time: Feb 05, 2022 at 09:03 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -93,14 +93,13 @@ CREATE TABLE `table_category` (
 --
 
 INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `title`, `item_type`, `image`, `ranking`, `visibility`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
-('com.sample.live', 13, 5, 'Category Live Exam', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.sample.live', 14, 5, 'Category Live Exam 2', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
-('com.bizwiz.global', 15, 5, 'BizWiz Category 1', 0, NULL, 0, 1, NULL, NULL, '2022-01-20 07:28:20', '2022-01-26 16:19:23'),
 ('com.appsfeature', 108, 0, 'Dashboard', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 17:12:07'),
 ('com.appsfeature', 109, 108, 'Mobile Shop', 1, NULL, 0, 1, '', '', NULL, '2022-02-03 17:15:17'),
 ('com.appsfeature', 110, 108, 'Cloth Shop', 1, NULL, 0, 1, '', '', NULL, '2022-02-03 17:15:33'),
 ('com.appsfeature', 111, 108, 'Electronics', 0, NULL, 0, 1, '', '', NULL, '2022-02-03 19:20:14'),
-('com.appsfeature', 112, 111, 'Laptops', 0, '5bc19555e3a6ddae1a318f0f486cf092.png', 0, 1, '', '', NULL, '2022-02-03 19:20:57');
+('com.appsfeature', 112, 111, 'Laptops', 0, '5bc19555e3a6ddae1a318f0f486cf092.png', 0, 1, '', '', NULL, '2022-02-03 19:20:57'),
+('com.appsfeature', 113, 108, 'Qwerty', 0, NULL, 0, 1, '', '', NULL, '2022-02-05 18:07:16'),
+('com.appsfeature.bizwiz', 114, 0, 'Home Slider', 0, NULL, 0, 1, '', '', NULL, '2022-02-05 18:41:48');
 
 -- --------------------------------------------------------
 
@@ -131,9 +130,7 @@ CREATE TABLE `table_content` (
 --
 
 INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `item_type`, `image`, `link`, `visibility`, `ranking`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
-('com.sample.live', 3, 13, 5, 'Live exam scheduled on 25th ', NULL, 0, NULL, NULL, 1, 0, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.bizwiz.global', 4, 13, 5, 'BizWiz video striming soon.', NULL, 0, NULL, NULL, 1, 0, NULL, NULL, '2022-01-20 12:59:38', '2022-01-26 16:18:09'),
-('com.appsfeature.bizwiz', 34, 0, 0, 'Happy Hours', '', 0, NULL, 'https://github.com/appsfeature/droidapps', 1, 0, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
+('com.appsfeature.bizwiz', 34, 114, 0, 'Happy Hours', '', NULL, NULL, 'https://github.com/appsfeature/droidapps', 1, 0, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
 ('com.appsfeature', 39, 109, 0, 'Android Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:14'),
 ('com.appsfeature', 40, 109, 0, 'Apple Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:35'),
 ('com.appsfeature', 41, 110, 0, 'Womens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:39'),
@@ -165,7 +162,7 @@ INSERT INTO `table_item_type` (`pkg_id`, `id`, `flavour`, `item_type`, `title`, 
 ('com.appsfeature', 2, NULL, 0, 'Category', 0, 1),
 ('com.appsfeature', 3, NULL, 1, 'Content', 0, 1),
 ('com.appsfeature', 4, NULL, 2, 'Item', 0, 1),
-('com.appsfeature.bizwiz', 5, NULL, 0, 'Home Slider', 0, 1);
+('com.appsfeature.bizwiz', 5, NULL, 2, 'Slider', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -243,13 +240,13 @@ ALTER TABLE `table_app`
 -- AUTO_INCREMENT for table `table_category`
 --
 ALTER TABLE `table_category`
-  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `cat_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `table_content`
 --
 ALTER TABLE `table_content`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `table_item_type`
