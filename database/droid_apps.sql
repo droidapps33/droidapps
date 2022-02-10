@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2022 at 09:03 PM
--- Server version: 10.4.17-MariaDB
--- PHP Version: 7.3.27
+-- Generation Time: Feb 10, 2022 at 06:09 AM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -140,13 +140,34 @@ INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `d
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `table_flavour`
+--
+
+CREATE TABLE `table_flavour` (
+  `id` int(11) NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `visibility` int(10) DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `table_flavour`
+--
+
+INSERT INTO `table_flavour` (`id`, `title`, `visibility`) VALUES
+(0, 'Category', 1),
+(1, 'Content', 1),
+(2, 'Json', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `table_item_type`
 --
 
 CREATE TABLE `table_item_type` (
   `pkg_id` varchar(100) NOT NULL,
   `id` int(11) NOT NULL,
-  `flavour` varchar(100) DEFAULT NULL,
+  `flavour` int(100) DEFAULT 0,
   `item_type` int(100) NOT NULL,
   `title` varchar(500) NOT NULL,
   `ranking` int(10) DEFAULT 0,
@@ -158,11 +179,19 @@ CREATE TABLE `table_item_type` (
 --
 
 INSERT INTO `table_item_type` (`pkg_id`, `id`, `flavour`, `item_type`, `title`, `ranking`, `visibility`) VALUES
-('com.appsfeature', 1, NULL, 3, 'Home Slider', 0, 1),
-('com.appsfeature', 2, NULL, 0, 'Category', 0, 1),
-('com.appsfeature', 3, NULL, 1, 'Content', 0, 1),
-('com.appsfeature', 4, NULL, 2, 'Item', 0, 1),
-('com.appsfeature.bizwiz', 5, NULL, 2, 'Slider', 0, 1);
+('common', 2, 0, 0, 'List', 0, 1),
+('common', 3, 0, 1, 'Grid', 0, 1),
+('common', 4, 0, 2, 'Horizontal Card Scroll', 0, 1),
+('com.appsfeature.bizwiz', 5, 1, 2, 'Slider', 0, 1),
+('common', 7, 0, 3, 'ViewPager Auto Slider', 0, 1),
+('common', 8, 0, 4, 'List Card', 0, 1),
+('common', 9, 0, 5, 'Grid Card', 0, 1),
+('common', 10, 1, 101, 'PDF', 0, 1),
+('common', 11, 1, 102, 'Link', 0, 1),
+('common', 12, 1, 103, 'Html View', 0, 1),
+('common', 13, 1, 104, 'Test', 0, 1),
+('common', 14, 1, 105, 'Quiz', 0, 1),
+('common', 15, 1, 106, 'Videos', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -209,6 +238,12 @@ ALTER TABLE `table_content`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indexes for table `table_flavour`
+--
+ALTER TABLE `table_flavour`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `table_item_type`
 --
 ALTER TABLE `table_item_type`
@@ -249,10 +284,16 @@ ALTER TABLE `table_content`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
+-- AUTO_INCREMENT for table `table_flavour`
+--
+ALTER TABLE `table_flavour`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `table_item_type`
 --
 ALTER TABLE `table_item_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `table_json`
