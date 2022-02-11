@@ -80,6 +80,20 @@ function getDataWhereClause($pkg_id, $cat_id, $id){
     return $whereClause;
 }
 
+function getItemTypeWhereClause($pkg_id, $id, $title){
+    $whereClause = null;
+    if($pkg_id != null){
+        $whereClause['pkg_id'] = $pkg_id;
+    }
+    if($id != null){
+        $whereClause['id'] = $id;
+    }
+    if($title != null){
+        $whereClause['title'] = $title;
+    }
+    return $whereClause;
+}
+
 function savePreferences(){
     $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
     if($pkg_id == 'com.appsfeature.bizwiz'){
@@ -90,7 +104,7 @@ function savePreferences(){
 function isVisibleSideMenu($menuName){
   $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
   if($pkg_id == 'com.appsfeature.bizwiz'){
-      if($menuName == 'Categories' || $menuName == 'Contents'){
+      if($menuName == 'Categories' || $menuName == 'Contents' || $menuName == 'ItemType'){
           return false;
       }
   }
@@ -113,7 +127,7 @@ function getMenuTitle($menuName){
       switch ($menuName) {
           case 'Contents':
               return 'Home Items';
-          case 'Simple Item':
+          case 'Json data':
               return 'Home Items';
           default:
               return $menuName;
@@ -128,9 +142,9 @@ function getMenuLink($menuLink){
       switch ($menuLink) {
           case 'admin/content':
           case 'admin/content/list':
-          case 'admin/item':
+          case 'admin/json':
               return 'admin/bizwiz';
-          case 'admin/item/create':
+          case 'admin/json/create':
               return 'admin/bizwiz/create';
           default:
               return $menuLink;

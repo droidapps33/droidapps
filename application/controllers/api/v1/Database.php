@@ -14,13 +14,23 @@ class Database extends REST_Controller{
   }
 
 
-  //http://localhost/droidapps/api/v1/database/get_apps
+  //http://localhost/droidapps/api/v1/database/get-apps
   public function get_apps_get(){
       $apps = $this->database_model->get_apps();
       if(count($apps) > 0){
           $this->responseResult(STATUS_SUCCESS,"Apps found", $apps);
       }else{
           $this->responseResult(STATUS_FAILURE," No Apps found");
+      }
+  }
+
+  //http://localhost/droidapps/api/v1/database/get-flavours
+  public function get_flavours_get(){
+      $flavours = $this->database_model->get_flavours();
+      if(count($flavours) > 0){
+          $this->responseResult(STATUS_SUCCESS, "Flavours found", $flavours);
+      }else{
+          $this->responseResult(STATUS_FAILURE," No Flavours found");
       }
   }
 
@@ -448,6 +458,90 @@ class Database extends REST_Controller{
           $this->responseResult(STATUS_SUCCESS,"Json found", $content);
       }else{
           $this->responseResult(STATUS_FAILURE," No Json found");
+      }
+  }
+
+  //http://localhost/droidapps/api/v1/database/insert-item-type
+  //where: $pkg_id, $id, $title
+  public function insert_item_type_post(){
+        $this->insertItemtype(false);
+  }
+  //http://localhost/droidapps/api/v1/database/update-item-type
+  //where: $pkg_id, $id, $title
+  public function update_item_type_post(){
+      $this->insertItemtype(true);
+  }
+
+  private function insertItemtype($isUpdateOnly = false){
+      $pkg_id = $this->input->post("pkg_id");
+      $id = $this->input->post("id");
+      $flavour = $this->input->post("flavour");
+      $itemType = $this->input->post("item_type");
+      $title = $this->input->post("title");
+      $ranking = $this->input->post("ranking");
+      $visibility = $this->input->post("visibility");
+
+      $whereClause = getItemTypeWhereClause($pkg_id, $id, $title);
+
+      $this->form_validation->set_rules("pkg_id", "Package Id", "required");
+      $this->form_validation->set_rules("item_type", "Item Type", "required");
+      $this->form_validation->set_rules("title", "Title", "required");
+      // checking form submittion have any error or not
+      if($this->form_validation->run() === FALSE){
+          // we have some errors
+          $this->responseResult(0, strip_tags(validation_errors()));
+      }else{
+          $content = array(
+              "pkg_id" => $pkg_id,
+              "flavour" => $flavour == null ? 0 : $flavour,
+              "item_type" => $itemType == null ? 0 : $itemType,
+              "title" => $title,
+              "ranking" => $ranking == null ? 0 : $ranking,
+              "visibility" => $visibility == null ? 1 : $visibility
+          );
+          if($isUpdateOnly){
+              if($this->database_model->update_item_type($whereClause, $content)){
+                  $this->responseStatus(STATUS_SUCCESS, "ItemType has been updated");
+              }else{
+                  $this->responseStatus(STATUS_FAILURE,"Failed to update ItemType");
+              }
+          }else {
+              if($this->database_model->insert_item_type(false, $whereClause, $content)){
+                  $this->responseStatus(STATUS_SUCCESS, "ItemType has been created");
+              }else{
+                  $this->responseStatus(STATUS_FAILURE,"Failed to create ItemType");
+              }
+          }
+      }
+  }
+
+  //http://localhost/droidapps/api/v1/database/delete-item-type
+  public function delete_item_type_post(){
+      // delete data method
+      $pkg_id = $this->input->post("pkg_id");
+      $id = $this->input->post("id");
+      $whereClause = getItemTypeWhereClause($pkg_id, $id, null);
+
+      if($this->database_model->delete_item_type($whereClause)){
+          $this->responseStatus(STATUS_SUCCESS, "ItemType has been deleted");
+      }else{
+          $this->responseStatus(STATUS_FAILURE,"Failed to delete ItemType");
+      }
+  }
+
+  //http://localhost/droidapps/index.php/api/v1/database/get-item-type
+  public function get_item_type_get(){
+      $pkg_id = $this->input->get("pkg_id");
+      $id = $this->input->get("id");
+      $whereClause = getItemTypeWhereClause($pkg_id, $id, null);
+
+      $category = $this->database_model->get_item_type($whereClause);
+      // print_r($students);
+      // die();
+      if(count($category) > 0){
+          $this->responseResult(STATUS_SUCCESS,"ItemType found", $category);
+      }else{
+          $this->responseResult(STATUS_FAILURE," No ItemType found");
       }
   }
 

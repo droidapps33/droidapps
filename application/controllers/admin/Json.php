@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit ('No direct script access allowed');
 
-class Item extends CI_Controller{
+class Json extends CI_Controller{
 
     public $module_title = 'Items';
-    public $module_url = 'admin/item';
-    public $module_url_list = 'admin/item';
-    public $module_url_create = 'admin/item/create';
-    public $module_url_edit = 'admin/item/edit';
-    public $module_url_delete = 'admin/item/delete';
+    public $module_url = 'admin/json';
+    public $module_url_list = 'admin/json';
+    public $module_url_create = 'admin/json/create';
+    public $module_url_edit = 'admin/json/edit';
+    public $module_url_delete = 'admin/json/delete';
 
     public function __construct(){
         parent::__construct();
@@ -22,7 +22,7 @@ class Item extends CI_Controller{
         $this->load->helper("common_helper");
     }
 
-    //http://localhost/droidapps/admin/item
+    //http://localhost/droidapps/admin/json
     //This will show item list page
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
