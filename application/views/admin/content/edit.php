@@ -180,7 +180,7 @@ $(document).ready(function() {
             encode: true,
         }).done(function(data) {
             var successURL = "<?php echo base_url().$CI->module_url_list; ?>";
-            if(data.status==0){
+            if(data.status=='failure'){
               showToast(false, data.message);
               $("button[type='submit']").prop("disabled", false);
             } else {

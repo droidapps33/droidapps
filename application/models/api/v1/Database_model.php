@@ -146,16 +146,12 @@ class Database_model extends CI_Model{
         return $query->result_array();
     }
 
-    public function insert_item_type($isUpdate = false, $whereClause = array(), $data = array()){
+    public function insert_item_type($whereClause = array(), $data = array()){
       $query = $this->db->get_where('table_item_type', $whereClause);
       if($query->num_rows() <= 0 ){
-        return $this->db->insert("table_item_type", $data);
+            return $this->db->insert("table_item_type", $data);
       }else {
-        if($isUpdate){
-          return $this->db->update("table_item_type", $data, $whereClause);
-        }else {
-          return false;
-        }
+            return false;
       }
     }
 
@@ -189,5 +185,14 @@ class Database_model extends CI_Model{
          $query = $this->db->get("table_item_type");
          return $query->result_array();
      }
+
+      public function get_item_type_where($whereClause = array(), $searchQuery=[]){
+          if($searchQuery != null && count($searchQuery) > 0){
+              $this->db->like($searchQuery);
+          }
+          $this->db->order_by('ranking', 'ASC');
+          $query = $this->db->get_where("table_item_type", $whereClause);
+          return $query->result_array();
+      }
 }
 ?>

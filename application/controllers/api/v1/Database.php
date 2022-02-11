@@ -481,8 +481,6 @@ class Database extends REST_Controller{
       $ranking = $this->input->post("ranking");
       $visibility = $this->input->post("visibility");
 
-      $whereClause = getItemTypeWhereClause($pkg_id, $id, $title);
-
       $this->form_validation->set_rules("pkg_id", "Package Id", "required");
       $this->form_validation->set_rules("item_type", "Item Type", "required");
       $this->form_validation->set_rules("title", "Title", "required");
@@ -500,16 +498,23 @@ class Database extends REST_Controller{
               "visibility" => $visibility == null ? 1 : $visibility
           );
           if($isUpdateOnly){
+              $whereClause = getItemTypeWhereClause($pkg_id, $id, $itemType);
               if($this->database_model->update_item_type($whereClause, $content)){
                   $this->responseStatus(STATUS_SUCCESS, "ItemType has been updated");
               }else{
-                  $this->responseStatus(STATUS_FAILURE,"Failed to update ItemType");
+                  $this->responseStatus(STATUS_FAILURE, "Failed to update ItemType");
               }
           }else {
-              if($this->database_model->insert_item_type(false, $whereClause, $content)){
-                  $this->responseStatus(STATUS_SUCCESS, "ItemType has been created");
-              }else{
-                  $this->responseStatus(STATUS_FAILURE,"Failed to create ItemType");
+              $whereClause = getItemTypeWhereClause(null, null, $itemType);
+              $itemType = $this->database_model->get_item_type_where($whereClause);
+              if($itemType == null || count($itemType) <= 0){
+                  if($this->database_model->insert_item_type(false, $whereClause, $content)){
+                      $this->responseStatus(STATUS_SUCCESS, "ItemType has been created");
+                  }else{
+                      $this->responseStatus(STATUS_FAILURE, "Failed to create ItemType");
+                  }
+              }else {
+                  $this->responseStatus(STATUS_FAILURE, "Item Type already exists!");
               }
           }
       }
@@ -535,11 +540,11 @@ class Database extends REST_Controller{
       $id = $this->input->get("id");
       $whereClause = getItemTypeWhereClause($pkg_id, $id, null);
 
-      $category = $this->database_model->get_item_type($whereClause);
+      $itemType = $this->database_model->get_item_type($whereClause);
       // print_r($students);
       // die();
-      if(count($category) > 0){
-          $this->responseResult(STATUS_SUCCESS,"ItemType found", $category);
+      if(count($itemType) > 0){
+          $this->responseResult(STATUS_SUCCESS,"ItemType found", $itemType);
       }else{
           $this->responseResult(STATUS_FAILURE," No ItemType found");
       }

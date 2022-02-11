@@ -93,7 +93,7 @@ Params :
     image:
     link:
     visibility:
-    :json_data:
+    json_data:
     other_property:
 
 Where  : pkg_id, id, cat_id, sub_cat_id

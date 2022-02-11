@@ -27,35 +27,26 @@ class Itemtype extends CI_Controller{
     public function index(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
         $queryString = $this->input->get();
-        $catIdSelected = getPref('catIdSelected');
         $querySearch = '';
         if(!empty($queryString)){
-            if(array_key_exists("cat_id", $queryString)){
-                $catIdSelected = $queryString['cat_id'];
-                savePref('catIdSelected', $catIdSelected);
-            }
             if(array_key_exists("title", $queryString)){
                 $querySearch = $queryString['title'];
             }
-        }else{
-            $queryString['cat_id'] = $catIdSelected;
         }
-        $whereClause = getContentWhereClause($pkg_id, null, null, null, null);
-        $categories = $this->database_model->get_category($whereClause);
+        $whereClause = getItemTypeWhereClause($pkg_id, null, null);
+        $flavours = $this->database_model->get_flavours();
 
-        $itemtypes = $this->database_model->get_itemtype($whereClause, $queryString);
+        $itemtypes = $this->database_model->get_item_type($whereClause, $queryString);
         $data['itemtypes'] = $itemtypes;
-        $data['categories'] = $categories;
-        $data['catIdSelected'] = $catIdSelected;
+        $data['flavours'] = $flavours;
         $data['querySearch'] = $querySearch;
         $data['mainModule'] = 'itemtype';
-        $data['subModule'] = 'viewContent';
+        $data['subModule'] = 'viewItemtype';
         $this->load->view($this->module_url.'/list', $data);
     }
 
     //Reset and open list
     public function list(){
-        savePref('catIdSelected', '');
         $this->index();
     }
 
@@ -63,14 +54,10 @@ class Itemtype extends CI_Controller{
     public function create(){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
-        $categories = $this->database_model->get_category($whereClause);
-        $itemTypes = $this->database_model->get_item_types($whereClause);
-        $catIdSelected = getPref('catIdSelected');
-        $data['categories'] = $categories;
-        $data['itemTypes'] = $itemTypes;
-        $data['catIdSelected'] = $catIdSelected;
+        $flavours = $this->database_model->get_flavours();
+        $data['flavours'] = $flavours;
         $data['mainModule'] = 'itemtype';
-        $data['subModule'] = 'createContent';
+        $data['subModule'] = 'createItemtype';
         $this->load->view($this->module_url.'/create', $data);
     }
 
@@ -78,20 +65,21 @@ class Itemtype extends CI_Controller{
     public function edit($itemtypeId = null){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
 
-        $whereClause = getContentWhereClause($pkg_id, null, null, $itemtypeId, null);
-        $itemtype = $this->database_model->get_itemtype($whereClause);
+        $whereClause = getItemTypeWhereClause(null, $itemtypeId, null);
+        $itemtype = $this->database_model->get_item_type_where($whereClause);
 
-        $whereClause = getCategoryWhereClause($pkg_id, null, null);
-        $allCategories = $this->database_model->get_category($whereClause);
-        $itemTypes = $this->database_model->get_item_types($whereClause);
-
+        $flavours = $this->database_model->get_flavours();
         if($itemtype != null && count($itemtype) == 1){
-            $data['itemtype'] = $itemtype[0];
-            $data['categories'] = $allCategories;
-            $data['itemTypes'] = $itemTypes;
-            $data['mainModule'] = 'itemtype';
-            $data['subModule'] = '';
-            $this->load->view($this->module_url.'/edit', $data);
+            if($itemtype[0]['pkg_id'] == 'common' && $pkg_id != 'com.appsfeature'){
+                $this->session->set_flashdata('error', 'Not authorise to edit.');
+                redirect(base_url().$this->module_url);
+            }else {
+                $data['itemtype'] = $itemtype[0];
+                $data['flavours'] = $flavours;
+                $data['mainModule'] = 'itemtype';
+                $data['subModule'] = '';
+                $this->load->view($this->module_url.'/edit', $data);
+            }
         }else {
             $this->session->set_flashdata('error', 'Itemtype not found');
             redirect(base_url().$this->module_url);
@@ -101,14 +89,17 @@ class Itemtype extends CI_Controller{
     //This will show delete page
     public function delete($itemtypeId){
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
-        $whereClause = getContentWhereClause($pkg_id, null, null, $itemtypeId, null);
-
-        $itemtypeArray = $this->database_model->get_itemtype($whereClause);
+        $whereClause = getItemTypeWhereClause(null, $itemtypeId, null);
+        $itemtypeArray = $this->database_model->get_item_type_where($whereClause);
         if($itemtypeArray != null && count($itemtypeArray) == 1){
-            if($this->database_model->delete_itemtype($whereClause)){
-                $this->session->set_flashdata('success', 'Itemtype has been deleted');
-            }else{
-                $this->session->set_flashdata('error', 'Failed to delete Itemtype');
+            if($itemtypeArray[0]['pkg_id'] == 'common' && $pkg_id != 'com.appsfeature'){
+                $this->session->set_flashdata('error', 'Not authorise to delete.');
+            }else {
+                if($this->database_model->delete_item_type($whereClause)){
+                    $this->session->set_flashdata('success', 'Itemtype has been deleted');
+                }else{
+                    $this->session->set_flashdata('error', 'Failed to delete Itemtype');
+                }
             }
         }else {
             $this->session->set_flashdata('error', 'Itemtype not found');

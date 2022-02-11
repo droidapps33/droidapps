@@ -80,7 +80,7 @@ function getDataWhereClause($pkg_id, $cat_id, $id){
     return $whereClause;
 }
 
-function getItemTypeWhereClause($pkg_id, $id, $title){
+function getItemTypeWhereClause($pkg_id, $id, $itemType){
     $whereClause = null;
     if($pkg_id != null){
         $whereClause['pkg_id'] = $pkg_id;
@@ -88,8 +88,8 @@ function getItemTypeWhereClause($pkg_id, $id, $title){
     if($id != null){
         $whereClause['id'] = $id;
     }
-    if($title != null){
-        $whereClause['title'] = $title;
+    if($itemType != null){
+        $whereClause['item_type'] = $itemType;
     }
     return $whereClause;
 }
