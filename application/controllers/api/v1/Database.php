@@ -507,16 +507,22 @@ class Database extends REST_Controller{
                   $this->responseStatus(STATUS_FAILURE, "Failed to update ItemType");
               }
           }else {
-              $whereClause = getItemTypeWhereClause(null, null, $itemType);
+              $whereClause = getItemTypeWhereClause('common', null, $itemType);
               $itemType = $this->database_model->get_item_type_where($whereClause);
-              if($itemType == null || count($itemType) <= 0){
-                  if($this->database_model->insert_item_type(false, $whereClause, $content)){
-                      $this->responseStatus(STATUS_SUCCESS, "ItemType has been created");
-                  }else{
-                      $this->responseStatus(STATUS_FAILURE, "Failed to create ItemType");
-                  }
-              }else {
+              if($itemType != null && count($itemType) > 0){
+                  $this->responseStatus(STATUS_FAILURE, "Item Type already exists in defaults!");
+                  return;
+              }
+              $whereClause = getItemTypeWhereClause($pkg_id, null, $itemType);
+              $itemType = $this->database_model->get_item_type_where($whereClause);
+              if($itemType != null && count($itemType) > 0){
                   $this->responseStatus(STATUS_FAILURE, "Item Type already exists!");
+                  return;
+              }
+              if($this->database_model->insert_item_type($whereClause, $content)){
+                  $this->responseStatus(STATUS_SUCCESS, "ItemType has been created");
+              }else{
+                  $this->responseStatus(STATUS_FAILURE, "Failed to create ItemType");
               }
           }
       }
