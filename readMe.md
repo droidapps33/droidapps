@@ -55,7 +55,7 @@ Params & Where :
 
 - GET: get-category
 ```
-Params & Where :
+Params & Where :?pkg_id=package&cat_id=0&sub_cat_id=0
     pkg_id:
     cat_id:
     sub_cat_id:
@@ -110,7 +110,7 @@ Params & Where :
 
 - GET: get-content
 ```
-Params & Where :
+Params & Where : ?pkg_id=package&id=0&cat_id=0&sub_cat_id=0
     pkg_id:
     id:
     cat_id:
@@ -119,7 +119,7 @@ Params & Where :
 
 - GET: get-content-by-category
 ```
-Params & Where :
+Params & Where : ?pkg_id=package&cat_id=0&level=0
     pkg_id:
     cat_id:
     level:
@@ -127,7 +127,7 @@ Params & Where :
 
 - GET: get-content-by-sub-category
 ```
-Params & Where :
+Params & Where :?pkg_id=package&cat_id=0
     pkg_id:
     cat_id:
 ```
@@ -160,7 +160,7 @@ Params & Where :
 
 - GET: get-data
 ```
-Params & Where :
+Params & Where :?pkg_id=package&cat_id=0
     pkg_id:
     cat_id:
 ```
