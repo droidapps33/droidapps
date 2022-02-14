@@ -763,7 +763,8 @@ abstract class REST_Controller extends \CI_Controller {
       $this->response(array(
         "status" => $status,
         "message" => $message,
-        "data" => !empty($data)?$data:[]
+        "data" => !empty($data)?$data:[],
+        "image_path" => base_url().path_image
       ), REST_Controller::HTTP_OK);
     }
 
@@ -781,7 +782,8 @@ abstract class REST_Controller extends \CI_Controller {
       $this->response(array(
         "status" => $status,
         "message" => $message,
-        "data" => $finalData
+        "data" => $finalData,
+        "image_path" => base_url().path_image
       ), REST_Controller::HTTP_OK);
     }
 
