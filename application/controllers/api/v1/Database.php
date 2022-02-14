@@ -508,14 +508,14 @@ class Database extends REST_Controller{
               }
           }else {
               $whereClause = getItemTypeWhereClause('common', null, $itemType);
-              $itemType = $this->database_model->get_item_type_where($whereClause);
-              if($itemType != null && count($itemType) > 0){
+              $result = $this->database_model->get_item_type_where($whereClause);
+              if($result != null && count($result) > 0){
                   $this->responseStatus(STATUS_FAILURE, "Item Type already exists in defaults!");
                   return;
               }
               $whereClause = getItemTypeWhereClause($pkg_id, null, $itemType);
-              $itemType = $this->database_model->get_item_type_where($whereClause);
-              if($itemType != null && count($itemType) > 0){
+              $result = $this->database_model->get_item_type_where($whereClause);
+              if($result != null && count($result) > 0){
                   $this->responseStatus(STATUS_FAILURE, "Item Type already exists!");
                   return;
               }
