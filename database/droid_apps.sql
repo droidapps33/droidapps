@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2022 at 06:09 AM
+-- Generation Time: Feb 14, 2022 at 07:28 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -44,7 +44,8 @@ CREATE TABLE `table_account` (
 
 INSERT INTO `table_account` (`id`, `name`, `role`, `pkg_id`, `user_id`, `password`, `active`, `validity`) VALUES
 (1, 'Admin', 1, 'com.appsfeature', 'admin', '123', 1, '2024-01-31 19:15:44'),
-(3, 'Amit Jain', 0, 'com.appsfeature.bizwiz', 'amit', 'amit@123', 1, '2022-05-17 19:16:26');
+(3, 'Amit Jain', 0, 'com.appsfeature.bizwiz', 'amit', 'amit@123', 1, '2023-05-17 19:16:26'),
+(4, 'Katyayan School', 0, 'com.katyayanschool.katyayanschool', 'school', 'school@123', 1, '2023-02-14 07:20:53');
 
 -- --------------------------------------------------------
 
@@ -65,7 +66,8 @@ CREATE TABLE `table_app` (
 
 INSERT INTO `table_app` (`app_id`, `pkg_id`, `app_name`, `visibility`) VALUES
 (1, 'com.appsfeature', 'Appsfeature', 1),
-(2, 'com.appsfeature.bizwiz', 'BizWiz', 1);
+(2, 'com.appsfeature.bizwiz', 'BizWiz', 1),
+(3, 'com.katyayanschool.katyayanschool', 'Katyayan School', 1);
 
 -- --------------------------------------------------------
 
@@ -130,12 +132,12 @@ CREATE TABLE `table_content` (
 --
 
 INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `item_type`, `image`, `link`, `visibility`, `ranking`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
-('com.appsfeature.bizwiz', 34, 114, 0, 'Happy Hours', '', NULL, NULL, 'https://github.com/appsfeature/droidapps', 1, 0, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
+('com.appsfeature.bizwiz', 34, 114, 0, 'Happy Hours', '', 0, NULL, 'https://github.com/appsfeature/droidapps', 1, 0, NULL, '2022-01-31T11:25', '', '2022-01-28 05:56:01'),
 ('com.appsfeature', 39, 109, 0, 'Android Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:14'),
 ('com.appsfeature', 40, 109, 0, 'Apple Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:35'),
 ('com.appsfeature', 41, 110, 0, 'Womens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:39'),
-('com.appsfeature', 42, 110, 0, 'Mens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:51'),
-('com.appsfeature', 43, 112, 0, 'Dell Laptop', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 19:24:25');
+('com.appsfeature', 42, 110, 0, 'Mens Cloth', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:51'),
+('com.appsfeature', 43, 112, 0, 'Dell Laptop', '', 150, NULL, '', 1, 0, '', '', NULL, '2022-02-03 19:24:25');
 
 -- --------------------------------------------------------
 
@@ -146,6 +148,7 @@ INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `d
 CREATE TABLE `table_flavour` (
   `id` int(11) NOT NULL,
   `title` varchar(500) NOT NULL,
+  `ranking` int(10) DEFAULT 0,
   `visibility` int(10) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -153,10 +156,10 @@ CREATE TABLE `table_flavour` (
 -- Dumping data for table `table_flavour`
 --
 
-INSERT INTO `table_flavour` (`id`, `title`, `visibility`) VALUES
-(0, 'Category', 1),
-(1, 'Content', 1),
-(2, 'Json', 1);
+INSERT INTO `table_flavour` (`id`, `title`, `ranking`, `visibility`) VALUES
+(0, 'Category', 0, 1),
+(1, 'Content', 0, 1),
+(2, 'Json', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -191,7 +194,8 @@ INSERT INTO `table_item_type` (`pkg_id`, `id`, `flavour`, `item_type`, `title`, 
 ('common', 12, 1, 103, 'Html View', 0, 1),
 ('common', 13, 1, 104, 'Test', 0, 1),
 ('common', 14, 1, 105, 'Quiz', 0, 1),
-('common', 15, 1, 106, 'Videos', 0, 1);
+('common', 15, 1, 106, 'Videos', 0, 1),
+('com.appsfeature', 16, 1, 150, 'Browser', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -206,6 +210,13 @@ CREATE TABLE `table_json` (
   `json_data` text NOT NULL,
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `table_json`
+--
+
+INSERT INTO `table_json` (`pkg_id`, `id`, `cat_id`, `json_data`, `updated_at`) VALUES
+('com.appsfeature', 3, 113, 'ghj', '2022-02-11 17:10:56');
 
 --
 -- Indexes for dumped tables
@@ -263,13 +274,13 @@ ALTER TABLE `table_json`
 -- AUTO_INCREMENT for table `table_account`
 --
 ALTER TABLE `table_account`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `table_app`
 --
 ALTER TABLE `table_app`
-  MODIFY `app_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `app_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `table_category`
@@ -293,13 +304,13 @@ ALTER TABLE `table_flavour`
 -- AUTO_INCREMENT for table `table_item_type`
 --
 ALTER TABLE `table_item_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `table_json`
 --
 ALTER TABLE `table_json`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
