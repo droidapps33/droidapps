@@ -94,6 +94,14 @@ function getItemTypeWhereClause($pkg_id, $id, $itemType){
     return $whereClause;
 }
 
+function getFlavourWhereClause($type){
+    $whereClause = null;
+    if($type != null){
+        $whereClause['title'] = $type;
+    }
+    return $whereClause;
+}
+
 function savePreferences(){
     $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
     if($pkg_id == 'com.appsfeature.bizwiz'){

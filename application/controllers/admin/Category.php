@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit ('No direct script access allowed');
 
 class Category extends CI_Controller{
 
+    public $flavour = 0;
     public $module_title = 'Categories';
     public $module_url = 'admin/category';
     public $module_url_list = 'admin/category';
@@ -46,10 +47,19 @@ class Category extends CI_Controller{
         $subCategories = $this->database_model->get_category($whereClause);
 
         $category = $this->database_model->get_category($whereClause, $queryString);
+
+        $whereClause['flavour'] = $this->flavour;
+        $itemTypes = $this->database_model->get_item_type_flavour($whereClause);
+        $itemTypeMap = null;
+        foreach ($itemTypes as $value) {
+            $itemTypeMap[$value['item_type']] = $value['title'];
+        }
+
         $data['categories'] = $category;
         $data['subCategories'] = $subCategories;
         $data['subCatIdSelected'] = $subCatIdSelected;
         $data['querySearch'] = $querySearch;
+        $data['itemTypeMap'] = $itemTypeMap;
         $data['mainModule'] = 'category';
         $data['subModule'] = 'viewCategory';
         $this->load->view($this->module_url.'/list', $data);
@@ -66,7 +76,8 @@ class Category extends CI_Controller{
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';;
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
         $categories = $this->database_model->get_category($whereClause);
-        $itemTypes = $this->database_model->get_item_types($whereClause);
+        $whereClause['flavour'] = $this->flavour;
+        $itemTypes = $this->database_model->get_item_type_flavour($whereClause);
         $subCatIdSelected = getPref('subCatIdSelected');
         $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
@@ -85,7 +96,8 @@ class Category extends CI_Controller{
         $whereClause = getCategoryWhereClause($pkg_id, null, null);
         $allCategories = $this->database_model->get_category($whereClause);
 
-        $itemTypes = $this->database_model->get_item_types($whereClause);
+        $whereClause['flavour'] = $this->flavour;
+        $itemTypes = $this->database_model->get_item_type_flavour($whereClause);
         if($category != null && count($category) == 1){
             $data['category'] = $category[0];
             $data['categories'] = $allCategories;

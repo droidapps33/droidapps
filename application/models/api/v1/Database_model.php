@@ -15,18 +15,12 @@ class Database_model extends CI_Model{
     return $query->result_array();
   }
 
-  public function get_flavours(){
+  public function get_flavours($whereClause = array()){
     $this->db->order_by('ranking', 'ASC');
     $this->db->where('visibility =', '1');
-    $query = $this->db->get('table_flavour');
+    $query = $this->db->get_where('table_flavour', $whereClause);
     return $query->result_array();
   }
-
-   public function get_item_types($whereClause = array()){
-       $this->db->order_by('id', 'DESC');
-       $query = $this->db->get_where("table_item_type", $whereClause);
-       return $query->result_array();
-   }
 
    public function insert_category($isUpdate = false, $whereClause = array(), $data = array()){
      $query = $this->db->get_where('table_category', $whereClause);
@@ -175,12 +169,27 @@ class Database_model extends CI_Model{
         return $this->db->delete("table_item_type", $whereClause);
     }
 
+     public function get_item_types($whereClause = array()){
+         $this->db->order_by('id', 'DESC');
+         $query = $this->db->get_where("table_item_type", $whereClause);
+         return $query->result_array();
+     }
+
      public function get_item_type($whereClause = array(), $searchQuery=[]){
          if($searchQuery != null && count($searchQuery) > 0){
              $this->db->like($searchQuery);
          }
          $names = array('common', $whereClause['pkg_id']);
          $this->db->where_in('pkg_id', $names);
+         $this->db->order_by('ranking', 'ASC');
+         $query = $this->db->get("table_item_type");
+         return $query->result_array();
+     }
+
+     public function get_item_type_flavour($whereClause = array()){
+         $pkgIds = array('common', $whereClause['pkg_id']);
+         $this->db->where_in('pkg_id', $pkgIds);
+         $this->db->where('flavour', $whereClause['flavour']);
          $this->db->order_by('ranking', 'ASC');
          $query = $this->db->get("table_item_type");
          return $query->result_array();

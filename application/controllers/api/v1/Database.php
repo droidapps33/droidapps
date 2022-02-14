@@ -26,7 +26,9 @@ class Database extends REST_Controller{
 
   //http://localhost/droidapps/api/v1/database/get-flavours
   public function get_flavours_get(){
-      $flavours = $this->database_model->get_flavours();
+      $type = $this->input->get("type");
+      $whereClause = getFlavourWhereClause($type);
+      $flavours = $this->database_model->get_flavours($whereClause);
       if(count($flavours) > 0){
           $this->responseResult(STATUS_SUCCESS, "Flavours found", $flavours);
       }else{

@@ -66,6 +66,7 @@
                     <tr>
                       <th width="50" class="text-center">CatId</th>
                       <th width="100" class="text-center">SubCatId</th>
+                      <th width="100" class="text-center">ItemType</th>
                       <th>Name</th>
                       <th width="100" class="text-center">Status</th>
                       <th width="160" class="text-center">Action</th>
@@ -76,6 +77,7 @@
                             <tr>
                               <td class="text-center"><?php echo $categoryRow['cat_id'];?></td>
                               <td class="text-center"><?php echo $categoryRow['sub_cat_id'];?></td>
+                              <td class="text-center"><?php echo isset($itemTypeMap[$categoryRow['item_type']]) ? $itemTypeMap[$categoryRow['item_type']] : 'Undefined';?></td>
                               <td><?php echo $categoryRow['title'];?></td>
                               <td class="text-center">
                                   <?php if($categoryRow['visibility'] == 1) {?>
