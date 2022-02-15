@@ -132,6 +132,15 @@ Params & Where :?pkg_id=package&cat_id=0
     cat_id:
 ```
 
+- GET: get-data-by-sub-category
+```
+Params & Where :?pkg_id=package&cat_id=0
+    pkg_id:
+    cat_id:
+
+Return : getting both category or content with flag is_contant = true/false.
+```
+
 
 # Json Data API's methods
 
