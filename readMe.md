@@ -138,9 +138,20 @@ Params & Where :?pkg_id=package&cat_id=0
     pkg_id:
     cat_id:
 
-Return : getting both category or content with flag is_contant = true/false.
+Return :    Getting 2 levels of listing
+            Getting both category or content with flag is_contant = true/false.
 ```
 
+- GET: get-data-by-category
+```
+Params & Where :?pkg_id=package&cat_id=0
+    pkg_id:
+    cat_id:
+
+Return :    Not including self category
+            Getting 1 levels of listing
+            Getting both category or content with flag is_contant = true/false.
+```
 
 # Json Data API's methods
 
