@@ -54,9 +54,14 @@ class Category extends CI_Controller{
         foreach ($itemTypes as $value) {
             $itemTypeMap[$value['item_type']] = $value['title'];
         }
+        $categoryMap = null;
+        foreach ($subCategories as $value1) {
+            $categoryMap[$value1['cat_id']] = $value1['title'];
+        }
 
         $data['categories'] = $category;
         $data['subCategories'] = $subCategories;
+        $data['categoryMap'] = $categoryMap;
         $data['subCatIdSelected'] = $subCatIdSelected;
         $data['querySearch'] = $querySearch;
         $data['itemTypeMap'] = $itemTypeMap;

@@ -76,7 +76,8 @@
                         <?php foreach ($categories as $categoryRow) {?>
                             <tr>
                               <td class="text-center"><?php echo $categoryRow['cat_id'];?></td>
-                              <td class="text-center"><?php echo $categoryRow['sub_cat_id'];?></td>
+                              <!-- <td class="text-center"><?php echo $categoryRow['sub_cat_id'];?></td> -->
+                              <td class="text-center" ><p style="font-size:12px"><?php echo isset($categoryMap[$categoryRow['sub_cat_id']]) ? $categoryMap[$categoryRow['sub_cat_id']].'-'.$categoryRow['sub_cat_id'].'' : 'Undefined';?></p></td>
                               <td class="text-center"><?php echo isset($itemTypeMap[$categoryRow['item_type']]) ? $itemTypeMap[$categoryRow['item_type']] : 'Undefined';?></td>
                               <td><?php echo $categoryRow['title'];?></td>
                               <td class="text-center">

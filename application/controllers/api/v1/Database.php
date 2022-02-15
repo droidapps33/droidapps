@@ -382,6 +382,40 @@ class Database extends REST_Controller{
       }
   }
 
+  //http://localhost/droidapps/api/v1/database/get-data-by-sub-category
+  public function get_data_by_sub_category_get(){
+      $pkg_id = $this->input->get("pkg_id");
+      $cat_id = $this->input->get("cat_id");
+      $whereClause = getCategoryWhereClause($pkg_id, null, $cat_id);
+
+      $category = $this->database_model->get_category_selected($whereClause);
+      if(count($category) > 0){
+          foreach ($category as $key => $item) {
+              $whereClause = getCategoryWhereClause($pkg_id, null, $item['cat_id']);
+              $resultCategory = $this->database_model->get_category_selected($whereClause);
+              if(count($resultCategory) > 0){
+                  foreach ($resultCategory as $key1 => $subItem) {
+                      $resultCategory[$key1]['is_content'] = false;
+                      $resultCategory[$key1] = array('id' => $subItem['cat_id']) + $resultCategory[$key1];
+                  }
+                  $category[$key]['data'] = $resultCategory;
+              }else {
+                  $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+                  $resultContent = $this->database_model->get_content_selected($whereClause);
+                  if(count($resultContent) > 0){
+                      foreach ($resultContent as $key2 => $subItem) {
+                          $resultContent[$key2]['is_content'] = true;
+                      }
+                  }
+                  $category[$key]['data'] = $resultContent;
+              }
+          }
+          $this->responseResult(STATUS_SUCCESS,"Category found", $category);
+      }else{
+          $this->responseResult(STATUS_FAILURE," No Category found");
+      }
+  }
+
   //http://localhost/droidapps/api/v1/database/insert-data
   //where: pkg_id, title, sub_cat_id
   public function insert_data_post(){

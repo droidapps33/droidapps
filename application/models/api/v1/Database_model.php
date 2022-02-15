@@ -48,9 +48,17 @@ class Database_model extends CI_Model{
      return $this->db->delete("table_category", $whereClause);
    }
 
-    public function get_category($whereClause = array(), $searchQuery=[]){
+      public function get_category_selected($whereClause = array(), $searchQuery=[]){
+          $selection = array('cat_id', 'sub_cat_id', 'title', 'item_type', 'image', 'ranking');
+          return $this->get_category($whereClause, $searchQuery, $selection);
+      }
+
+    public function get_category($whereClause = array(), $searchQuery=[], $selection = array()){
         if($searchQuery != null && count($searchQuery) > 0){
             $this->db->like($searchQuery);
+        }
+        if($selection != null && count($selection) > 0){
+            $this->db->select($selection);
         }
         $this->db->order_by('cat_id', 'DESC');
         $query = $this->db->get_where("table_category", $whereClause);
@@ -83,14 +91,21 @@ class Database_model extends CI_Model{
        return $this->db->delete("table_content", $whereClause);
    }
 
-    public function get_content($whereClause = array(), $searchQuery=[]){
+   public function get_content_selected($whereClause = array(), $searchQuery=[]){
+       $selection = array('id', 'cat_id', 'sub_cat_id', 'title', 'description', 'item_type', 'image', 'link', 'ranking');
+       return $this->get_content($whereClause, $searchQuery, $selection);
+   }
+   public function get_content($whereClause = array(), $searchQuery=[], $selection = array()){
         if($searchQuery != null && count($searchQuery) > 0){
            $this->db->like($searchQuery);
+        }
+        if($selection != null && count($selection) > 0){
+            $this->db->select($selection);
         }
         $this->db->where('title !=', '');
         $this->db->order_by('id', 'DESC');
         $query = $this->db->get_where("table_content", $whereClause);
-         return $query->result_array();
+        return $query->result_array();
     }
 
     public function insert_json($isUpdate = false, $whereClause = array(), $data = array()){
