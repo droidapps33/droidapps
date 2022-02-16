@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 16, 2022 at 06:03 AM
--- Server version: 5.7.36-cll-lve
--- PHP Version: 7.3.32
+-- Host: 127.0.0.1
+-- Generation Time: Feb 16, 2022 at 03:44 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,11 +30,11 @@ SET time_zone = "+00:00";
 CREATE TABLE `table_account` (
   `id` int(100) NOT NULL,
   `name` varchar(500) NOT NULL,
-  `role` int(100) NOT NULL DEFAULT '0',
+  `role` int(100) NOT NULL DEFAULT 0,
   `pkg_id` varchar(100) DEFAULT NULL,
   `user_id` varchar(500) NOT NULL,
   `password` varchar(500) NOT NULL,
-  `active` int(100) NOT NULL DEFAULT '1',
+  `active` int(100) NOT NULL DEFAULT 1,
   `validity` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -58,7 +57,7 @@ CREATE TABLE `table_app` (
   `app_id` int(100) NOT NULL,
   `pkg_id` varchar(500) NOT NULL,
   `app_name` varchar(500) NOT NULL,
-  `visibility` int(100) NOT NULL DEFAULT '1'
+  `visibility` int(100) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -79,16 +78,16 @@ INSERT INTO `table_app` (`app_id`, `pkg_id`, `app_name`, `visibility`) VALUES
 CREATE TABLE `table_category` (
   `pkg_id` varchar(100) NOT NULL,
   `cat_id` int(100) NOT NULL,
-  `sub_cat_id` int(100) NOT NULL DEFAULT '0',
+  `sub_cat_id` int(100) NOT NULL DEFAULT 0,
   `title` varchar(1000) NOT NULL,
-  `item_type` int(100) DEFAULT '0',
+  `item_type` int(100) DEFAULT 0,
   `image` varchar(1000) DEFAULT NULL,
-  `ranking` int(100) NOT NULL DEFAULT '0',
-  `visibility` int(100) NOT NULL DEFAULT '1',
+  `ranking` int(100) NOT NULL DEFAULT 0,
+  `visibility` int(100) NOT NULL DEFAULT 1,
   `json_data` varchar(5000) DEFAULT NULL,
-  `other_property` text,
-  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `other_property` text DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -117,19 +116,19 @@ INSERT INTO `table_category` (`pkg_id`, `cat_id`, `sub_cat_id`, `title`, `item_t
 CREATE TABLE `table_content` (
   `pkg_id` varchar(100) NOT NULL,
   `id` int(100) NOT NULL,
-  `cat_id` int(100) NOT NULL DEFAULT '0',
-  `sub_cat_id` int(100) NOT NULL DEFAULT '0',
+  `cat_id` int(100) NOT NULL DEFAULT 0,
+  `sub_cat_id` int(100) NOT NULL DEFAULT 0,
   `title` varchar(1000) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
-  `item_type` int(100) DEFAULT '0',
+  `item_type` int(100) DEFAULT 0,
   `image` varchar(100) DEFAULT NULL,
   `link` varchar(1000) DEFAULT NULL,
-  `visibility` int(100) NOT NULL DEFAULT '1',
-  `ranking` int(100) DEFAULT '0',
+  `visibility` int(100) NOT NULL DEFAULT 1,
+  `ranking` int(100) DEFAULT 0,
   `json_data` varchar(5000) DEFAULT NULL,
   `other_property` varchar(1000) DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -137,20 +136,22 @@ CREATE TABLE `table_content` (
 --
 
 INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `description`, `item_type`, `image`, `link`, `visibility`, `ranking`, `json_data`, `other_property`, `updated_at`, `created_at`) VALUES
-('com.appsfeature', 39, 109, 0, 'Android Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:14'),
-('com.appsfeature', 40, 109, 0, 'Apple Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:35'),
-('com.appsfeature', 41, 110, 0, 'Womens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:39'),
-('com.appsfeature', 42, 110, 0, 'Mens Cloth', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:51'),
-('com.appsfeature', 43, 112, 0, 'Dell Laptop', '', 150, NULL, '', 1, 0, '', '', NULL, '2022-02-03 19:24:25'),
-('com.katyayanschool.katyayanschool', 45, 116, 0, 'Live Classes', '', 107, 'f88d3e71037eded195690054bdc3cda7.png', '', 1, 0, '', '', NULL, '2022-02-14 09:33:34'),
-('com.katyayanschool.katyayanschool', 46, 116, 0, 'Test Series', '', 102, '9e67fd16f5ad2e3f0fcea3bda0d2e0e4.png', 'https://www.katyayangroups.com/erp/index.php/Stu_app_exam/test/', 1, 0, '', '', NULL, '2022-02-14 09:33:59'),
-('com.katyayanschool.katyayanschool', 47, 116, 0, 'My Profile', '', 108, 'd60b2444fe7e286fd2b8b35c18214cfe.png', '', 1, 0, '', '', NULL, '2022-02-14 09:37:13'),
-('com.katyayanschool.katyayanschool', 48, 116, 0, 'Previous Classes', '', 106, '247f356e5f8c978a03d6388ba5e9fcdb.png', '', 1, 0, '', '', NULL, '2022-02-14 09:37:55'),
-('com.katyayanschool.katyayanschool', 49, 121, 0, 'Slider 1', '', 100, '8f8ecd2ff351223233a0ae8c08d9d4e0.jpg', '', 1, 0, '', '', NULL, '2022-02-14 11:02:33'),
-('com.katyayanschool.katyayanschool', 50, 121, 0, 'Slider 2', '', 100, '2e5a09673bb7aa5d8fc9363bc8bbe561.jpg', '', 1, 0, '', '', NULL, '2022-02-16 05:16:38'),
-('com.katyayanschool.katyayanschool', 51, 121, 0, 'dfg', '', 100, NULL, '', 1, 0, '', '', NULL, '2022-02-16 10:33:07'),
-('com.katyayanschool.katyayanschool', 52, 122, 0, 'Mathematics 1st', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-16 11:56:04'),
-('com.katyayanschool.katyayanschool', 53, 122, 0, 'Mathematics 2nd', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-16 11:56:16');
+('com.appsfeature', 39, 0, 109, 'Android Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:14'),
+('com.appsfeature', 40, 0, 109, 'Apple Phones', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:21:35'),
+('com.appsfeature', 41, 0, 110, 'Womens Cloth', '', 0, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:39'),
+('com.appsfeature', 42, 0, 110, 'Mens Cloth', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-03 18:23:51'),
+('com.appsfeature', 43, 0, 112, 'Dell Laptop', '', 150, NULL, '', 1, 0, '', '', NULL, '2022-02-03 19:24:25'),
+('com.katyayanschool.katyayanschool', 45, 0, 116, 'Live Classes', '', 107, 'f88d3e71037eded195690054bdc3cda7.png', '', 1, 0, '', '', NULL, '2022-02-14 09:33:34'),
+('com.katyayanschool.katyayanschool', 46, 0, 116, 'Test Series', '', 102, '9e67fd16f5ad2e3f0fcea3bda0d2e0e4.png', 'https://www.katyayangroups.com/erp/index.php/Stu_app_exam/test/', 1, 0, '', '', NULL, '2022-02-14 09:33:59'),
+('com.katyayanschool.katyayanschool', 47, 0, 116, 'My Profile', '', 108, 'd60b2444fe7e286fd2b8b35c18214cfe.png', '', 1, 0, '', '', NULL, '2022-02-14 09:37:13'),
+('com.katyayanschool.katyayanschool', 48, 0, 116, 'Previous Classes', '', 106, '247f356e5f8c978a03d6388ba5e9fcdb.png', '', 1, 0, '', '', NULL, '2022-02-14 09:37:55'),
+('com.katyayanschool.katyayanschool', 49, 0, 121, 'Slider 1', '', 100, '8f8ecd2ff351223233a0ae8c08d9d4e0.jpg', '', 1, 0, '', '', NULL, '2022-02-14 11:02:33'),
+('com.katyayanschool.katyayanschool', 50, 0, 121, 'Slider 2', '', 100, '2e5a09673bb7aa5d8fc9363bc8bbe561.jpg', '', 1, 0, '', '', NULL, '2022-02-16 05:16:38'),
+('com.katyayanschool.katyayanschool', 51, 0, 121, 'dfg', '', 100, NULL, '', 1, 0, '', '', NULL, '2022-02-16 10:33:07'),
+('com.katyayanschool.katyayanschool', 52, 0, 122, 'Mathematics 1st', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-16 11:56:04'),
+('com.katyayanschool.katyayanschool', 53, 0, 122, 'Mathematics 2nd', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-16 11:56:16'),
+('com.katyayanschool.katyayanschool', 54, 0, 122, 'Chemistry 1', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-16 14:29:53'),
+('com.katyayanschool.katyayanschool', 55, 0, 122, 'Chemistry 2', '', 101, NULL, '', 1, 0, '', '', NULL, '2022-02-16 14:30:15');
 
 -- --------------------------------------------------------
 
@@ -161,8 +162,8 @@ INSERT INTO `table_content` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `title`, `d
 CREATE TABLE `table_flavour` (
   `id` int(11) NOT NULL,
   `title` varchar(500) NOT NULL,
-  `ranking` int(10) DEFAULT '0',
-  `visibility` int(10) DEFAULT '1'
+  `ranking` int(10) DEFAULT 0,
+  `visibility` int(10) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -183,11 +184,11 @@ INSERT INTO `table_flavour` (`id`, `title`, `ranking`, `visibility`) VALUES
 CREATE TABLE `table_item_type` (
   `pkg_id` varchar(100) NOT NULL,
   `id` int(11) NOT NULL,
-  `flavour` int(100) DEFAULT '0',
+  `flavour` int(100) DEFAULT 0,
   `item_type` int(100) NOT NULL,
   `title` varchar(500) NOT NULL,
-  `ranking` int(10) DEFAULT '0',
-  `visibility` int(11) DEFAULT '1'
+  `ranking` int(10) DEFAULT 0,
+  `visibility` int(11) DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -226,9 +227,9 @@ INSERT INTO `table_item_type` (`pkg_id`, `id`, `flavour`, `item_type`, `title`, 
 CREATE TABLE `table_json` (
   `pkg_id` varchar(100) NOT NULL,
   `id` int(11) NOT NULL,
-  `cat_id` int(100) DEFAULT '0',
+  `cat_id` int(100) DEFAULT 0,
   `json_data` text NOT NULL,
-  `updated_at` datetime DEFAULT CURRENT_TIMESTAMP
+  `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -312,7 +313,7 @@ ALTER TABLE `table_category`
 -- AUTO_INCREMENT for table `table_content`
 --
 ALTER TABLE `table_content`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `table_flavour`
