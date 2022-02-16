@@ -110,11 +110,11 @@
                      <div class="row">
                          <div class="col-sm-6 mb-3">
                              <label for="json_data" class="formbuilder-text-label">Json Data</label>
-                             <input type="text" placeholder="Enter Json Data" value="<?php echo $category['json_data']; ?>" class="form-control" name="json_data" access="false" id="json_data">
+                             <textarea type="textarea" rows="1" placeholder="Enter Json Data" class="form-control" name="json_data" access="false" id="json_data"><?php echo $category['json_data']; ?></textarea>
                          </div>
                          <div class="col-sm-6 mb-3">
                              <label for="other_property" class="formbuilder-text-label">Other Property</label>
-                             <input type="text" placeholder="Enter Other Property" value="<?php echo $category['other_property']; ?>" class="form-control" name="other_property" access="false" id="other_property">
+                             <textarea type="textarea" rows="1" placeholder="Enter Other Property" class="form-control" name="other_property" access="false" id="other_property"><?php echo $category['other_property']; ?></textarea>
                          </div>
                      </div>
 

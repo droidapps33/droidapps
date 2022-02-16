@@ -49,7 +49,7 @@ class Database_model extends CI_Model{
    }
 
       public function get_category_selected($whereClause = array(), $searchQuery=[]){
-          $selection = array('cat_id', 'sub_cat_id', 'title', 'item_type', 'image', 'ranking');
+          $selection = array('cat_id', 'sub_cat_id', 'title', 'item_type', 'image', 'ranking', 'other_property');
           return $this->get_category($whereClause, $searchQuery, $selection);
       }
 
@@ -92,7 +92,7 @@ class Database_model extends CI_Model{
    }
 
    public function get_content_selected($whereClause = array(), $searchQuery=[]){
-       $selection = array('id', 'cat_id', 'sub_cat_id', 'title', 'description', 'item_type', 'image', 'link', 'ranking');
+       $selection = array('id', 'cat_id', 'sub_cat_id', 'title', 'description', 'item_type', 'image', 'link', 'ranking', 'other_property');
        return $this->get_content($whereClause, $searchQuery, $selection);
    }
    public function get_content($whereClause = array(), $searchQuery=[], $selection = array()){
