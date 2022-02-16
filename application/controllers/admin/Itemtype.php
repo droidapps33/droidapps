@@ -28,9 +28,13 @@ class Itemtype extends CI_Controller{
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
         $queryString = $this->input->get();
         $querySearch = '';
+        $flavourSelected = '';
         if(!empty($queryString)){
             if(array_key_exists("title", $queryString)){
                 $querySearch = $queryString['title'];
+            }
+            if(array_key_exists("flavour", $queryString)){
+                $flavourSelected = $queryString['flavour'];
             }
         }
         $whereClause = getItemTypeWhereClause($pkg_id, null, null);
@@ -39,6 +43,7 @@ class Itemtype extends CI_Controller{
         $itemtypes = $this->database_model->get_item_type($whereClause, $queryString);
         $data['itemtypes'] = $itemtypes;
         $data['flavours'] = $flavours;
+        $data['flavourSelected'] = $flavourSelected;
         $data['querySearch'] = $querySearch;
         $data['mainModule'] = 'itemtype';
         $data['subModule'] = 'viewItemtype';

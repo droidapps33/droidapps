@@ -34,6 +34,25 @@
                           <i class="fas fa-search"></i>
                         </button>
                       </div>
+
+                      <select class="form-control ml-3" name="flavour" id="flavour">
+                          <option value="">Select Flavour</option>
+                          <?php
+                              if(!empty($flavours)){
+                                  foreach ($flavours as $item) {
+                                      $selected = ($flavourSelected == $item['id']) ? true : false;
+                                       ?>
+                                       <option <?php echo set_select('flavour', $item['id'], $selected); ?> value="<?php echo $item['id'];?>"><?php echo $item['title'];?></option>
+                                       <?php
+                                  }
+                              }
+                           ?>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon1">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
                     </div>
                   </form>
                 </div>

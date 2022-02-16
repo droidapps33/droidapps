@@ -36,7 +36,7 @@
                       </div>
 
                       <select class="form-control ml-3" name="sub_cat_id" id="sub_cat_id">
-                          <option value="0">Select Sub Category</option>
+                          <option value="">Select Sub Category</option>
                           <?php
                               if(!empty($subCategories)){
                                   foreach ($subCategories as $item) {
