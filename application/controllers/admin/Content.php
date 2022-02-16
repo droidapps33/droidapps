@@ -31,15 +31,15 @@ class Content extends CI_Controller{
         $catIdSelected = getPref('catIdSelected');
         $querySearch = '';
         if(!empty($queryString)){
-            if(array_key_exists("cat_id", $queryString)){
-                $catIdSelected = $queryString['cat_id'];
+            if(array_key_exists("sub_cat_id", $queryString)){
+                $catIdSelected = $queryString['sub_cat_id'];
                 savePref('catIdSelected', $catIdSelected);
             }
             if(array_key_exists("title", $queryString)){
                 $querySearch = $queryString['title'];
             }
         }else{
-            $queryString['cat_id'] = $catIdSelected;
+            $queryString['sub_cat_id'] = $catIdSelected;
         }
         $whereClause = getContentWhereClause($pkg_id, null, null, null, null);
         $categories = $this->database_model->get_category($whereClause);
@@ -52,8 +52,14 @@ class Content extends CI_Controller{
         foreach ($itemTypes as $value) {
             $itemTypeMap[$value['item_type']] = $value['title'];
         }
+        $categoryMap = null;
+        foreach ($categories as $value1) {
+            $categoryMap[$value1['cat_id']] = $value1['title'];
+        }
+
         $data['contents'] = $contents;
         $data['categories'] = $categories;
+        $data['categoryMap'] = $categoryMap;
         $data['catIdSelected'] = $catIdSelected;
         $data['querySearch'] = $querySearch;
         $data['itemTypeMap'] = $itemTypeMap;

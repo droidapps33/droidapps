@@ -341,20 +341,20 @@ class Database extends REST_Controller{
                               $category3 = $this->database_model->get_category($whereClause);
                               if(count($category3) > 0){
                                   foreach ($category3 as $key3 => $item3) {
-                                      $whereClause = getContentWhereClause($pkg_id, $item3['cat_id'], null, null, null);
+                                      $whereClause = getContentWhereClause($pkg_id, null, $item3['cat_id'], null, null);
                                       $category3[$key3]['data'] = $this->database_model->get_content($whereClause);
                                   }
                               }
                               $category2[$key2]['data'] = $category3;
                           }else {
-                              $whereClause = getContentWhereClause($pkg_id, $item2['cat_id'], null, null, null);
+                              $whereClause = getContentWhereClause($pkg_id, null, $item2['cat_id'], null, null);
                               $category2[$key2]['data'] = $this->database_model->get_content($whereClause);
                           }
                       }
                   }
                   $category[$key]['data'] = $category2;
               }else {
-                  $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+                  $whereClause = getContentWhereClause($pkg_id, null, $item['cat_id'], null, null);
                   $category[$key]['data'] = $this->database_model->get_content($whereClause);
               }
           }
@@ -373,7 +373,7 @@ class Database extends REST_Controller{
       $category = $this->database_model->get_category($whereClause);
       if(count($category) > 0){
           foreach ($category as $key => $item) {
-              $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+              $whereClause = getContentWhereClause($pkg_id, null, $item['cat_id'], null, null);
               $category[$key]['data'] = $this->database_model->get_content($whereClause);
           }
           $this->responseResult(STATUS_SUCCESS,"Category found", $category);
@@ -400,7 +400,7 @@ class Database extends REST_Controller{
               }
           }
           // Add contents if exists
-          $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+          $whereClause = getContentWhereClause($pkg_id, null, $item['cat_id'], null, null);
           $resultContent = $this->database_model->get_content_selected($whereClause);
           if(count($resultContent) > 0){
               foreach ($resultContent as $key2 => $subItem) {
@@ -433,7 +433,7 @@ class Database extends REST_Controller{
                   }
               }
               // Add contents if exists
-              $whereClause = getContentWhereClause($pkg_id, $item['cat_id'], null, null, null);
+              $whereClause = getContentWhereClause($pkg_id, null, $item['cat_id'], null, null);
               $resultContent = $this->database_model->get_content_selected($whereClause);
               if(count($resultContent) > 0){
                   foreach ($resultContent as $key2 => $subItem) {

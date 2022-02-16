@@ -35,14 +35,14 @@
                         </button>
                       </div>
 
-                      <select class="form-control ml-3" name="cat_id" id="cat_id">
+                      <select class="form-control ml-3" name="sub_cat_id" id="sub_cat_id">
                           <option value="0">Select Category</option>
                           <?php
                               if(!empty($categories)){
                                   foreach ($categories as $item) {
                                       $selected = ($catIdSelected == $item['cat_id']) ? true : false;
                                        ?>
-                                       <option <?php echo set_select('cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
+                                       <option <?php echo set_select('sub_cat_id', $item['cat_id'], $selected); ?> value="<?php echo $item['cat_id'];?>"><?php echo $item['title'];?></option>
                                        <?php
                                   }
                               }
@@ -66,7 +66,7 @@
                   <table class="table">
                     <tr>
                       <th width="50" class="text-center">Id</th>
-                      <th width="100" class="text-center">CatId</th>
+                      <th width="100" class="text-center">SubCatId</th>
                       <th width="100" class="text-center">ItemType</th>
                       <th>Name</th>
                       <th width="100" class="text-center">Status</th>
@@ -77,8 +77,8 @@
                         <?php foreach ($contents as $contentRow) {?>
                             <tr>
                               <td class="text-center"><?php echo $contentRow['id'];?></td>
-                              <td class="text-center"><?php echo $contentRow['cat_id'];?></td>
-                              <td class="text-center"><?php echo isset($itemTypeMap[$contentRow['item_type']]) ? $itemTypeMap[$contentRow['item_type']] : 'Undefined';?></td>
+                              <td class="text-center" ><p style="font-size:13px"><?php echo isset($categoryMap[$contentRow['sub_cat_id']]) ? $categoryMap[$contentRow['sub_cat_id']].'</br>'.$contentRow['sub_cat_id'].'' : 'Undefined';?></p></td>
+                              <td class="text-center"><p style="font-size:13px"><?php echo isset($itemTypeMap[$contentRow['item_type']]) ? $itemTypeMap[$contentRow['item_type']] : 'Undefined';?></p></td>
                               <td><?php echo $contentRow['title'];?></td>
                               <td class="text-center">
                                   <?php if($contentRow['visibility'] == 1) {?>
