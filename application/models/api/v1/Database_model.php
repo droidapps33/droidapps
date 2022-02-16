@@ -49,7 +49,7 @@ class Database_model extends CI_Model{
    }
 
       public function get_category_selected($whereClause = array(), $searchQuery=[]){
-          $selection = array('cat_id', 'sub_cat_id', 'title', 'item_type', 'image', 'ranking', 'other_property');
+          $selection = array('cat_id', 'sub_cat_id', 'title', 'item_type', 'image', 'ranking', 'other_property', 'created_at');
           return $this->get_category($whereClause, $searchQuery, $selection);
       }
 
@@ -60,7 +60,7 @@ class Database_model extends CI_Model{
         if($selection != null && count($selection) > 0){
             $this->db->select($selection);
         }
-        $this->db->order_by('cat_id', 'DESC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get_where("table_category", $whereClause);
         return $query->result_array();
     }
@@ -92,7 +92,7 @@ class Database_model extends CI_Model{
    }
 
    public function get_content_selected($whereClause = array(), $searchQuery=[]){
-       $selection = array('id', 'cat_id', 'sub_cat_id', 'title', 'description', 'item_type', 'image', 'link', 'ranking', 'other_property');
+       $selection = array('id', 'cat_id', 'sub_cat_id', 'title', 'description', 'item_type', 'image', 'link', 'ranking', 'other_property', 'created_at');
        return $this->get_content($whereClause, $searchQuery, $selection);
    }
    public function get_content($whereClause = array(), $searchQuery=[], $selection = array()){
@@ -103,7 +103,7 @@ class Database_model extends CI_Model{
             $this->db->select($selection);
         }
         $this->db->where('title !=', '');
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('created_at', 'DESC');
         $query = $this->db->get_where("table_content", $whereClause);
         return $query->result_array();
     }
