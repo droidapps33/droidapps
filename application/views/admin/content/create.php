@@ -77,8 +77,9 @@
                                 <?php
                                     if(!empty($itemTypes)){
                                         foreach ($itemTypes as $item) {
-                                             ?>
-                                             <option <?php echo set_select('item_type', $item['item_type'], false); ?> value="<?php echo $item['item_type'];?>"><?php echo $item['title'];?></option>
+                                            $selected = ($itemTypeContentSelected == $item['item_type']) ? true : false;
+                                            ?>
+                                             <option <?php echo set_select('item_type', $item['item_type'], $selected); ?> value="<?php echo $item['item_type'];?>"><?php echo $item['title'];?></option>
                                              <?php
                                         }
                                     }

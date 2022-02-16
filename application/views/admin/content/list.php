@@ -54,6 +54,25 @@
                         </button>
                       </div>
 
+                      <select class="form-control ml-3" name="item_type" id="item_type">
+                          <option value="">Select Item Type</option>
+                          <?php
+                              if(!empty($itemTypes)){
+                                  foreach ($itemTypes as $item) {
+                                      $selected = ($itemTypeContentSelected == $item['item_type']) ? true : false;
+                                       ?>
+                                       <option <?php echo set_select('item_type', $item['item_type'], $selected); ?> value="<?php echo $item['item_type'];?>"><?php echo $item['title'];?></option>
+                                       <?php
+                                  }
+                              }
+                           ?>
+                      </select>
+                      <div class="input-group-append">
+                        <button class="input-group-text" id="basic-addon1">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+
                     </div>
                   </form>
                 </div>

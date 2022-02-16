@@ -29,11 +29,16 @@ class Content extends CI_Controller{
         $pkg_id = isset($_SESSION['admin']['pkg_id'])?$_SESSION['admin']['pkg_id']:'';
         $queryString = $this->input->get();
         $catIdSelected = getPref('catIdSelected');
+        $itemTypeContentSelected = getPref('itemTypeContentSelected');
         $querySearch = '';
         if(!empty($queryString)){
             if(array_key_exists("sub_cat_id", $queryString)){
                 $catIdSelected = $queryString['sub_cat_id'];
                 savePref('catIdSelected', $catIdSelected);
+            }
+            if(array_key_exists("item_type", $queryString)){
+                $itemTypeContentSelected = $queryString['item_type'];
+                savePref('itemTypeContentSelected', $itemTypeContentSelected);
             }
             if(array_key_exists("title", $queryString)){
                 $querySearch = $queryString['title'];
@@ -61,7 +66,9 @@ class Content extends CI_Controller{
         $data['categories'] = $categories;
         $data['categoryMap'] = $categoryMap;
         $data['catIdSelected'] = $catIdSelected;
+        $data['itemTypeContentSelected'] = $itemTypeContentSelected;
         $data['querySearch'] = $querySearch;
+        $data['itemTypes'] = $itemTypes;
         $data['itemTypeMap'] = $itemTypeMap;
         $data['mainModule'] = 'content';
         $data['subModule'] = 'viewContent';
@@ -71,6 +78,7 @@ class Content extends CI_Controller{
     //Reset and open list
     public function list(){
         savePref('catIdSelected', '');
+        savePref('itemTypeContentSelected', '');
         $this->index();
     }
 
@@ -82,9 +90,11 @@ class Content extends CI_Controller{
         $whereClause['flavour'] = $this->flavour;
         $itemTypes = $this->database_model->get_item_type_flavour($whereClause);
         $catIdSelected = getPref('catIdSelected');
+        $itemTypeContentSelected = getPref('itemTypeContentSelected');
         $data['categories'] = $categories;
         $data['itemTypes'] = $itemTypes;
         $data['catIdSelected'] = $catIdSelected;
+        $data['itemTypeContentSelected'] = $itemTypeContentSelected;
         $data['mainModule'] = 'content';
         $data['subModule'] = 'createContent';
         $this->load->view($this->module_url.'/create', $data);
