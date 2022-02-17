@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2022 at 09:32 AM
+-- Generation Time: Feb 17, 2022 at 01:53 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -118,10 +118,28 @@ CREATE TABLE `table_category_master` (
   `id` int(11) NOT NULL,
   `cat_id` int(100) NOT NULL,
   `sub_cat_id` int(100) NOT NULL,
+  `sub_cat_name` varchar(100) DEFAULT NULL,
   `visibility` int(100) DEFAULT 1,
   `ranking` int(100) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `table_category_master`
+--
+
+INSERT INTO `table_category_master` (`pkg_id`, `id`, `cat_id`, `sub_cat_id`, `sub_cat_name`, `visibility`, `ranking`, `created_at`) VALUES
+('com.appsfeature', 1, 108, 0, NULL, 1, 0, '2022-02-03 17:12:07'),
+('com.appsfeature', 2, 109, 108, 'Dashboard', 1, 0, '2022-02-03 17:15:17'),
+('com.appsfeature', 3, 110, 108, 'Dashboard', 1, 0, '2022-02-03 17:15:33'),
+('com.appsfeature', 4, 111, 108, 'Dashboard', 1, 0, '2022-02-03 19:20:14'),
+('com.appsfeature', 5, 112, 111, 'Electronics', 1, 0, '2022-02-03 19:20:57'),
+('com.appsfeature', 6, 113, 108, 'Dashboard', 1, 0, '2022-02-05 18:07:16'),
+('com.appsfeature.bizwiz', 7, 114, 0, NULL, 1, 0, '2022-02-05 18:41:48'),
+('com.katyayanschool.katyayanschool', 8, 115, 0, NULL, 1, 0, '2022-02-14 06:46:16'),
+('com.katyayanschool.katyayanschool', 9, 116, 115, 'Dashboard', 1, 0, '2022-02-14 06:58:47'),
+('com.katyayanschool.katyayanschool', 10, 121, 115, 'Dashboard', 1, 0, '2022-02-14 11:01:10'),
+('com.katyayanschool.katyayanschool', 11, 122, 116, 'Home Menu', 1, 0, '2022-02-16 10:56:57');
 
 -- --------------------------------------------------------
 
@@ -180,10 +198,33 @@ CREATE TABLE `table_content_master` (
   `id` int(11) NOT NULL,
   `content_id` int(100) NOT NULL,
   `sub_cat_id` int(100) NOT NULL,
+  `sub_cat_name` varchar(100) DEFAULT NULL,
   `visibility` int(100) DEFAULT 1,
   `ranking` int(100) DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `table_content_master`
+--
+
+INSERT INTO `table_content_master` (`pkg_id`, `id`, `content_id`, `sub_cat_id`, `sub_cat_name`, `visibility`, `ranking`, `created_at`) VALUES
+('com.appsfeature', 1, 39, 109, 'Mobile Shop', 1, 0, '2022-02-03 18:21:14'),
+('com.appsfeature', 2, 40, 109, 'Mobile Shop', 1, 0, '2022-02-03 18:21:35'),
+('com.appsfeature', 3, 41, 110, 'Cloth Shop', 1, 0, '2022-02-03 18:23:39'),
+('com.appsfeature', 4, 42, 110, 'Cloth Shop', 1, 0, '2022-02-03 18:23:51'),
+('com.appsfeature', 5, 43, 112, 'Laptops', 1, 0, '2022-02-03 19:24:25'),
+('com.katyayanschool.katyayanschool', 6, 45, 116, 'Home Menu', 1, 0, '2022-02-14 09:33:34'),
+('com.katyayanschool.katyayanschool', 7, 46, 116, 'Home Menu', 1, 0, '2022-02-14 09:33:59'),
+('com.katyayanschool.katyayanschool', 8, 47, 116, 'Home Menu', 1, 0, '2022-02-14 09:37:13'),
+('com.katyayanschool.katyayanschool', 9, 48, 116, 'Home Menu', 1, 0, '2022-02-14 09:37:55'),
+('com.katyayanschool.katyayanschool', 10, 49, 121, 'Home Slider', 1, 0, '2022-02-14 11:02:33'),
+('com.katyayanschool.katyayanschool', 11, 50, 121, 'Home Slider', 1, 0, '2022-02-16 05:16:38'),
+('com.katyayanschool.katyayanschool', 12, 51, 121, 'Home Slider', 1, 0, '2022-02-16 10:33:07'),
+('com.katyayanschool.katyayanschool', 13, 52, 122, 'PDF Books', 1, 0, '2022-02-16 11:56:04'),
+('com.katyayanschool.katyayanschool', 14, 53, 122, 'PDF Books', 1, 0, '2022-02-16 11:56:16'),
+('com.katyayanschool.katyayanschool', 15, 54, 122, 'PDF Books', 1, 0, '2022-02-16 14:29:53'),
+('com.katyayanschool.katyayanschool', 16, 55, 122, 'PDF Books', 1, 0, '2022-02-16 14:30:15');
 
 -- --------------------------------------------------------
 
@@ -357,7 +398,7 @@ ALTER TABLE `table_category`
 -- AUTO_INCREMENT for table `table_category_master`
 --
 ALTER TABLE `table_category_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `table_content`
@@ -369,7 +410,7 @@ ALTER TABLE `table_content`
 -- AUTO_INCREMENT for table `table_content_master`
 --
 ALTER TABLE `table_content_master`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `table_flavour`
